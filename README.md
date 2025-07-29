@@ -1,42 +1,46 @@
-# GmGnAPI 🚀
+# GmGnAPI
 
-[![PyPI version](https://badge.fury.io/py/gmgnapi.svg)](https://badge.fury.io/py/gmgnapi)
-[![Python versions](https://img.shields.io/pypi/pyversions/gmgnapi.svg)](https://pypi.org/project/gmgnapi/)
-[![License](https://img.shields.io/github/license/gmgnapi/gmgnapi.svg)](https://github.com/gmgnapi/gmgnapi/blob/main/LICENSE)
+**Professional Python client library for GMGN.ai WebSocket API**
+
+[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-[![Tests](https://github.com/gmgnapi/gmgnapi/workflows/Tests/badge.svg)](https://github.com/gmgnapi/gmgnapi/actions)
-[![Coverage](https://codecov.io/gh/gmgnapi/gmgnapi/branch/main/graph/badge.svg)](https://codecov.io/gh/gmgnapi/gmgnapi)
 
-**Professional Python client for GMGN.ai WebSocket API** - Get real-time Solana blockchain data streams with ease.
+GmGnAPI provides real-time access to Solana blockchain data through GMGN.ai's WebSocket API with advanced features including intelligent filtering, data export capabilities, monitoring statistics, and automated alerting.
 
-## 🌟 Features
+## 🚀 Features
 
-- **Real-time WebSocket Connection**: Connect to GMGN's live data streams
-- **Multiple Data Channels**: Subscribe to pools, pairs, launches, trades, and more
-- **Async/Await Support**: Built with modern Python async patterns
-- **Type Safety**: Full type hints and Pydantic models
-- **Automatic Reconnection**: Robust connection handling with retry logic
-- **Professional Grade**: Production-ready with comprehensive error handling
-- **Easy to Use**: Simple, intuitive API design
-- **Well Documented**: Extensive documentation and examples
+### Core Functionality
+- **Real-time WebSocket connection** to GMGN.ai API
+- **Multiple data channels**: New pools, token launches, pair updates, chain statistics, social info, wallet trades, limit orders
+- **Automatic reconnection** with exponential backoff
+- **Comprehensive error handling** and logging
+- **Type-safe** with full Pydantic model validation
+- **Async/await** support for modern Python applications
 
-## 🎯 Supported Data Streams
+### Advanced Features
+- **🔍 Intelligent Filtering**: Advanced token filtering by market cap, liquidity, volume, holder count, exchange, and risk scores
+- **📊 Data Export**: Export to JSON, CSV, or SQLite database with automatic file rotation and compression
+- **📈 Monitoring & Statistics**: Real-time connection metrics, message counts, unique token/pool tracking
+- **🚨 Alert System**: Configurable alerts for market conditions with rate limiting and webhook support
+- **⚡ Rate Limiting**: Configurable message processing limits to prevent overwhelming
+- **🔄 Queue Management**: Buffered message processing with configurable queue sizes
 
-- **New Pool Info** (`new_pool_info`): Real-time new liquidity pool creations
-- **Pair Updates** (`new_pair_update`): Live trading pair information updates  
-- **Token Launches** (`new_launched_info`): Newly launched token notifications
-- **Chain Statistics** (`chain_stat`): Blockchain network statistics
-- **Social Info** (`token_social_info`): Token social media and community data
-- **Wallet Trades** (`wallet_trade_data`): Individual wallet trading activity
-- **Limit Orders** (`limit_order_info`): Limit order book updates
-
-## 🚀 Quick Start
-
-### Installation
+## 📦 Installation
 
 ```bash
 pip install gmgnapi
 ```
+
+### Development Installation
+
+```bash
+git clone https://github.com/yourusername/gmgnapi.git
+cd gmgnapi
+pip install -e .
+```
+
+## 🎯 Quick Start
 
 ### Basic Usage
 
@@ -44,232 +48,337 @@ pip install gmgnapi
 import asyncio
 from gmgnapi import GmGnClient
 
+async def on_new_pool(pool_info):
+    if pool_info.pools:
+        pool = pool_info.pools[0]
+        token_info = pool.bti
+        if token_info:
+            print(f"New pool: {token_info.s} ({token_info.n})")
+
 async def main():
     client = GmGnClient()
+    client.on_new_pool(on_new_pool)
     
-    # Connect to GMGN WebSocket
     await client.connect()
+    await client.subscribe_new_pools()
     
-    # Subscribe to new pool information
-    await client.subscribe_new_pools(chain="sol")
-    
-    # Subscribe to token launches
-    await client.subscribe_token_launches(chain="sol")
-    
-    # Listen for messages
-    async for message in client.listen():
-        print(f"Received: {message}")
+    # Keep running
+    while True:
+        await asyncio.sleep(1)
 
-if __name__ == "__main__":
-    asyncio.run(main())
+asyncio.run(main())
 ```
 
-### Advanced Usage with Custom Handlers
+### Advanced Usage with Filtering and Export
 
 ```python
 import asyncio
-from gmgnapi import GmGnClient
-from gmgnapi.models import NewPoolInfo, TokenLaunchInfo
-
-async def handle_new_pool(data: NewPoolInfo):
-    print(f"New pool created: {data.token_address}")
-    print(f"Initial liquidity: ${data.initial_liquidity_usd:,.2f}")
-
-async def handle_token_launch(data: TokenLaunchInfo):
-    print(f"Token launched: {data.name} ({data.symbol})")
-    print(f"Market cap: ${data.market_cap_usd:,.2f}")
+from decimal import Decimal
+from gmgnapi import (
+    GmGnEnhancedClient, 
+    TokenFilter, 
+    DataExportConfig,
+    AlertConfig
+)
 
 async def main():
-    client = GmGnClient()
-    
-    # Register event handlers
-    client.on("new_pool_info", handle_new_pool)
-    client.on("new_launched_info", handle_token_launch)
-    
-    await client.connect()
-    await client.subscribe_all_channels(chain="sol")
-    
-    # Keep listening
-    await client.run_forever()
-
-if __name__ == "__main__":
-    asyncio.run(main())
-```
-
-### Wallet-Specific Trading Data
-
-```python
-import asyncio
-from gmgnapi import GmGnClient
-
-async def main():
-    client = GmGnClient()
-    await client.connect()
-    
-    # Monitor specific wallet trades (requires access token)
-    wallet_address = "9F5WjUyPaRmFbnwJofAVhPWjCPUQ9Xaiss3ErsJRjGNf"
-    await client.subscribe_wallet_trades(
-        chain="sol",
-        wallet_address=wallet_address,
-        access_token="your_access_token_here"
+    # Configure advanced token filtering
+    token_filter = TokenFilter(
+        min_market_cap=Decimal("50000"),       # $50k minimum market cap
+        min_liquidity=Decimal("10000"),        # $10k minimum liquidity
+        min_volume_24h=Decimal("5000"),        # $5k minimum daily volume
+        min_holder_count=10,                   # 10+ holders
+        exchanges=["raydium", "orca"],         # Specific exchanges only
+        exclude_symbols=["SCAM", "TEST"],      # Exclude potential scams
+        max_risk_score=0.7,                    # Maximum risk threshold
     )
     
-    async for message in client.listen():
-        if message.channel == "wallet_trade_data":
-            print(f"Wallet trade: {message.data}")
+    # Configure data export
+    export_config = DataExportConfig(
+        enabled=True,
+        format="json",                         # "json", "csv", or "database"
+        file_path="./gmgn_data",              # Export directory
+        max_file_size_mb=50,                  # File rotation at 50MB
+        rotation_interval_hours=6,            # Rotate every 6 hours
+        compress=True,                        # Enable compression
+    )
+    
+    # Configure alerts
+    alert_config = AlertConfig(
+        enabled=True,
+        webhook_url="https://hooks.slack.com/...",  # Optional webhook
+        conditions=[
+            {
+                "type": "high_value_pool",
+                "min_market_cap": 100000,
+                "description": "Alert for pools > $100k"
+            }
+        ],
+        rate_limit_seconds=300,               # Max 1 alert per 5 minutes
+    )
+    
+    # Initialize enhanced client
+    client = GmGnEnhancedClient(
+        token_filter=token_filter,
+        export_config=export_config,
+        alert_config=alert_config,
+        rate_limit=100,                       # Max 100 messages/second
+    )
+    
+    # Event handlers
+    async def on_new_pool(pool_info):
+        if pool_info.pools:
+            pool = pool_info.pools[0]
+            token_info = pool.bti
+            if token_info:
+                print(f"🔥 Filtered pool: {token_info.s} - ${token_info.mc:,}")
+    
+    async def on_volume_spike(pair_data):
+        if pair_data.volume_24h_usd > Decimal("500000"):
+            print(f"📈 Volume spike: ${pair_data.volume_24h_usd:,}")
+    
+    client.on_new_pool(on_new_pool)
+    client.on_pair_update(on_volume_spike)
+    
+    # Connect and subscribe
+    await client.connect()
+    await client.subscribe_all_channels()
+    
+    # Monitor and get statistics
+    while True:
+        await asyncio.sleep(60)
+        
+        stats = client.get_monitoring_stats()
+        print(f"📊 Stats: {stats.total_messages:,} messages, "
+              f"{stats.unique_tokens_seen} tokens, "
+              f"{stats.unique_pools_seen} pools")
 
-if __name__ == "__main__":
-    asyncio.run(main())
+asyncio.run(main())
 ```
 
-## 📊 Data Models
+## 📋 Available Channels
 
-All data is returned as typed Pydantic models for easy access and validation:
+### Public Channels
+- **`new_pools`**: New liquidity pool creation events
+- **`pair_update`**: Trading pair price and volume updates  
+- **`token_launch`**: New token launch notifications
+- **`chain_stats`**: Blockchain statistics and metrics
+
+### Authenticated Channels (require access token)
+- **`token_social`**: Token social media and community information
+- **`wallet_trades`**: Wallet trading activity and transactions
+- **`limit_orders`**: Limit order updates and fills
+
+## 🔧 Configuration Options
+
+### TokenFilter
+Filter tokens based on various criteria:
 
 ```python
-from gmgnapi.models import NewPoolInfo, PairUpdate, TokenLaunchInfo
-
-# Type-safe data access
-pool_info: NewPoolInfo = message.data
-print(f"Token: {pool_info.token_address}")
-print(f"Liquidity: ${pool_info.initial_liquidity_usd}")
-print(f"Chain: {pool_info.chain}")
-```
-
-## 🔧 Configuration
-
-### Environment Variables
-
-```bash
-# Optional: Set custom WebSocket URL
-GMGN_WS_URL=wss://ws.gmgn.ai/quotation
-
-# Optional: Set custom user agent
-GMGN_USER_AGENT="Your-App/1.0.0"
-
-# Optional: Set access token for authenticated endpoints
-GMGN_ACCESS_TOKEN=your_jwt_token_here
-```
-
-### Client Configuration
-
-```python
-from gmgnapi import GmGnClient
-
-client = GmGnClient(
-    ws_url="wss://ws.gmgn.ai/quotation",
-    device_id="your-device-id",
-    client_id="your-client-id", 
-    user_agent="Your-App/1.0.0",
-    auto_reconnect=True,
-    max_reconnect_attempts=5,
-    reconnect_delay=5.0
+TokenFilter(
+    min_market_cap=Decimal("10000"),          # Minimum market cap in USD
+    max_market_cap=Decimal("1000000"),        # Maximum market cap in USD
+    min_liquidity=Decimal("5000"),            # Minimum liquidity in USD
+    min_volume_24h=Decimal("1000"),           # Minimum 24h volume in USD
+    min_holder_count=10,                      # Minimum number of holders
+    exchanges=["raydium", "orca"],            # Allowed exchanges
+    symbols=["SOL", "USDC"],                  # Specific symbols to include
+    exclude_symbols=["SCAM", "TEST"],         # Symbols to exclude
+    max_risk_score=0.5,                       # Maximum risk score (0-1)
 )
 ```
 
-## 🧪 Development
+### DataExportConfig
+Configure data export and storage:
 
-### Setup Development Environment
-
-```bash
-# Clone the repository
-git clone https://github.com/gmgnapi/gmgnapi.git
-cd gmgnapi
-
-# Create virtual environment
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-
-# Install development dependencies
-pip install -e ".[dev]"
-
-# Install pre-commit hooks
-pre-commit install
+```python
+DataExportConfig(
+    enabled=True,                             # Enable/disable export
+    format="json",                            # "json", "csv", or "database"
+    file_path="./exports",                    # Export directory
+    max_file_size_mb=100,                     # File size limit for rotation
+    rotation_interval_hours=24,               # Time-based rotation
+    compress=True,                            # Enable compression
+    include_metadata=True,                    # Include extra metadata
+)
 ```
 
-### Running Tests
+### AlertConfig
+Set up alerts and notifications:
+
+```python
+AlertConfig(
+    enabled=True,                             # Enable/disable alerts
+    webhook_url="https://hooks.slack.com/...", # Webhook URL for notifications
+    email="alerts@example.com",               # Email for alerts
+    conditions=[                              # Custom alert conditions
+        {
+            "type": "new_pool",
+            "min_liquidity": 100000,
+            "description": "High liquidity pool alert"
+        }
+    ],
+    rate_limit_seconds=300,                   # Minimum time between alerts
+)
+```
+
+## 📊 Monitoring and Statistics
+
+Get real-time monitoring statistics:
+
+```python
+stats = client.get_monitoring_stats()
+
+print(f"Total messages: {stats.total_messages:,}")
+print(f"Messages per minute: {stats.messages_per_minute:.1f}")
+print(f"Unique tokens seen: {stats.unique_tokens_seen}")
+print(f"Unique pools seen: {stats.unique_pools_seen}")
+print(f"Connection uptime: {stats.connection_uptime:.0f}s")
+print(f"Error count: {stats.error_count}")
+```
+
+## 📁 Data Export Formats
+
+### JSON Export
+```json
+{
+    "timestamp": "2024-01-15T10:30:00",
+    "channel": "new_pools",
+    "data": {
+        "c": "sol",
+        "p": [{
+            "a": "pool_address_here",
+            "ba": "base_token_address", 
+            "qa": "quote_token_address",
+            "bti": {
+                "s": "TOKEN",
+                "n": "Token Name",
+                "mc": 150000
+            }
+        }]
+    }
+}
+```
+
+### CSV Export
+```csv
+timestamp,channel,data
+2024-01-15T10:30:00,new_pools,"{""c"":""sol"",""p"":[...]}"
+```
+
+### SQLite Database
+Tables: `messages`, `new_pools`, `trades` with structured data storage.
+
+## 🚨 Error Handling
+
+GmGnAPI provides comprehensive error handling:
+
+```python
+from gmgnapi import (
+    GmGnAPIError,
+    ConnectionError,
+    AuthenticationError,
+    SubscriptionError,
+    MessageParsingError,
+)
+
+try:
+    await client.connect()
+    await client.subscribe_wallet_trades()
+except AuthenticationError:
+    print("Invalid access token")
+except ConnectionError:
+    print("Failed to connect to WebSocket")
+except SubscriptionError as e:
+    print(f"Subscription failed: {e}")
+except GmGnAPIError as e:
+    print(f"API error: {e}")
+```
+
+## 📚 Examples
+
+The `examples/` directory contains comprehensive examples:
+
+- **`basic_usage.py`**: Simple connection and data streaming
+- **`advanced_monitoring.py`**: Full-featured monitoring with statistics
+- **`data_export.py`**: Data export in multiple formats
+- **`filtering_alerts.py`**: Advanced filtering and alerting
+- **`multiple_channels.py`**: Subscribe to multiple data channels
+
+## 🧪 Testing
+
+Run the test suite:
 
 ```bash
-# Run all tests
+# Install test dependencies
+pip install -e ".[dev]"
+
+# Run tests
 pytest
 
 # Run with coverage
-pytest --cov=gmgnapi --cov-report=html
+pytest --cov=gmgnapi
 
-# Run only unit tests
-pytest -m unit
-
-# Run only integration tests  
-pytest -m integration
+# Run specific test file
+pytest tests/test_client.py
 ```
+
+## 🛠️ Development
 
 ### Code Quality
-
 ```bash
 # Format code
-black src tests examples
+black src/ tests/ examples/
 
-# Sort imports
-isort src tests examples
-
-# Lint code
-flake8 src tests examples
+# Sort imports  
+isort src/ tests/ examples/
 
 # Type checking
-mypy src
+mypy src/
+
+# Linting
+flake8 src/ tests/
 ```
 
-## 📚 Documentation
+### Building Documentation
+```bash
+# Install docs dependencies
+pip install -e ".[docs]"
 
-- **[API Reference](https://gmgnapi.readthedocs.io/en/latest/api.html)**: Complete API documentation
-- **[User Guide](https://gmgnapi.readthedocs.io/en/latest/guide.html)**: Detailed usage examples
-- **[Examples](examples/)**: Ready-to-run example scripts
-- **[Contributing](CONTRIBUTING.md)**: How to contribute to the project
+# Build docs
+cd docs/
+make html
+```
 
 ## 🤝 Contributing
-
-We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
-
-### Quick Contribution Steps
 
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
 3. Make your changes
-4. Add tests for your changes
+4. Add tests for new functionality
 5. Ensure all tests pass (`pytest`)
-6. Commit your changes (`git commit -m 'Add amazing feature'`)
-7. Push to the branch (`git push origin feature/amazing-feature`)
-8. Open a Pull Request
-
-## 📋 Requirements
-
-- Python 3.8+
-- `websockets>=11.0.3`
-- `aiohttp>=3.8.0`
-- `pydantic>=2.0.0`
+6. Format your code (`black`, `isort`)
+7. Commit your changes (`git commit -m 'Add amazing feature'`)
+8. Push to the branch (`git push origin feature/amazing-feature`)
+9. Open a Pull Request
 
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## ⚠️ Disclaimer
+## 🙏 Acknowledgments
 
-This is an unofficial client library for the GMGN.ai API. Use at your own risk. The authors are not responsible for any financial losses incurred through the use of this library.
+- [GMGN.ai](https://gmgn.ai/) for providing the WebSocket API
+- [Pydantic](https://pydantic-docs.helpmanual.io/) for data validation
+- [websockets](https://websockets.readthedocs.io/) for WebSocket client implementation
 
 ## 🔗 Links
 
-- **Website**: [https://gmgnapi.dev](https://gmgnapi.dev)
-- **Documentation**: [https://gmgnapi.readthedocs.io](https://gmgnapi.readthedocs.io)
-- **PyPI**: [https://pypi.org/project/gmgnapi/](https://pypi.org/project/gmgnapi/)
-- **GitHub**: [https://github.com/gmgnapi/gmgnapi](https://github.com/gmgnapi/gmgnapi)
-- **Issues**: [https://github.com/gmgnapi/gmgnapi/issues](https://github.com/gmgnapi/gmgnapi/issues)
-
-## 🙏 Acknowledgments
-
-- Thanks to GMGN.ai for providing the WebSocket API
-- Inspired by the Solana and DeFi community
-- Built with ❤️ for developers and traders
+- **Documentation**: [https://gmgnapi.readthedocs.io/](https://gmgnapi.readthedocs.io/)
+- **PyPI Package**: [https://pypi.org/project/gmgnapi/](https://pypi.org/project/gmgnapi/)
+- **GitHub Issues**: [https://github.com/yourusername/gmgnapi/issues](https://github.com/yourusername/gmgnapi/issues)
+- **GMGN.ai**: [https://gmgn.ai/](https://gmgn.ai/)
 
 ---
 
-**Star ⭐ this repository if you find it useful!**
+**⚡ Built for speed, designed for reliability, crafted for the Solana ecosystem.**

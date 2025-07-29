@@ -4,30 +4,37 @@ Pydantic models for GMGN API data structures.
 
 from datetime import datetime
 from decimal import Decimal
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Dict, List, Optional, Union, Literal
 from uuid import uuid4
 
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field, field_validator, ConfigDict
 
 
 class Message(BaseModel):
     """Base message structure received from GMGN WebSocket."""
     
-    action: str
-    channel: str
-    id: str
-    data: Any
-    timestamp: Optional[datetime] = None
-    
-    class Config:
-        json_encoders = {
+    model_config = ConfigDict(
+        json_encoders={
             datetime: lambda v: v.isoformat(),
             Decimal: str,
         }
+    )
+    
+    channel: str
+    data: Any
+    action: Optional[str] = None
+    id: Optional[str] = None
+    timestamp: Optional[datetime] = None
 
 
 class SubscriptionRequest(BaseModel):
     """WebSocket subscription request structure."""
+    
+    model_config = ConfigDict(
+        json_encoders={
+            datetime: lambda v: v.isoformat(),
+        }
+    )
     
     action: str = "subscribe"
     channel: str
@@ -36,46 +43,99 @@ class SubscriptionRequest(BaseModel):
     data: List[Dict[str, Any]]
     access_token: Optional[str] = None
     retry: Optional[int] = None
-    
-    class Config:
-        json_encoders = {
-            datetime: lambda v: v.isoformat(),
-        }
 
 
 class TokenInfo(BaseModel):
-    """Basic token information."""
+    """Basic token information from GMGN API."""
     
-    address: str
-    name: Optional[str] = None
-    symbol: Optional[str] = None
-    decimals: Optional[int] = None
-    logo_url: Optional[str] = None
+    s: Optional[str] = None  # symbol
+    n: Optional[str] = None  # name
+    l: Optional[str] = None  # logo URL
+    ts: Optional[int] = None  # total supply
+    v1m: Optional[float] = None  # volume 1 minute
+    v5m: Optional[float] = None  # volume 5 minutes
+    v1h: Optional[float] = None  # volume 1 hour
+    v6h: Optional[float] = None  # volume 6 hours
+    v24h: Optional[float] = None  # volume 24 hours
+    s1m: Optional[int] = None  # swaps 1 minute
+    s5m: Optional[int] = None  # swaps 5 minutes
+    s1h: Optional[int] = None  # swaps 1 hour
+    s6h: Optional[int] = None  # swaps 6 hours
+    s24h: Optional[int] = None  # swaps 24 hours
+    p: Optional[float] = None  # price
+    hc: Optional[int] = None  # holder count
+    pcp1m: Optional[str] = None  # price change percentage 1 minute
+    pcp5m: Optional[str] = None  # price change percentage 5 minutes
+    pcp1h: Optional[str] = None  # price change percentage 1 hour
+    br: Optional[str] = None  # burn rate
+    bs: Optional[str] = None  # burn status
+    isa: Optional[bool] = None  # is active
+    hl: Optional[int] = None  # holder limit
+    lqdt: Optional[str] = None  # liquidity data
+    t10hr: Optional[float] = None  # top 10 holder ratio
+    rm: Optional[int] = None  # risk management
+    rfa: Optional[int] = None  # risk factor A
+    mc: Optional[int] = None  # market cap
+    ctr: Optional[str] = None  # creator
+    cbr: Optional[float] = None  # creator balance ratio
+    cts: Optional[str] = None  # creator status
+    rtar: Optional[float] = None  # risk target ratio
+    bop: Optional[int] = None  # burn on purchase
+    sdc: Optional[int] = None  # supply decrease count
+    rc: Optional[int] = None  # risk count
+    pg: Optional[float] = None  # price growth
+    dx_ul: Optional[bool] = None  # DEX unlocked
+    snp: Optional[int] = None  # snapshot
+    f_pre: Optional[str] = None  # freeze pre
+    f_t: Optional[str] = None  # freeze total
+    cto: Optional[bool] = None  # creator token owned
+    d_cic: Optional[int] = None  # daily creator in count
+    d_coc: Optional[int] = None  # daily creator out count
+    d_ccc: Optional[int] = None  # daily creator change count
+    dx_tb: Optional[bool] = None  # DEX token burn
+    dx_bf: Optional[int] = None  # DEX burn factor
+
+
+class PoolData(BaseModel):
+    """Individual pool data structure."""
+    
+    id: Optional[int] = None  # pool ID
+    a: str  # pool address
+    ex: str  # exchange
+    pa: str  # pool address (duplicate)
+    ba: str  # base token address
+    qa: str  # quote token address
+    qr: Optional[str] = None  # quote reserve
+    il: Optional[int] = None  # initial liquidity
+    iqr: Optional[str] = None  # initial quote reserve
+    l: Optional[str] = None  # liquidity provider
+    lpp: Optional[str] = None  # liquidity provider protocol
+    ot: Optional[int] = None  # open time
+    pts: Optional[str] = None  # pool type string
+    pt: Optional[int] = None  # pool type
+    qs: Optional[str] = None  # quote symbol
+    bti: Optional[TokenInfo] = None  # base token info
+    bf_: Optional[bool] = None  # some boolean flag
 
 
 class NewPoolInfo(BaseModel):
     """New liquidity pool information."""
     
-    pool_address: str
-    token_address: str
-    base_token_address: str
-    quote_token_address: str
-    initial_liquidity_usd: Optional[Decimal] = None
-    initial_price: Optional[Decimal] = None
-    chain: str
-    dex: Optional[str] = None
-    created_at: Optional[datetime] = None
-    token_info: Optional[TokenInfo] = None
+    c: str  # chain
+    rg: Optional[str] = None  # region
+    p: List[PoolData]  # pools
     
-    @validator('initial_liquidity_usd', 'initial_price', pre=True)
-    def parse_decimal_fields(cls, v):
-        if v is None or v == "":
-            return None
-        return Decimal(str(v))
+    @property
+    def chain(self) -> str:
+        return self.c
+        
+    @property
+    def pools(self) -> List[PoolData]:
+        return self.p
 
 
-class PairUpdate(BaseModel):
-    """Trading pair update information."""
+class PairUpdateData(BaseModel):
+    """Trading pair update data."""
     
     pair_address: str
     token_address: str
@@ -87,14 +147,15 @@ class PairUpdate(BaseModel):
     chain: str
     updated_at: Optional[datetime] = None
     
-    @validator('price_usd', 'volume_24h_usd', 'liquidity_usd', 'market_cap_usd', pre=True)
+    @field_validator('price_usd', 'volume_24h_usd', 'liquidity_usd', 'market_cap_usd', mode='before')
+    @classmethod
     def parse_decimal_fields(cls, v):
         if v is None or v == "":
             return None
         return Decimal(str(v))
 
 
-class TokenLaunchInfo(BaseModel):
+class TokenLaunchData(BaseModel):
     """Token launch information."""
     
     token_address: str
@@ -109,7 +170,8 @@ class TokenLaunchInfo(BaseModel):
     creator_address: Optional[str] = None
     description: Optional[str] = None
     
-    @validator('total_supply', 'initial_price_usd', 'market_cap_usd', pre=True)
+    @field_validator('total_supply', 'initial_price_usd', 'market_cap_usd', mode='before')
+    @classmethod
     def parse_decimal_fields(cls, v):
         if v is None or v == "":
             return None
@@ -128,7 +190,8 @@ class ChainStatistics(BaseModel):
     new_tokens_24h: Optional[int] = None
     updated_at: Optional[datetime] = None
     
-    @validator('total_volume_24h_usd', 'total_liquidity_usd', pre=True)
+    @field_validator('total_volume_24h_usd', 'total_liquidity_usd', mode='before')
+    @classmethod
     def parse_decimal_fields(cls, v):
         if v is None or v == "":
             return None
@@ -150,19 +213,20 @@ class TokenSocialInfo(BaseModel):
     updated_at: Optional[datetime] = None
 
 
-class TradeInfo(BaseModel):
+class TradeData(BaseModel):
     """Individual trade information."""
     
     transaction_hash: str
     wallet_address: str
     token_address: str
-    trade_type: str  # "buy" or "sell"
+    trade_type: Literal["buy", "sell"]
     amount_token: Decimal
     amount_usd: Decimal
     price_usd: Decimal
     timestamp: datetime
     
-    @validator('amount_token', 'amount_usd', 'price_usd', pre=True)
+    @field_validator('amount_token', 'amount_usd', 'price_usd', mode='before')
+    @classmethod
     def parse_decimal_fields(cls, v):
         return Decimal(str(v))
 
@@ -172,13 +236,14 @@ class WalletTradeData(BaseModel):
     
     wallet_address: str
     chain: str
-    trades: List[TradeInfo]
+    trades: List[TradeData]
     total_volume_24h_usd: Optional[Decimal] = None
     total_trades_24h: Optional[int] = None
     pnl_24h_usd: Optional[Decimal] = None
     updated_at: Optional[datetime] = None
     
-    @validator('total_volume_24h_usd', 'pnl_24h_usd', pre=True)
+    @field_validator('total_volume_24h_usd', 'pnl_24h_usd', mode='before')
+    @classmethod
     def parse_decimal_fields(cls, v):
         if v is None or v == "":
             return None
@@ -191,17 +256,70 @@ class LimitOrderInfo(BaseModel):
     order_id: str
     wallet_address: str
     token_address: str
-    order_type: str  # "buy" or "sell"
+    order_type: Literal["buy", "sell"]
     amount_token: Decimal
     price_usd: Decimal
-    status: str  # "active", "filled", "cancelled"
+    status: Literal["active", "filled", "cancelled"]
     created_at: datetime
     expires_at: Optional[datetime] = None
     filled_amount: Optional[Decimal] = None
     chain: str
     
-    @validator('amount_token', 'price_usd', 'filled_amount', pre=True)
+    @field_validator('amount_token', 'price_usd', 'filled_amount', mode='before')
+    @classmethod
     def parse_decimal_fields(cls, v):
         if v is None or v == "":
             return None
         return Decimal(str(v))
+
+
+# Filter and Configuration Models
+class TokenFilter(BaseModel):
+    """Filter configuration for tokens."""
+    
+    min_market_cap: Optional[Decimal] = None
+    max_market_cap: Optional[Decimal] = None
+    min_liquidity: Optional[Decimal] = None
+    max_liquidity: Optional[Decimal] = None
+    min_volume_24h: Optional[Decimal] = None
+    max_volume_24h: Optional[Decimal] = None
+    exchanges: Optional[List[str]] = None
+    symbols: Optional[List[str]] = None
+    exclude_symbols: Optional[List[str]] = None
+    min_holder_count: Optional[int] = None
+    max_risk_score: Optional[float] = None
+
+
+class DataExportConfig(BaseModel):
+    """Configuration for data export."""
+    
+    enabled: bool = False
+    format: Literal["json", "csv", "parquet"] = "json"
+    file_path: Optional[str] = None
+    max_file_size_mb: int = 100
+    rotation_interval_hours: int = 24
+    compress: bool = False
+    include_metadata: bool = True
+
+
+class AlertConfig(BaseModel):
+    """Configuration for alerts and notifications."""
+    
+    enabled: bool = False
+    webhook_url: Optional[str] = None
+    email: Optional[str] = None
+    conditions: List[Dict[str, Any]] = Field(default_factory=list)
+    rate_limit_seconds: int = 60
+
+
+class MonitoringStats(BaseModel):
+    """Real-time monitoring statistics."""
+    
+    total_messages: int = 0
+    messages_per_minute: float = 0.0
+    unique_tokens_seen: int = 0
+    unique_pools_seen: int = 0
+    total_volume_tracked: Decimal = Decimal("0")
+    connection_uptime: float = 0.0
+    last_message_time: Optional[datetime] = None
+    error_count: int = 0

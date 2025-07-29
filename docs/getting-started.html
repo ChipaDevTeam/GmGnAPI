@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Getting Started - GmGnAPI Documentation</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="logo-icon">🚀</span>
+                <span class="logo-text">GmGnAPI</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="getting-started.html" class="nav-link active">Getting Started</a></li>
+                <li><a href="api-reference.html" class="nav-link">API Reference</a></li>
+                <li><a href="examples.html" class="nav-link">Examples</a></li>
+                <li><a href="advanced.html" class="nav-link">Advanced</a></li>
+                <li><a href="https://github.com/theshadow76/GmGnAPI" class="nav-link" target="_blank">
+                    <i class="fab fa-github"></i> GitHub
+                </a></li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <main style="margin-top: 70px;">
+        <div class="container" style="padding: 3rem 1.5rem;">
+            <header class="page-header">
+                <h1>Getting Started with GmGnAPI</h1>
+                <p class="page-description">
+                    Learn how to install and set up GmGnAPI to start receiving real-time Solana blockchain data from GMGN.ai.
+                </p>
+            </header>
+
+            <div class="content-grid">
+                <nav class="sidebar">
+                    <h3>Table of Contents</h3>
+                    <ul class="toc">
+                        <li><a href="#installation">Installation</a></li>
+                        <li><a href="#requirements">Requirements</a></li>
+                        <li><a href="#quick-start">Quick Start</a></li>
+                        <li><a href="#authentication">Authentication</a></li>
+                        <li><a href="#basic-usage">Basic Usage</a></li>
+                        <li><a href="#error-handling">Error Handling</a></li>
+                        <li><a href="#next-steps">Next Steps</a></li>
+                    </ul>
+                </nav>
+
+                <article class="main-content">
+                    <section id="installation">
+                        <h2><i class="fas fa-download"></i> Installation</h2>
+                        <p>GmGnAPI is available on PyPI and can be installed using pip:</p>
+                        
+                        <div class="code-block">
+                            <pre><code class="language-bash">pip install gmgnapi</code></pre>
+                            <button class="copy-btn" onclick="copyToClipboard(this)">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+
+                        <div class="info-box">
+                            <h4><i class="fas fa-info-circle"></i> Development Installation</h4>
+                            <p>For development or to get the latest features:</p>
+                            <div class="code-block">
+                                <pre><code class="language-bash">git clone https://github.com/theshadow76/GmGnAPI.git
+cd GmGnAPI
+pip install -e .</code></pre>
+                                <button class="copy-btn" onclick="copyToClipboard(this)">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="requirements">
+                        <h2><i class="fas fa-cog"></i> Requirements</h2>
+                        <div class="requirements-grid">
+                            <div class="requirement-card">
+                                <h4>Python Version</h4>
+                                <p>Python 3.8 or higher</p>
+                                <code>python --version</code>
+                            </div>
+                            <div class="requirement-card">
+                                <h4>Dependencies</h4>
+                                <ul>
+                                    <li>websockets >= 12.0</li>
+                                    <li>pydantic >= 2.0</li>
+                                    <li>aiofiles >= 23.0</li>
+                                </ul>
+                            </div>
+                            <div class="requirement-card">
+                                <h4>Optional</h4>
+                                <ul>
+                                    <li>pandas (for data analysis)</li>
+                                    <li>numpy (for numerical operations)</li>
+                                    <li>aiohttp (for webhook alerts)</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="code-block">
+                            <pre><code class="language-bash"># Install with optional dependencies
+pip install gmgnapi[all]
+
+# Or install specific optional dependencies
+pip install gmgnapi[pandas,analysis]</code></pre>
+                            <button class="copy-btn" onclick="copyToClipboard(this)">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                    </section>
+
+                    <section id="quick-start">
+                        <h2><i class="fas fa-rocket"></i> Quick Start</h2>
+                        <p>Here's the fastest way to start receiving real-time data:</p>
+
+                        <div class="code-block">
+                            <pre><code class="language-python">import asyncio
+from gmgnapi import GmGnClient
+
+async def main():
+    # Create client instance
+    async with GmGnClient() as client:
+        # Subscribe to new liquidity pools
+        await client.subscribe_new_pools(chain="sol")
+        
+        # Define event handler
+        @client.on_new_pool
+        async def handle_new_pool(pool_data):
+            print(f"🆕 New pool detected!")
+            for pool in pool_data.pools:
+                if pool.bti:  # Base token info available
+                    print(f"  Token: {pool.bti.s} ({pool.bti.n})")
+                    print(f"  Market Cap: ${pool.bti.mc:,.2f}")
+                    print(f"  Exchange: {pool.ex}")
+                    print("-" * 40)
+        
+        # Start listening for messages
+        print("🔥 Starting GMGN data stream...")
+        await client.listen()
+
+# Run the async function
+if __name__ == "__main__":
+    asyncio.run(main())</code></pre>
+                            <button class="copy-btn" onclick="copyToClipboard(this)">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+
+                        <div class="success-box">
+                            <h4><i class="fas fa-check-circle"></i> That's it!</h4>
+                            <p>Save this as <code>quick_start.py</code> and run it with <code>python quick_start.py</code>. You should start seeing real-time pool data!</p>
+                        </div>
+                    </section>
+
+                    <section id="authentication">
+                        <h2><i class="fas fa-key"></i> Authentication</h2>
+                        <p>Some GMGN.ai channels require authentication. You can provide your access token in several ways:</p>
+
+                        <h3>1. Environment Variable (Recommended)</h3>
+                        <div class="code-block">
+                            <pre><code class="language-bash"># Set environment variable
+export GMGN_ACCESS_TOKEN="your_access_token_here"</code></pre>
+                            <button class="copy-btn" onclick="copyToClipboard(this)">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+
+                        <div class="code-block">
+                            <pre><code class="language-python"># Client will automatically use the environment variable
+async with GmGnClient() as client:
+    await client.subscribe_wallet_trades()  # Requires auth</code></pre>
+                            <button class="copy-btn" onclick="copyToClipboard(this)">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+
+                        <h3>2. Direct Parameter</h3>
+                        <div class="code-block">
+                            <pre><code class="language-python">async with GmGnClient(access_token="your_token") as client:
+    await client.subscribe_wallet_trades()</code></pre>
+                            <button class="copy-btn" onclick="copyToClipboard(this)">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+
+                        <h3>3. Configuration File</h3>
+                        <div class="code-block">
+                            <pre><code class="language-python"># config.json
+{
+    "access_token": "your_access_token_here",
+    "default_chain": "sol"
+}
+
+# In your code
+import json
+with open('config.json') as f:
+    config = json.load(f)
+
+async with GmGnClient(access_token=config['access_token']) as client:
+    # Your code here</code></pre>
+                            <button class="copy-btn" onclick="copyToClipboard(this)">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+
+                        <div class="warning-box">
+                            <h4><i class="fas fa-exclamation-triangle"></i> Security Note</h4>
+                            <p>Never commit access tokens to version control. Use environment variables or secure configuration management.</p>
+                        </div>
+                    </section>
+
+                    <section id="basic-usage">
+                        <h2><i class="fas fa-play"></i> Basic Usage Patterns</h2>
+                        
+                        <h3>Available Subscriptions</h3>
+                        <div class="subscription-grid">
+                            <div class="subscription-card">
+                                <h4>New Pools</h4>
+                                <code>subscribe_new_pools()</code>
+                                <p>Real-time new liquidity pool notifications</p>
+                            </div>
+                            <div class="subscription-card">
+                                <h4>Token Updates</h4>
+                                <code>subscribe_token_updates()</code>
+                                <p>Price and volume changes for specific tokens</p>
+                            </div>
+                            <div class="subscription-card">
+                                <h4>Wallet Trades</h4>
+                                <code>subscribe_wallet_trades()</code>
+                                <p>Trading activity from specific wallets</p>
+                            </div>
+                        </div>
+
+                        <h3>Multiple Subscriptions</h3>
+                        <div class="code-block">
+                            <pre><code class="language-python">async def multi_subscription_example():
+    async with GmGnClient() as client:
+        # Subscribe to multiple data streams
+        await client.subscribe_new_pools(chain="sol")
+        await client.subscribe_token_updates(tokens=["EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"])
+        
+        # Handle different event types
+        @client.on_new_pool
+        async def handle_pools(data):
+            print(f"📊 New pool: {len(data.pools)} pools")
+        
+        @client.on_token_update
+        async def handle_updates(data):
+            print(f"💰 Token update: ${data.price_usd}")
+        
+        @client.on_error
+        async def handle_error(error):
+            print(f"❌ Error: {error}")
+        
+        await client.listen()</code></pre>
+                            <button class="copy-btn" onclick="copyToClipboard(this)">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+
+                        <h3>Chain Selection</h3>
+                        <div class="code-block">
+                            <pre><code class="language-python"># Solana (default)
+await client.subscribe_new_pools(chain="sol")
+
+# Ethereum
+await client.subscribe_new_pools(chain="eth")
+
+# Binance Smart Chain
+await client.subscribe_new_pools(chain="bsc")
+
+# Polygon
+await client.subscribe_new_pools(chain="polygon")</code></pre>
+                            <button class="copy-btn" onclick="copyToClipboard(this)">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                    </section>
+
+                    <section id="error-handling">
+                        <h2><i class="fas fa-shield-alt"></i> Error Handling</h2>
+                        <p>GmGnAPI includes comprehensive error handling and automatic reconnection:</p>
+
+                        <div class="code-block">
+                            <pre><code class="language-python">import logging
+from gmgnapi import GmGnClient, GmGnAPIError
+
+# Set up logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+async def robust_client_example():
+    try:
+        async with GmGnClient() as client:
+            # Error event handler
+            @client.on_error
+            async def handle_error(error):
+                logger.error(f"WebSocket error: {error}")
+                # Custom error handling logic here
+            
+            # Connection event handlers
+            @client.on_connect
+            async def handle_connect():
+                logger.info("✅ Connected to GMGN WebSocket")
+            
+            @client.on_disconnect
+            async def handle_disconnect():
+                logger.warning("⚠️ Disconnected from GMGN WebSocket")
+            
+            @client.on_reconnect
+            async def handle_reconnect():
+                logger.info("🔄 Reconnected to GMGN WebSocket")
+            
+            await client.subscribe_new_pools()
+            await client.listen()
+            
+    except GmGnAPIError as e:
+        logger.error(f"GMGN API Error: {e}")
+    except Exception as e:
+        logger.error(f"Unexpected error: {e}")
+        raise</code></pre>
+                            <button class="copy-btn" onclick="copyToClipboard(this)">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+
+                        <h3>Common Error Types</h3>
+                        <div class="error-types">
+                            <div class="error-type">
+                                <h4>ConnectionError</h4>
+                                <p>Network connectivity issues - automatically retried with exponential backoff</p>
+                            </div>
+                            <div class="error-type">
+                                <h4>AuthenticationError</h4>
+                                <p>Invalid or missing access token for authenticated channels</p>
+                            </div>
+                            <div class="error-type">
+                                <h4>ValidationError</h4>
+                                <p>Invalid data received from the API - check your subscription parameters</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="next-steps">
+                        <h2><i class="fas fa-arrow-right"></i> Next Steps</h2>
+                        <div class="next-steps-grid">
+                            <a href="examples.html" class="next-step-card">
+                                <div class="step-icon">
+                                    <i class="fas fa-code"></i>
+                                </div>
+                                <h3>View Examples</h3>
+                                <p>Explore practical examples for common use cases</p>
+                            </a>
+                            <a href="api-reference.html" class="next-step-card">
+                                <div class="step-icon">
+                                    <i class="fas fa-book"></i>
+                                </div>
+                                <h3>API Reference</h3>
+                                <p>Complete documentation of all classes and methods</p>
+                            </a>
+                            <a href="advanced.html" class="next-step-card">
+                                <div class="step-icon">
+                                    <i class="fas fa-cogs"></i>
+                                </div>
+                                <h3>Advanced Features</h3>
+                                <p>Learn about filtering, monitoring, and data export</p>
+                            </a>
+                        </div>
+
+                        <div class="info-box">
+                            <h4><i class="fas fa-lightbulb"></i> Pro Tips</h4>
+                            <ul>
+                                <li>Use the enhanced client (<code>GmGnEnhancedClient</code>) for production applications</li>
+                                <li>Enable logging to debug connection issues</li>
+                                <li>Consider implementing data persistence for important events</li>
+                                <li>Monitor your application's memory usage with long-running connections</li>
+                                <li>Join our GitHub Discussions for community support</li>
+                            </ul>
+                        </div>
+                    </section>
+                </article>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>GmGnAPI</h4>
+                    <p>Professional Python client for GMGN.ai WebSocket API</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Documentation</h4>
+                    <ul>
+                        <li><a href="getting-started.html">Getting Started</a></li>
+                        <li><a href="api-reference.html">API Reference</a></li>
+                        <li><a href="examples.html">Examples</a></li>
+                        <li><a href="advanced.html">Advanced</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 GmGnAPI. Open source under MIT License.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="assets/js/main.js"></script>
+
+    <style>
+    .page-header {
+        text-align: center;
+        margin-bottom: 3rem;
+        padding: 2rem 0;
+        background: var(--gradient-primary);
+        border-radius: var(--radius-xl);
+        color: white;
+    }
+
+    .page-description {
+        font-size: 1.25rem;
+        opacity: 0.9;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .content-grid {
+        display: grid;
+        grid-template-columns: 250px 1fr;
+        gap: 3rem;
+        align-items: start;
+    }
+
+    .sidebar {
+        position: sticky;
+        top: 100px;
+        background: var(--bg-secondary);
+        padding: 1.5rem;
+        border-radius: var(--radius-lg);
+        border: 1px solid var(--border-primary);
+    }
+
+    .sidebar h3 {
+        margin-bottom: 1rem;
+        color: var(--primary-color);
+    }
+
+    .toc {
+        list-style: none;
+    }
+
+    .toc li {
+        margin-bottom: 0.5rem;
+    }
+
+    .toc a {
+        color: var(--text-secondary);
+        text-decoration: none;
+        transition: var(--transition-fast);
+        padding: 0.25rem 0;
+        display: block;
+    }
+
+    .toc a:hover {
+        color: var(--primary-color);
+        padding-left: 0.5rem;
+    }
+
+    .main-content {
+        max-width: none;
+    }
+
+    .main-content section {
+        margin-bottom: 3rem;
+        padding: 2rem;
+        background: var(--bg-secondary);
+        border-radius: var(--radius-lg);
+        border: 1px solid var(--border-primary);
+    }
+
+    .main-content h2 {
+        color: var(--primary-color);
+        border-bottom: 2px solid var(--border-primary);
+        padding-bottom: 0.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .requirements-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1rem;
+        margin: 1.5rem 0;
+    }
+
+    .requirement-card {
+        background: var(--bg-tertiary);
+        padding: 1.5rem;
+        border-radius: var(--radius-md);
+        border: 1px solid var(--border-secondary);
+    }
+
+    .requirement-card h4 {
+        color: var(--text-primary);
+        margin-bottom: 0.5rem;
+    }
+
+    .requirement-card ul {
+        margin: 0.5rem 0;
+        padding-left: 1rem;
+    }
+
+    .requirement-card code {
+        background: var(--bg-primary);
+        padding: 0.25rem 0.5rem;
+        border-radius: var(--radius-sm);
+        font-size: 0.875rem;
+        display: block;
+        margin-top: 0.5rem;
+    }
+
+    .subscription-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+        margin: 1rem 0;
+    }
+
+    .subscription-card {
+        background: var(--bg-tertiary);
+        padding: 1rem;
+        border-radius: var(--radius-md);
+        text-align: center;
+        border: 1px solid var(--border-secondary);
+    }
+
+    .subscription-card h4 {
+        color: var(--primary-color);
+        margin-bottom: 0.5rem;
+    }
+
+    .subscription-card code {
+        background: var(--bg-primary);
+        padding: 0.25rem 0.5rem;
+        border-radius: var(--radius-sm);
+        font-size: 0.75rem;
+        display: block;
+        margin: 0.5rem 0;
+    }
+
+    .error-types {
+        display: grid;
+        gap: 1rem;
+        margin: 1rem 0;
+    }
+
+    .error-type {
+        background: var(--bg-tertiary);
+        padding: 1rem;
+        border-radius: var(--radius-md);
+        border-left: 4px solid var(--danger-color);
+    }
+
+    .error-type h4 {
+        color: var(--danger-color);
+        margin-bottom: 0.5rem;
+    }
+
+    .next-steps-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin: 2rem 0;
+    }
+
+    .next-step-card {
+        background: var(--bg-tertiary);
+        padding: 2rem;
+        border-radius: var(--radius-lg);
+        border: 1px solid var(--border-secondary);
+        text-decoration: none;
+        transition: var(--transition-normal);
+        text-align: center;
+    }
+
+    .next-step-card:hover {
+        transform: translateY(-5px);
+        border-color: var(--primary-color);
+        box-shadow: var(--shadow-lg);
+    }
+
+    .step-icon {
+        width: 60px;
+        height: 60px;
+        background: var(--gradient-secondary);
+        border-radius: var(--radius-full);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1rem;
+        font-size: 1.5rem;
+        color: white;
+    }
+
+    .info-box, .warning-box, .success-box {
+        margin: 1.5rem 0;
+        padding: 1.5rem;
+        border-radius: var(--radius-md);
+        border-left: 4px solid;
+    }
+
+    .info-box {
+        background: rgba(99, 102, 241, 0.1);
+        border-color: var(--primary-color);
+    }
+
+    .warning-box {
+        background: rgba(245, 158, 11, 0.1);
+        border-color: var(--accent-color);
+    }
+
+    .success-box {
+        background: rgba(16, 185, 129, 0.1);
+        border-color: var(--secondary-color);
+    }
+
+    .info-box h4, .warning-box h4, .success-box h4 {
+        margin-bottom: 0.5rem;
+    }
+
+    .info-box ul {
+        margin: 0.5rem 0;
+        padding-left: 1.5rem;
+    }
+
+    @media (max-width: 1024px) {
+        .content-grid {
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+        
+        .sidebar {
+            position: static;
+            order: -1;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .requirements-grid,
+        .subscription-grid,
+        .next-steps-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .main-content section {
+            padding: 1.5rem;
+        }
+    }
+    </style>
+</body>
+</html>

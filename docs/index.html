@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GmGnAPI - Professional Python Client for GMGN.ai</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <meta name="description" content="Professional Python client library for GMGN.ai WebSocket API - Real-time Solana blockchain data streams">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="logo-icon">🚀</span>
+                <span class="logo-text">GmGnAPI</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link active">Home</a></li>
+                <li><a href="getting-started.html" class="nav-link">Getting Started</a></li>
+                <li><a href="api-reference.html" class="nav-link">API Reference</a></li>
+                <li><a href="examples.html" class="nav-link">Examples</a></li>
+                <li><a href="advanced.html" class="nav-link">Advanced</a></li>
+                <li><a href="https://github.com/theshadow76/GmGnAPI" class="nav-link" target="_blank">
+                    <i class="fab fa-github"></i> GitHub
+                </a></li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="hero">
+            <div class="hero-container">
+                <div class="hero-content">
+                    <h1 class="hero-title">
+                        <span class="gradient-text">GmGnAPI</span>
+                        <span class="hero-subtitle">Professional Python Client</span>
+                    </h1>
+                    <p class="hero-description">
+                        Connect to GMGN.ai's WebSocket API for real-time Solana blockchain data streams.
+                        Built with modern Python, async/await patterns, and enterprise-grade features.
+                    </p>
+                    <div class="hero-buttons">
+                        <a href="getting-started.html" class="btn btn-primary">
+                            <i class="fas fa-rocket"></i> Get Started
+                        </a>
+                        <a href="examples.html" class="btn btn-secondary">
+                            <i class="fas fa-code"></i> View Examples
+                        </a>
+                    </div>
+                    <div class="hero-stats">
+                        <div class="stat">
+                            <span class="stat-number">100%</span>
+                            <span class="stat-label">Type Hinted</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">Async</span>
+                            <span class="stat-label">First</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">Python 3.8+</span>
+                            <span class="stat-label">Compatible</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-code">
+                    <div class="code-window">
+                        <div class="code-header">
+                            <div class="code-dots">
+                                <span class="dot red"></span>
+                                <span class="dot yellow"></span>
+                                <span class="dot green"></span>
+                            </div>
+                            <span class="code-title">quick_start.py</span>
+                        </div>
+                        <pre><code class="language-python">import asyncio
+from gmgnapi import GmGnClient
+
+async def main():
+    async with GmGnClient() as client:
+        # Subscribe to new token pools
+        await client.subscribe_new_pools()
+        
+        # Handle real-time data
+        @client.on_new_pool
+        async def handle_pool(pool_data):
+            print(f"New pool: {pool_data.chain}")
+            
+        # Start receiving data
+        await client.listen()
+
+asyncio.run(main())</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features">
+            <div class="container">
+                <h2 class="section-title">Key Features</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <h3>Real-time WebSocket</h3>
+                        <p>Persistent connection with automatic reconnection and exponential backoff for reliable data streaming.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3>Type Safety</h3>
+                        <p>Full type hints with Pydantic v2 models for robust data validation and IDE support.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-filter"></i>
+                        </div>
+                        <h3>Advanced Filtering</h3>
+                        <p>Sophisticated filtering system for market cap, volume, liquidity, and custom conditions.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <h3>Data Export</h3>
+                        <p>Export to JSON, CSV, or SQLite with automatic rotation and compression options.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>Monitoring & Stats</h3>
+                        <p>Real-time monitoring with detailed statistics and performance metrics.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-bell"></i>
+                        </div>
+                        <h3>Smart Alerts</h3>
+                        <p>Intelligent alerting system with webhook and email notifications for important events.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Installation Section -->
+        <section class="installation">
+            <div class="container">
+                <h2 class="section-title">Quick Installation</h2>
+                <div class="install-grid">
+                    <div class="install-method">
+                        <h3><i class="fas fa-download"></i> PyPI (Recommended)</h3>
+                        <div class="code-block">
+                            <pre><code class="language-bash">pip install gmgnapi</code></pre>
+                            <button class="copy-btn" onclick="copyToClipboard(this)">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="install-method">
+                        <h3><i class="fab fa-git-alt"></i> Development</h3>
+                        <div class="code-block">
+                            <pre><code class="language-bash">git clone https://github.com/theshadow76/GmGnAPI.git
+cd GmGnAPI
+pip install -e .</code></pre>
+                            <button class="copy-btn" onclick="copyToClipboard(this)">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Example Section -->
+        <section class="example-preview">
+            <div class="container">
+                <h2 class="section-title">See It In Action</h2>
+                <div class="example-tabs">
+                    <button class="tab-btn active" onclick="showExample('basic')">Basic Usage</button>
+                    <button class="tab-btn" onclick="showExample('filtering')">Advanced Filtering</button>
+                    <button class="tab-btn" onclick="showExample('monitoring')">Monitoring</button>
+                </div>
+                
+                <div id="basic-example" class="example-content active">
+                    <pre><code class="language-python">import asyncio
+from gmgnapi import GmGnClient
+
+async def monitor_new_pools():
+    """Monitor new liquidity pools in real-time."""
+    
+    async with GmGnClient() as client:
+        await client.subscribe_new_pools(chain="sol")
+        
+        @client.on_new_pool
+        async def handle_new_pool(pool_data):
+            for pool in pool_data.pools:
+                if pool.bti:  # Base token info available
+                    print(f"🆕 New Pool: {pool.bti.s}")
+                    print(f"   💰 Market Cap: ${pool.bti.mc:,.2f}")
+                    print(f"   📊 Liquidity: ${pool.il or 0:,.2f}")
+                    print(f"   🏪 Exchange: {pool.ex}")
+                    print("   " + "="*40)
+        
+        await client.listen()
+
+asyncio.run(monitor_new_pools())</code></pre>
+                </div>
+                
+                <div id="filtering-example" class="example-content">
+                    <pre><code class="language-python">from gmgnapi import GmGnEnhancedClient, TokenFilter
+from decimal import Decimal
+
+async def monitor_high_value_pools():
+    """Monitor only high-value pools with custom filters."""
+    
+    # Define filter for quality tokens
+    token_filter = TokenFilter(
+        min_market_cap=Decimal("100000"),    # Min $100K market cap
+        min_liquidity=Decimal("50000"),      # Min $50K liquidity
+        min_volume_24h=Decimal("10000"),     # Min $10K 24h volume
+        max_risk_score=0.3,                  # Low risk only
+        exchanges=["raydium", "orca"]        # Major DEXes only
+    )
+    
+    async with GmGnEnhancedClient(token_filter=token_filter) as client:
+        await client.subscribe_new_pools()
+        
+        @client.on_filtered_pool
+        async def handle_quality_pool(pool_data):
+            print(f"🎯 Quality Pool Found!")
+            print(f"   Symbol: {pool_data.pools[0].bti.s}")
+            print(f"   Market Cap: ${pool_data.pools[0].bti.mc:,.2f}")
+            
+        await client.listen()</code></pre>
+                </div>
+                
+                <div id="monitoring-example" class="example-content">
+                    <pre><code class="language-python">from gmgnapi import GmGnEnhancedClient, AlertConfig, DataExportConfig
+
+async def enterprise_monitoring():
+    """Enterprise-grade monitoring with alerts and data export."""
+    
+    # Configure alerts
+    alert_config = AlertConfig(
+        enabled=True,
+        webhook_url="https://hooks.slack.com/...",
+        conditions=[
+            {"field": "market_cap", "operator": ">", "value": 1000000},
+            {"field": "volume_24h", "operator": ">", "value": 500000}
+        ]
+    )
+    
+    # Configure data export
+    export_config = DataExportConfig(
+        enabled=True,
+        format="json",
+        file_path="./data/pools.json",
+        rotation_interval_hours=6
+    )
+    
+    async with GmGnEnhancedClient(
+        alert_config=alert_config,
+        export_config=export_config
+    ) as client:
+        
+        await client.subscribe_new_pools()
+        
+        # Monitor statistics
+        @client.on_statistics_update
+        async def log_stats(stats):
+            print(f"📊 Stats: {stats.total_messages} messages")
+            print(f"   Uptime: {stats.connection_uptime:.1f}s")
+            print(f"   Tokens: {stats.unique_tokens_seen}")
+        
+        await client.listen()</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Documentation Links -->
+        <section class="documentation-links">
+            <div class="container">
+                <h2 class="section-title">Complete Documentation</h2>
+                <div class="docs-grid">
+                    <a href="getting-started.html" class="doc-card">
+                        <div class="doc-icon">
+                            <i class="fas fa-play"></i>
+                        </div>
+                        <h3>Getting Started</h3>
+                        <p>Installation, basic setup, and your first WebSocket connection.</p>
+                    </a>
+                    <a href="api-reference.html" class="doc-card">
+                        <div class="doc-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <h3>API Reference</h3>
+                        <p>Complete reference for all classes, methods, and data models.</p>
+                    </a>
+                    <a href="examples.html" class="doc-card">
+                        <div class="doc-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <h3>Examples</h3>
+                        <p>Practical examples from basic usage to advanced enterprise patterns.</p>
+                    </a>
+                    <a href="advanced.html" class="doc-card">
+                        <div class="doc-icon">
+                            <i class="fas fa-cogs"></i>
+                        </div>
+                        <h3>Advanced Usage</h3>
+                        <p>Filtering, monitoring, alerts, data export, and production deployment.</p>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>GmGnAPI</h4>
+                    <p>Professional Python client for GMGN.ai WebSocket API</p>
+                    <div class="social-links">
+                        <a href="https://github.com/theshadow76/GmGnAPI" target="_blank">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://pypi.org/project/gmgnapi/" target="_blank">
+                            <i class="fab fa-python"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Documentation</h4>
+                    <ul>
+                        <li><a href="getting-started.html">Getting Started</a></li>
+                        <li><a href="api-reference.html">API Reference</a></li>
+                        <li><a href="examples.html">Examples</a></li>
+                        <li><a href="advanced.html">Advanced</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="https://github.com/theshadow76/GmGnAPI/issues">Report Issues</a></li>
+                        <li><a href="https://github.com/theshadow76/GmGnAPI/discussions">Discussions</a></li>
+                        <li><a href="https://github.com/theshadow76/GmGnAPI/releases">Changelog</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 GmGnAPI. Open source under MIT License.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="assets/js/main.js"></script>
+</body>
+</html>

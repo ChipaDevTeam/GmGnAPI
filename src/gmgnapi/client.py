@@ -227,29 +227,51 @@ class GmGnClient:
         """Handle incoming WebSocket message."""
         try:
             data = json.loads(raw_message)
-            message = Message(**data)
             
-            # Add to message queue
-            await self._message_queue.put(message)
+            # Log the raw message for debugging
+            logger.debug(f"Raw message received: {data}")
             
-            # Call event handlers
-            channel = message.channel
-            if channel in self._event_handlers:
-                for handler in self._event_handlers[channel]:
-                    try:
-                        if asyncio.iscoroutinefunction(handler):
-                            await handler(message.data)
-                        else:
-                            handler(message.data)
-                    except Exception as e:
-                        logger.error(f"Error in event handler for {channel}: {e}")
+            # Handle different message formats
+            if isinstance(data, dict):
+                channel = data.get("channel", "unknown")
+                
+                # Handle special message types
+                if channel == "ack":
+                    logger.debug(f"Received acknowledgment: {data}")
+                    return  # Don't process ack messages further
+                
+                # Create message with flexible validation
+                message_data = {
+                    "channel": channel,
+                    "data": data.get("data", data),  # Use entire data if no 'data' field
+                    "action": data.get("action"),
+                    "id": data.get("id"),
+                }
+                
+                message = Message(**message_data)
+                
+                # Add to message queue
+                await self._message_queue.put(message)
+                
+                # Call event handlers
+                if channel in self._event_handlers:
+                    for handler in self._event_handlers[channel]:
+                        try:
+                            if asyncio.iscoroutinefunction(handler):
+                                await handler(message.data)
+                            else:
+                                handler(message.data)
+                        except Exception as e:
+                            logger.error(f"Error in event handler for {channel}: {e}")
+            else:
+                logger.warning(f"Unexpected message format: {type(data)}")
                         
         except json.JSONDecodeError as e:
             logger.error(f"Failed to parse JSON message: {e}")
             raise MessageParsingError(f"Invalid JSON: {e}")
         except Exception as e:
             logger.error(f"Error processing message: {e}")
-            raise MessageParsingError(f"Message processing error: {e}")
+            # Don't raise here to avoid breaking the connection
 
     async def _attempt_reconnect(self) -> None:
         """Attempt to reconnect with exponential backoff."""

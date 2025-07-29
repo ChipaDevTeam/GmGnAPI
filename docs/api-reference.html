@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Reference - GmGnAPI Documentation</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="logo-icon">🚀</span>
+                <span class="logo-text">GmGnAPI</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="getting-started.html" class="nav-link">Getting Started</a></li>
+                <li><a href="api-reference.html" class="nav-link active">API Reference</a></li>
+                <li><a href="examples.html" class="nav-link">Examples</a></li>
+                <li><a href="advanced.html" class="nav-link">Advanced</a></li>
+                <li><a href="https://github.com/theshadow76/GmGnAPI" class="nav-link" target="_blank">
+                    <i class="fab fa-github"></i> GitHub
+                </a></li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <main style="margin-top: 70px;">
+        <div class="container" style="padding: 3rem 1.5rem;">
+            <header class="page-header">
+                <h1>API Reference</h1>
+                <p class="page-description">
+                    Complete reference documentation for all GmGnAPI classes, methods, and data models.
+                </p>
+            </header>
+
+            <div class="content-grid">
+                <nav class="sidebar">
+                    <h3>API Reference</h3>
+                    <ul class="toc">
+                        <li><a href="#gmgnclient">GmGnClient</a></li>
+                        <li><a href="#gmgnenhancedclient">GmGnEnhancedClient</a></li>
+                        <li><a href="#data-models">Data Models</a></li>
+                        <li><a href="#configuration">Configuration</a></li>
+                        <li><a href="#exceptions">Exceptions</a></li>
+                        <li><a href="#event-handlers">Event Handlers</a></li>
+                        <li><a href="#utilities">Utilities</a></li>
+                    </ul>
+                </nav>
+
+                <article class="main-content">
+                    <!-- GmGnClient -->
+                    <section id="gmgnclient" class="api-section">
+                        <h2><i class="fas fa-cube"></i> GmGnClient</h2>
+                        <p class="class-description">
+                            Basic WebSocket client for connecting to GMGN.ai's real-time data streams.
+                            Provides core functionality with automatic reconnection and event handling.
+                        </p>
+
+                        <div class="class-signature">
+                            <pre><code class="language-python">class GmGnClient(
+    websocket_url: str = "wss://gmgn.ai/ws",
+    access_token: Optional[str] = None,
+    max_reconnect_attempts: int = 10,
+    reconnect_delay: float = 1.0,
+    heartbeat_interval: float = 30.0
+)</code></pre>
+                        </div>
+
+                        <h3>Constructor Parameters</h3>
+                        <div class="params-table">
+                            <table>
+                                <tr>
+                                    <th>Parameter</th>
+                                    <th>Type</th>
+                                    <th>Default</th>
+                                    <th>Description</th>
+                                </tr>
+                                <tr>
+                                    <td><code>websocket_url</code></td>
+                                    <td><code>str</code></td>
+                                    <td><code>"wss://gmgn.ai/ws"</code></td>
+                                    <td>WebSocket endpoint URL</td>
+                                </tr>
+                                <tr>
+                                    <td><code>access_token</code></td>
+                                    <td><code>Optional[str]</code></td>
+                                    <td><code>None</code></td>
+                                    <td>Authentication token for protected channels</td>
+                                </tr>
+                                <tr>
+                                    <td><code>max_reconnect_attempts</code></td>
+                                    <td><code>int</code></td>
+                                    <td><code>10</code></td>
+                                    <td>Maximum number of reconnection attempts</td>
+                                </tr>
+                                <tr>
+                                    <td><code>reconnect_delay</code></td>
+                                    <td><code>float</code></td>
+                                    <td><code>1.0</code></td>
+                                    <td>Initial delay between reconnection attempts (seconds)</td>
+                                </tr>
+                                <tr>
+                                    <td><code>heartbeat_interval</code></td>
+                                    <td><code>float</code></td>
+                                    <td><code>30.0</code></td>
+                                    <td>Heartbeat ping interval (seconds)</td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <h3>Methods</h3>
+                        <div class="methods-list">
+                            <div class="method">
+                                <h4><code>async subscribe_new_pools(chain: str = "sol") -> None</code></h4>
+                                <p>Subscribe to real-time new liquidity pool notifications.</p>
+                                <div class="method-example">
+                                    <pre><code class="language-python">await client.subscribe_new_pools(chain="sol")</code></pre>
+                                </div>
+                            </div>
+
+                            <div class="method">
+                                <h4><code>async subscribe_token_updates(tokens: List[str], chain: str = "sol") -> None</code></h4>
+                                <p>Subscribe to price and volume updates for specific tokens.</p>
+                                <div class="method-example">
+                                    <pre><code class="language-python">tokens = ["EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"]
+await client.subscribe_token_updates(tokens, chain="sol")</code></pre>
+                                </div>
+                            </div>
+
+                            <div class="method">
+                                <h4><code>async subscribe_wallet_trades(wallets: List[str], chain: str = "sol") -> None</code></h4>
+                                <p>Subscribe to trading activity from specific wallet addresses.</p>
+                                <div class="method-example">
+                                    <pre><code class="language-python">wallets = ["wallet_address_here"]
+await client.subscribe_wallet_trades(wallets, chain="sol")</code></pre>
+                                </div>
+                            </div>
+
+                            <div class="method">
+                                <h4><code>async listen() -> None</code></h4>
+                                <p>Start listening for WebSocket messages and dispatch events.</p>
+                                <div class="method-example">
+                                    <pre><code class="language-python">await client.listen()  # Runs until connection closes</code></pre>
+                                </div>
+                            </div>
+
+                            <div class="method">
+                                <h4><code>async connect() -> None</code></h4>
+                                <p>Establish WebSocket connection manually.</p>
+                            </div>
+
+                            <div class="method">
+                                <h4><code>async disconnect() -> None</code></h4>
+                                <p>Close WebSocket connection gracefully.</p>
+                            </div>
+                        </div>
+
+                        <h3>Event Decorators</h3>
+                        <div class="events-list">
+                            <div class="event">
+                                <h4><code>@client.on_new_pool</code></h4>
+                                <p>Decorator for handling new pool notifications.</p>
+                                <div class="event-example">
+                                    <pre><code class="language-python">@client.on_new_pool
+async def handle_new_pool(pool_data: NewPoolInfo):
+    print(f"New pool: {pool_data.chain}")</code></pre>
+                                </div>
+                            </div>
+
+                            <div class="event">
+                                <h4><code>@client.on_token_update</code></h4>
+                                <p>Decorator for handling token price/volume updates.</p>
+                                <div class="event-example">
+                                    <pre><code class="language-python">@client.on_token_update
+async def handle_update(update: PairUpdateData):
+    print(f"Price: ${update.price_usd}")</code></pre>
+                                </div>
+                            </div>
+
+                            <div class="event">
+                                <h4><code>@client.on_wallet_trade</code></h4>
+                                <p>Decorator for handling wallet trading activity.</p>
+                            </div>
+
+                            <div class="event">
+                                <h4><code>@client.on_error</code></h4>
+                                <p>Decorator for handling connection and data errors.</p>
+                            </div>
+
+                            <div class="event">
+                                <h4><code>@client.on_connect</code></h4>
+                                <p>Decorator for handling successful connections.</p>
+                            </div>
+
+                            <div class="event">
+                                <h4><code>@client.on_disconnect</code></h4>
+                                <p>Decorator for handling disconnections.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- GmGnEnhancedClient -->
+                    <section id="gmgnenhancedclient" class="api-section">
+                        <h2><i class="fas fa-rocket"></i> GmGnEnhancedClient</h2>
+                        <p class="class-description">
+                            Advanced WebSocket client with filtering, monitoring, data export, and alerting capabilities.
+                            Extends GmGnClient with enterprise-grade features for production use.
+                        </p>
+
+                        <div class="class-signature">
+                            <pre><code class="language-python">class GmGnEnhancedClient(GmGnClient):
+    def __init__(
+        self,
+        token_filter: Optional[TokenFilter] = None,
+        export_config: Optional[DataExportConfig] = None,
+        alert_config: Optional[AlertConfig] = None,
+        enable_statistics: bool = True,
+        **kwargs
+    )</code></pre>
+                        </div>
+
+                        <h3>Additional Parameters</h3>
+                        <div class="params-table">
+                            <table>
+                                <tr>
+                                    <th>Parameter</th>
+                                    <th>Type</th>
+                                    <th>Description</th>
+                                </tr>
+                                <tr>
+                                    <td><code>token_filter</code></td>
+                                    <td><code>Optional[TokenFilter]</code></td>
+                                    <td>Filter configuration for token screening</td>
+                                </tr>
+                                <tr>
+                                    <td><code>export_config</code></td>
+                                    <td><code>Optional[DataExportConfig]</code></td>
+                                    <td>Data export settings (JSON, CSV, database)</td>
+                                </tr>
+                                <tr>
+                                    <td><code>alert_config</code></td>
+                                    <td><code>Optional[AlertConfig]</code></td>
+                                    <td>Alert and notification configuration</td>
+                                </tr>
+                                <tr>
+                                    <td><code>enable_statistics</code></td>
+                                    <td><code>bool</code></td>
+                                    <td>Enable real-time statistics collection</td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <h3>Enhanced Methods</h3>
+                        <div class="methods-list">
+                            <div class="method">
+                                <h4><code>get_statistics() -> MonitoringStats</code></h4>
+                                <p>Get current monitoring statistics and metrics.</p>
+                                <div class="method-example">
+                                    <pre><code class="language-python">stats = client.get_statistics()
+print(f"Messages: {stats.total_messages}")
+print(f"Uptime: {stats.connection_uptime}s")</code></pre>
+                                </div>
+                            </div>
+
+                            <div class="method">
+                                <h4><code>async export_data(format: str = "json", file_path: Optional[str] = None) -> str</code></h4>
+                                <p>Export collected data to specified format.</p>
+                                <div class="method-example">
+                                    <pre><code class="language-python">file_path = await client.export_data("csv", "data.csv")
+print(f"Data exported to: {file_path}")</code></pre>
+                                </div>
+                            </div>
+
+                            <div class="method">
+                                <h4><code>update_filter(new_filter: TokenFilter) -> None</code></h4>
+                                <p>Update token filtering criteria dynamically.</p>
+                            </div>
+
+                            <div class="method">
+                                <h4><code>add_alert_condition(condition: Dict[str, Any]) -> None</code></h4>
+                                <p>Add new alert condition at runtime.</p>
+                            </div>
+                        </div>
+
+                        <h3>Enhanced Events</h3>
+                        <div class="events-list">
+                            <div class="event">
+                                <h4><code>@client.on_filtered_pool</code></h4>
+                                <p>Triggered when a pool passes all filter criteria.</p>
+                            </div>
+
+                            <div class="event">
+                                <h4><code>@client.on_alert_triggered</code></h4>
+                                <p>Triggered when alert conditions are met.</p>
+                            </div>
+
+                            <div class="event">
+                                <h4><code>@client.on_statistics_update</code></h4>
+                                <p>Periodic statistics updates (every 60 seconds).</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Data Models -->
+                    <section id="data-models" class="api-section">
+                        <h2><i class="fas fa-database"></i> Data Models</h2>
+                        <p class="section-description">
+                            Pydantic data models for type-safe data handling and validation.
+                        </p>
+
+                        <div class="models-grid">
+                            <div class="model-card">
+                                <h4>NewPoolInfo</h4>
+                                <p>Information about new liquidity pools</p>
+                                <div class="model-fields">
+                                    <ul>
+                                        <li><code>c: str</code> - Chain identifier</li>
+                                        <li><code>p: List[PoolData]</code> - Pool data list</li>
+                                        <li><code>rg: Optional[str]</code> - Region</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="model-card">
+                                <h4>PoolData</h4>
+                                <p>Individual pool information</p>
+                                <div class="model-fields">
+                                    <ul>
+                                        <li><code>a: str</code> - Pool address</li>
+                                        <li><code>ex: str</code> - Exchange name</li>
+                                        <li><code>ba: str</code> - Base token address</li>
+                                        <li><code>qa: str</code> - Quote token address</li>
+                                        <li><code>bti: Optional[TokenInfo]</code> - Base token info</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="model-card">
+                                <h4>TokenInfo</h4>
+                                <p>Detailed token information</p>
+                                <div class="model-fields">
+                                    <ul>
+                                        <li><code>s: Optional[str]</code> - Symbol</li>
+                                        <li><code>n: Optional[str]</code> - Name</li>
+                                        <li><code>mc: Optional[int]</code> - Market cap</li>
+                                        <li><code>v24h: Optional[float]</code> - 24h volume</li>
+                                        <li><code>p: Optional[float]</code> - Price</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="model-card">
+                                <h4>PairUpdateData</h4>
+                                <p>Trading pair price/volume updates</p>
+                                <div class="model-fields">
+                                    <ul>
+                                        <li><code>pair_address: str</code></li>
+                                        <li><code>token_address: str</code></li>
+                                        <li><code>price_usd: Optional[Decimal]</code></li>
+                                        <li><code>volume_24h_usd: Optional[Decimal]</code></li>
+                                        <li><code>chain: str</code></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="model-card">
+                                <h4>WalletTradeData</h4>
+                                <p>Wallet trading activity</p>
+                                <div class="model-fields">
+                                    <ul>
+                                        <li><code>wallet_address: str</code></li>
+                                        <li><code>chain: str</code></li>
+                                        <li><code>trades: List[TradeData]</code></li>
+                                        <li><code>total_volume_24h_usd: Optional[Decimal]</code></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="model-card">
+                                <h4>TradeData</h4>
+                                <p>Individual trade information</p>
+                                <div class="model-fields">
+                                    <ul>
+                                        <li><code>transaction_hash: str</code></li>
+                                        <li><code>trade_type: Literal["buy", "sell"]</code></li>
+                                        <li><code>amount_usd: Decimal</code></li>
+                                        <li><code>timestamp: datetime</code></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Configuration -->
+                    <section id="configuration" class="api-section">
+                        <h2><i class="fas fa-cogs"></i> Configuration Models</h2>
+
+                        <div class="config-models">
+                            <div class="config-model">
+                                <h4>TokenFilter</h4>
+                                <p>Configure token filtering criteria</p>
+                                <div class="config-example">
+                                    <pre><code class="language-python">from decimal import Decimal
+from gmgnapi import TokenFilter
+
+filter_config = TokenFilter(
+    min_market_cap=Decimal("100000"),     # $100K minimum
+    max_market_cap=Decimal("10000000"),   # $10M maximum
+    min_liquidity=Decimal("50000"),       # $50K minimum liquidity
+    min_volume_24h=Decimal("10000"),      # $10K 24h volume
+    exchanges=["raydium", "orca"],        # Specific exchanges
+    max_risk_score=0.3                    # Low risk only
+)</code></pre>
+                                </div>
+                            </div>
+
+                            <div class="config-model">
+                                <h4>DataExportConfig</h4>
+                                <p>Configure data export settings</p>
+                                <div class="config-example">
+                                    <pre><code class="language-python">from gmgnapi import DataExportConfig
+
+export_config = DataExportConfig(
+    enabled=True,
+    format="json",                        # "json", "csv", "parquet"
+    file_path="./data/pools.json",
+    max_file_size_mb=100,
+    rotation_interval_hours=24,
+    compress=True,
+    include_metadata=True
+)</code></pre>
+                                </div>
+                            </div>
+
+                            <div class="config-model">
+                                <h4>AlertConfig</h4>
+                                <p>Configure alerts and notifications</p>
+                                <div class="config-example">
+                                    <pre><code class="language-python">from gmgnapi import AlertConfig
+
+alert_config = AlertConfig(
+    enabled=True,
+    webhook_url="https://hooks.slack.com/...",
+    email="alerts@example.com",
+    conditions=[
+        {
+            "field": "market_cap",
+            "operator": ">",
+            "value": 1000000
+        },
+        {
+            "field": "volume_24h",
+            "operator": ">",
+            "value": 500000
+        }
+    ],
+    rate_limit_seconds=60
+)</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Exceptions -->
+                    <section id="exceptions" class="api-section">
+                        <h2><i class="fas fa-exclamation-triangle"></i> Exceptions</h2>
+                        
+                        <div class="exceptions-list">
+                            <div class="exception">
+                                <h4>GmGnAPIError</h4>
+                                <p>Base exception class for all GmGnAPI errors</p>
+                            </div>
+
+                            <div class="exception">
+                                <h4>ConnectionError</h4>
+                                <p>Raised when WebSocket connection fails</p>
+                            </div>
+
+                            <div class="exception">
+                                <h4>AuthenticationError</h4>
+                                <p>Raised when authentication fails for protected channels</p>
+                            </div>
+
+                            <div class="exception">
+                                <h4>ValidationError</h4>
+                                <p>Raised when received data fails validation</p>
+                            </div>
+
+                            <div class="exception">
+                                <h4>SubscriptionError</h4>
+                                <p>Raised when subscription to a channel fails</p>
+                            </div>
+                        </div>
+
+                        <div class="exception-handling">
+                            <h4>Exception Handling Example</h4>
+                            <pre><code class="language-python">from gmgnapi import GmGnClient, GmGnAPIError, AuthenticationError
+
+try:
+    async with GmGnClient() as client:
+        await client.subscribe_wallet_trades(["wallet_address"])
+        await client.listen()
+except AuthenticationError as e:
+    print(f"Authentication failed: {e}")
+except GmGnAPIError as e:
+    print(f"API error: {e}")
+except Exception as e:
+    print(f"Unexpected error: {e}")</code></pre>
+                        </div>
+                    </section>
+                </article>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>GmGnAPI</h4>
+                    <p>Professional Python client for GMGN.ai WebSocket API</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Documentation</h4>
+                    <ul>
+                        <li><a href="getting-started.html">Getting Started</a></li>
+                        <li><a href="api-reference.html">API Reference</a></li>
+                        <li><a href="examples.html">Examples</a></li>
+                        <li><a href="advanced.html">Advanced</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 GmGnAPI. Open source under MIT License.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="assets/js/main.js"></script>
+
+    <style>
+    .api-section {
+        margin-bottom: 4rem;
+        padding: 2rem;
+        background: var(--bg-secondary);
+        border-radius: var(--radius-lg);
+        border: 1px solid var(--border-primary);
+    }
+
+    .class-description, .section-description {
+        font-size: 1.125rem;
+        color: var(--text-secondary);
+        margin-bottom: 2rem;
+        padding: 1rem;
+        background: var(--bg-tertiary);
+        border-radius: var(--radius-md);
+        border-left: 4px solid var(--primary-color);
+    }
+
+    .class-signature {
+        background: var(--bg-primary);
+        border-radius: var(--radius-md);
+        margin: 1.5rem 0;
+        border: 1px solid var(--border-secondary);
+    }
+
+    .class-signature pre {
+        margin: 0;
+        padding: 1.5rem;
+        font-family: var(--font-mono);
+        overflow-x: auto;
+    }
+
+    .params-table table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1rem 0;
+        background: var(--bg-tertiary);
+        border-radius: var(--radius-md);
+        overflow: hidden;
+    }
+
+    .params-table th,
+    .params-table td {
+        padding: 0.75rem;
+        text-align: left;
+        border-bottom: 1px solid var(--border-secondary);
+    }
+
+    .params-table th {
+        background: var(--bg-primary);
+        color: var(--primary-color);
+        font-weight: 600;
+    }
+
+    .params-table code {
+        background: var(--bg-primary);
+        padding: 0.25rem 0.5rem;
+        border-radius: var(--radius-sm);
+        font-size: 0.875rem;
+    }
+
+    .methods-list, .events-list {
+        display: grid;
+        gap: 1.5rem;
+        margin: 2rem 0;
+    }
+
+    .method, .event {
+        background: var(--bg-tertiary);
+        padding: 1.5rem;
+        border-radius: var(--radius-md);
+        border: 1px solid var(--border-secondary);
+    }
+
+    .method h4, .event h4 {
+        color: var(--secondary-color);
+        font-family: var(--font-mono);
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+        word-break: break-all;
+    }
+
+    .method p, .event p {
+        color: var(--text-secondary);
+        margin-bottom: 1rem;
+    }
+
+    .method-example, .event-example {
+        background: var(--bg-primary);
+        border-radius: var(--radius-sm);
+        border: 1px solid var(--border-primary);
+    }
+
+    .method-example pre, .event-example pre {
+        margin: 0;
+        padding: 1rem;
+        font-size: 0.875rem;
+        overflow-x: auto;
+    }
+
+    .models-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+        margin: 2rem 0;
+    }
+
+    .model-card {
+        background: var(--bg-tertiary);
+        padding: 1.5rem;
+        border-radius: var(--radius-md);
+        border: 1px solid var(--border-secondary);
+    }
+
+    .model-card h4 {
+        color: var(--accent-color);
+        margin-bottom: 0.5rem;
+    }
+
+    .model-card p {
+        color: var(--text-secondary);
+        margin-bottom: 1rem;
+        font-size: 0.875rem;
+    }
+
+    .model-fields ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .model-fields li {
+        padding: 0.25rem 0;
+        font-family: var(--font-mono);
+        font-size: 0.875rem;
+        color: var(--text-primary);
+    }
+
+    .config-models {
+        display: grid;
+        gap: 2rem;
+        margin: 2rem 0;
+    }
+
+    .config-model {
+        background: var(--bg-tertiary);
+        padding: 1.5rem;
+        border-radius: var(--radius-md);
+        border: 1px solid var(--border-secondary);
+    }
+
+    .config-model h4 {
+        color: var(--primary-color);
+        margin-bottom: 0.5rem;
+    }
+
+    .config-example {
+        background: var(--bg-primary);
+        border-radius: var(--radius-sm);
+        margin-top: 1rem;
+        border: 1px solid var(--border-primary);
+    }
+
+    .config-example pre {
+        margin: 0;
+        padding: 1rem;
+        overflow-x: auto;
+        font-size: 0.875rem;
+    }
+
+    .exceptions-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1rem;
+        margin: 2rem 0;
+    }
+
+    .exception {
+        background: var(--bg-tertiary);
+        padding: 1rem;
+        border-radius: var(--radius-md);
+        border-left: 4px solid var(--danger-color);
+    }
+
+    .exception h4 {
+        color: var(--danger-color);
+        margin-bottom: 0.5rem;
+        font-family: var(--font-mono);
+    }
+
+    .exception p {
+        color: var(--text-secondary);
+        font-size: 0.875rem;
+        margin: 0;
+    }
+
+    .exception-handling {
+        background: var(--bg-tertiary);
+        padding: 1.5rem;
+        border-radius: var(--radius-md);
+        margin-top: 2rem;
+        border: 1px solid var(--border-secondary);
+    }
+
+    .exception-handling h4 {
+        color: var(--primary-color);
+        margin-bottom: 1rem;
+    }
+
+    .exception-handling pre {
+        background: var(--bg-primary);
+        border-radius: var(--radius-sm);
+        padding: 1rem;
+        overflow-x: auto;
+        border: 1px solid var(--border-primary);
+    }
+
+    @media (max-width: 768px) {
+        .models-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .exceptions-list {
+            grid-template-columns: 1fr;
+        }
+        
+        .method h4, .event h4 {
+            font-size: 0.875rem;
+            word-break: break-word;
+        }
+    }
+    </style>
+</body>
+</html>

@@ -111,7 +111,8 @@ class TestGmGnClient:
     @pytest.mark.asyncio
     async def test_subscribe_wallet_trades_without_token(self, mock_websocket):
         """Test wallet subscription without access token."""
-        with patch('gmgnapi.client.websockets.connect', return_value=mock_websocket):
+        with patch('gmgnapi.client.websockets.connect') as mock_connect:
+            mock_connect.return_value = mock_websocket
             client = GmGnClient()
             await client.connect()
             
@@ -124,7 +125,8 @@ class TestGmGnClient:
     @pytest.mark.asyncio
     async def test_subscribe_wallet_trades_with_token(self, mock_websocket):
         """Test wallet subscription with access token."""
-        with patch('gmgnapi.client.websockets.connect', return_value=mock_websocket):
+        with patch('gmgnapi.client.websockets.connect') as mock_connect:
+            mock_connect.return_value = mock_websocket
             client = GmGnClient(access_token="test-token")
             await client.connect()
             
@@ -190,7 +192,8 @@ class TestGmGnClient:
     @pytest.mark.asyncio
     async def test_context_manager(self, mock_websocket):
         """Test client as async context manager."""
-        with patch('gmgnapi.client.websockets.connect', return_value=mock_websocket):
+        with patch('gmgnapi.client.websockets.connect') as mock_connect:
+            mock_connect.return_value = mock_websocket
             async with GmGnClient() as client:
                 assert client.is_connected
             
@@ -220,7 +223,7 @@ class TestModels:
         assert subscription.f == "w"
         
         # Test JSON serialization
-        json_data = subscription.json()
+        json_data = subscription.model_dump_json()
         assert isinstance(json_data, str)
         
         # Test that ID is generated if not provided
