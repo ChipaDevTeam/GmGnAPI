@@ -5,8 +5,15 @@
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![Discord](https://img.shields.io/discord/YOUR_DISCORD_ID?color=7289da&label=Discord&logo=discord&logoColor=white)](https://discord.gg/ub46R9Dk)
 
 GmGnAPI provides real-time access to Solana blockchain data through GMGN.ai's WebSocket API with advanced features including intelligent filtering, data export capabilities, monitoring statistics, and automated alerting.
+
+## 🔗 Quick Links
+
+- 📚 **[Documentation](https://yourusername.github.io/GmGnAPI/)** - Complete guides and API reference
+- 💬 **[Discord Community](https://discord.gg/ub46R9Dk)** - Get help and discuss strategies
+- 🌐 **[Create GMGN Account](https://gmgn.ai/?ref=9dLKvFyE&chain=sol)** - Sign up with our referral link to support the project
 
 ## 🚀 Features
 
@@ -39,6 +46,22 @@ git clone https://github.com/yourusername/gmgnapi.git
 cd gmgnapi
 pip install -e .
 ```
+
+## 🔑 Account Setup
+
+### 1. Create GMGN Account
+Create your GMGN account using our referral link to support the project:
+👉 **[Create GMGN Account](https://gmgn.ai/?ref=9dLKvFyE&chain=sol)**
+
+### 2. Get API Token
+1. Log in to your GMGN account
+2. Navigate to Account Settings
+3. Generate an API token
+4. Copy and securely store your token
+
+### 3. Join Community
+Join our Discord server for support and updates:
+👉 **[Discord Community](https://discord.gg/ub46R9Dk)**
 
 ## 🎯 Quick Start
 

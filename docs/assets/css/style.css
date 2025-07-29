@@ -411,6 +411,78 @@ section {
     font-weight: 700;
 }
 
+/* Account Setup Styles */
+.account-setup {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+}
+
+.setup-card {
+    background: var(--bg-tertiary);
+    padding: 1.5rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-secondary);
+    transition: transform 0.2s ease;
+}
+
+.setup-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--primary-color);
+}
+
+.setup-card h4 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.referral-link {
+    text-align: center;
+    margin: 1.5rem 0;
+}
+
+.referral-note {
+    margin-top: 0.75rem;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.warning-box {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid var(--danger-color);
+    border-radius: var(--radius-sm);
+    padding: 1rem;
+    margin-top: 1rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+}
+
+.warning-box i {
+    color: var(--danger-color);
+    margin-top: 0.1rem;
+}
+
+.btn.btn-accent {
+    background: linear-gradient(135deg, #7c3aed, #a855f7);
+    color: white;
+    border: none;
+}
+
+.btn.btn-accent:hover {
+    background: linear-gradient(135deg, #6d28d9, #9333ea);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+}
+
 /* Features Section */
 .features {
     background: var(--bg-secondary);
