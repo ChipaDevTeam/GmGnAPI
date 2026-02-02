@@ -228,9 +228,16 @@ class GmGnClient:
                     pass
 
             # Close WebSocket connection
-            if self._websocket:
-                await self._websocket.close()
+            if self._websocket and hasattr(self, '_ws_context'):
+                try:
+                    await self._ws_context.__aexit__(None, None, None)
+                except Exception as e:
+                    logger.debug(f"Error closing websocket: {e}")
                 self._websocket = None
+            
+            if self._session:
+                await self._session.close()
+                self._session = None
 
             logger.info("Disconnected from GMGN WebSocket")
 
@@ -239,18 +246,19 @@ class GmGnClient:
         try:
             async for message in self._websocket:
                 try:
+                    # curl_cffi yields bytes or str directly
                     await self._handle_message(message)
                 except Exception as e:
                     logger.error(f"Error handling message: {e}")
                     
-        except ConnectionClosedOK:
-            logger.info("WebSocket connection closed normally")
-        except ConnectionClosedError as e:
-            logger.warning(f"WebSocket connection closed unexpectedly: {e}")
-            if self.auto_reconnect:
-                await self._attempt_reconnect()
         except Exception as e:
-            logger.error(f"Unexpected error in message listener: {e}")
+            # Check if this is a connection closing exception
+            # curl_cffi might raise specific exceptions or just stop iterating
+            if "closed" in str(e).lower():
+                 logger.info("WebSocket connection closed")
+            else:
+                 logger.error(f"Unexpected error in message listener: {e}")
+            
             if self.auto_reconnect:
                 await self._attempt_reconnect()
 
