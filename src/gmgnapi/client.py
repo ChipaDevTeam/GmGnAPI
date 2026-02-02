@@ -6,19 +6,17 @@ import asyncio
 import json
 import logging
 import os
-import ssl
 import uuid
-from http.cookies import SimpleCookie
 from typing import Any, AsyncIterator, Callable, Dict, List, Optional, Union
 from urllib.parse import urlencode
 
-import websockets
-from websockets.exceptions import (
-    ConnectionClosedError,
-    ConnectionClosedOK,
-    InvalidURI,
-    WebSocketException,
-)
+from curl_cffi.requests import AsyncSession, WebSocket
+
+# Import exceptions that were previously from websockets for backward compatibility
+# though we are not using websockets library anymore
+class ConnectionClosedError(Exception): pass
+class ConnectionClosedOK(Exception): pass
+class WebSocketException(Exception): pass
 
 from .exceptions import (
     AuthenticationError,
@@ -109,7 +107,8 @@ class GmGnClient:
         self.ping_timeout = ping_timeout
         
         # Internal state
-        self._websocket: Optional[websockets.WebSocketServerProtocol] = None
+        self._session: Optional[AsyncSession] = None
+        self._websocket: Optional[WebSocket] = None
         self._connected = False
         self._reconnect_count = 0
         self._subscriptions: Dict[str, SubscriptionRequest] = {}
@@ -184,14 +183,18 @@ class GmGnClient:
                 
                 logger.info(f"Connecting to GMGN WebSocket: {self.ws_url}")
                 
-                # Use default SSL context management by websockets
-                self._websocket = await websockets.connect(
+                # Initialize curl_cffi session
+                # We create a new session for each connection to ensure fresh state/impersonation
+                if self._session:
+                     await self._session.close()
+                self._session = AsyncSession(impersonate="chrome124")
+                
+                # Connect using curl_cffi with manual context management
+                self._ws_context = self._session.ws_connect(
                     url,
-                    extra_headers=headers,
-                    ping_interval=self.ping_interval,
-                    ping_timeout=self.ping_timeout,
-                    max_size=2**20,  # 1MB max message size
+                    headers=headers,
                 )
+                self._websocket = await self._ws_context.__aenter__()
                 
                 self._connected = True
                 self._reconnect_count = 0
@@ -203,6 +206,9 @@ class GmGnClient:
                 
             except Exception as e:
                 logger.error(f"Failed to connect to GMGN WebSocket: {e}")
+                if self._session:
+                    await self._session.close()
+                    self._session = None
                 raise ConnectionError(f"Failed to connect: {e}")
 
     async def disconnect(self) -> None:
