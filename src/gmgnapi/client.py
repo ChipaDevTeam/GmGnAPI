@@ -191,7 +191,6 @@ class GmGnClient:
                     ping_interval=self.ping_interval,
                     ping_timeout=self.ping_timeout,
                     max_size=2**20,  # 1MB max message size
-                    compression=None,
                 )
                 
                 self._connected = True
