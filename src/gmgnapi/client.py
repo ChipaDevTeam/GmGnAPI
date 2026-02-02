@@ -68,6 +68,7 @@ class GmGnClient:
         reconnect_delay: float = 5.0,
         ping_interval: float = 30.0,
         ping_timeout: float = 10.0,
+        cookies: Optional[Dict[str, str]] = None,
     ):
         """
         Initialize the GmGnClient.
@@ -83,12 +84,14 @@ class GmGnClient:
             reconnect_delay: Delay between reconnection attempts (seconds)
             ping_interval: WebSocket ping interval (seconds)
             ping_timeout: WebSocket ping timeout (seconds)
+            cookies: Dictionary of cookies to send with connection
         """
         self.ws_url = ws_url or os.getenv("GMGN_WS_URL", self.DEFAULT_WS_URL)
         self.device_id = device_id or str(uuid.uuid4())
         self.client_id = client_id or f"gmgn_python_{uuid.uuid4().hex[:8]}"
         self.user_agent = user_agent or os.getenv("GMGN_USER_AGENT", self.DEFAULT_USER_AGENT)
         self.access_token = access_token or os.getenv("GMGN_ACCESS_TOKEN")
+        self.cookies = cookies or {}
         
         # Connection settings
         self.auto_reconnect = auto_reconnect
@@ -137,7 +140,7 @@ class GmGnClient:
 
     def _get_connection_headers(self) -> Dict[str, str]:
         """Get WebSocket connection headers."""
-        return {
+        headers = {
             "User-Agent": self.user_agent,
             "Origin": "https://gmgn.ai",
             "Cache-Control": "no-cache",
@@ -147,6 +150,12 @@ class GmGnClient:
             "Sec-WebSocket-Version": "13",
             "Sec-WebSocket-Extensions": "permessage-deflate; client_max_window_bits",
         }
+        
+        if self.cookies:
+            cookie_str = "; ".join([f"{k}={v}" for k, v in self.cookies.items()])
+            headers["Cookie"] = cookie_str
+            
+        return headers
 
     async def connect(self) -> None:
         """

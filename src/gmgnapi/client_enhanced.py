@@ -121,6 +121,7 @@ class GmGnEnhancedClient:
         alert_config: Optional[AlertConfig] = None,
         rate_limit: Optional[int] = None,
         max_queue_size: int = 10000,
+        cookies: Optional[Dict[str, str]] = None,
     ):
         """
         Initialize the advanced GMGN client.
@@ -135,6 +136,7 @@ class GmGnEnhancedClient:
             alert_config: Alert and notification configuration
             rate_limit: Maximum messages per second to process
             max_queue_size: Maximum message queue size
+            cookies: Dictionary of cookies to send with connection
         """
         self.access_token = access_token
         self.chain = chain
@@ -145,6 +147,7 @@ class GmGnEnhancedClient:
         self.alert_config = alert_config or AlertConfig()
         self.rate_limit = rate_limit
         self.max_queue_size = max_queue_size
+        self.cookies = cookies or {}
         
         self._websocket: Optional[websockets.WebSocketServerProtocol] = None
         self._handlers: Dict[str, List[Callable]] = {}
@@ -214,6 +217,10 @@ class GmGnEnhancedClient:
                 "Sec-WebSocket-Version": "13",
                 "Sec-WebSocket-Extensions": "permessage-deflate; client_max_window_bits",
             }
+            
+            if self.cookies:
+                cookie_str = "; ".join([f"{k}={v}" for k, v in self.cookies.items()])
+                headers["Cookie"] = cookie_str
             
             logger.info(f"Connecting to {url}")
             
