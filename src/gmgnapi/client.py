@@ -191,11 +191,11 @@ class GmGnClient:
                 self._session = AsyncSession(impersonate="chrome124")
                 
                 # Connect using curl_cffi with manual context management
-                self._ws_context = self._session.ws_connect(
+                # ws_connect appears to be a coroutine in this version
+                self._websocket = await self._session.ws_connect(
                     url,
                     headers=headers,
                 )
-                self._websocket = await self._ws_context.__aenter__()
                 
                 self._connected = True
                 self._reconnect_count = 0
@@ -229,9 +229,9 @@ class GmGnClient:
                     pass
 
             # Close WebSocket connection
-            if self._websocket and hasattr(self, '_ws_context'):
+            if self._websocket:
                 try:
-                    await self._ws_context.__aexit__(None, None, None)
+                    await self._websocket.close()
                 except Exception as e:
                     logger.debug(f"Error closing websocket: {e}")
                 self._websocket = None
