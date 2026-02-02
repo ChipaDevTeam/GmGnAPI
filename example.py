@@ -4,10 +4,10 @@ from src.gmgnapi import GmGnClient
 
 # Set up logging to see what's happening
 logging.basicConfig(
-    level=logging.DEBUG,
+    level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
-logging.getLogger("websockets").setLevel(logging.INFO) # Keep websockets info to avoid too much noise initially, or DEBUG to see headers
+# logging.getLogger("websockets").setLevel(logging.INFO) 
 
 logger = logging.getLogger(__name__)
 

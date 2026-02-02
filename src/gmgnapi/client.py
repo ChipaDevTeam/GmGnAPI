@@ -8,6 +8,7 @@ import logging
 import os
 import ssl
 import uuid
+from http.cookies import SimpleCookie
 from typing import Any, AsyncIterator, Callable, Dict, List, Optional, Union
 from urllib.parse import urlencode
 
@@ -156,8 +157,12 @@ class GmGnClient:
         }
         
         if self.cookies:
-            cookie_str = "; ".join([f"{k}={v}" for k, v in self.cookies.items()])
-            headers["Cookie"] = cookie_str
+            cookie = SimpleCookie()
+            for k, v in self.cookies.items():
+                cookie[k] = v
+            # SimpleCookie.output returns "Set-Cookie: name=value", we want just "name=value" joined by "; "
+            # But specific implementation for Cookie header:
+            headers["Cookie"] = "; ".join([f"{k}={v}" for k, v in self.cookies.items()])
             
         return headers
 
