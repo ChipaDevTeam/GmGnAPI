@@ -28,7 +28,10 @@ async def main():
         "_ga_0XM0LYXGC8": "GS2.1.s1770052487$o1$g1$t1770052644$j60$l0$h0",
     }
 
-    client = GmGnClient(cookies=cookies)
+    # Use the device_id from the captured session
+    device_id = "f3188121-8e81-4752-9eee-0ea242354a03"
+    
+    client = GmGnClient(cookies=cookies, device_id=device_id)
     
     # Register event handlers
     client.on("new_pool_info", handle_new_pool)

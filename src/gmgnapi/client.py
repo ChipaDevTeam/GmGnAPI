@@ -146,9 +146,6 @@ class GmGnClient:
             "Cache-Control": "no-cache",
             "Pragma": "no-cache",
             "Accept-Language": "fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7",
-            "Upgrade": "websocket",
-            "Sec-WebSocket-Version": "13",
-            "Sec-WebSocket-Extensions": "permessage-deflate; client_max_window_bits",
         }
         
         if self.cookies:
