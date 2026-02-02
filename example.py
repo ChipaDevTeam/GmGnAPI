@@ -30,8 +30,10 @@ async def main():
 
     # Use the device_id from the captured session
     device_id = "f3188121-8e81-4752-9eee-0ea242354a03"
+    fp_did = "b4d8308ddd0df730f26ffdffcb5ecd03"
+    user_uuid = "f41873c323d65843" # 16 chars from curl (different from device_id)
     
-    client = GmGnClient(cookies=cookies, device_id=device_id)
+    client = GmGnClient(cookies=cookies, device_id=device_id, fp_did=fp_did, user_uuid=user_uuid)
     
     # Register event handlers
     client.on("new_pool_info", handle_new_pool)

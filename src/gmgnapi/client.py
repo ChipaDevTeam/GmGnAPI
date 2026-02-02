@@ -69,6 +69,8 @@ class GmGnClient:
         ping_interval: float = 30.0,
         ping_timeout: float = 10.0,
         cookies: Optional[Dict[str, str]] = None,
+        fp_did: Optional[str] = None,
+        user_uuid: Optional[str] = None,
     ):
         """
         Initialize the GmGnClient.
@@ -85,6 +87,8 @@ class GmGnClient:
             ping_interval: WebSocket ping interval (seconds)
             ping_timeout: WebSocket ping timeout (seconds)
             cookies: Dictionary of cookies to send with connection
+            fp_did: Fingerprint device ID
+            user_uuid: User UUID session identifier
         """
         self.ws_url = ws_url or os.getenv("GMGN_WS_URL", self.DEFAULT_WS_URL)
         self.device_id = device_id or str(uuid.uuid4())
@@ -92,6 +96,8 @@ class GmGnClient:
         self.user_agent = user_agent or os.getenv("GMGN_USER_AGENT", self.DEFAULT_USER_AGENT)
         self.access_token = access_token or os.getenv("GMGN_ACCESS_TOKEN")
         self.cookies = cookies or {}
+        self.fp_did = fp_did or uuid.uuid4().hex
+        self.user_uuid = user_uuid or uuid.uuid4().hex[:16]
         
         # Connection settings
         self.auto_reconnect = auto_reconnect
@@ -122,7 +128,7 @@ class GmGnClient:
         app_version = "20260202-10623-98faccb"
         params = {
             "device_id": self.device_id,
-            "fp_did": uuid.uuid4().hex,
+            "fp_did": self.fp_did,
             "client_id": f"gmgn_web_{app_version}",
             "from_app": "gmgn",
             "app_ver": app_version,
@@ -131,7 +137,7 @@ class GmGnClient:
             "app_lang": "en-US",
             "os": "web",
             "worker": "0",
-            "uuid": uuid.uuid4().hex[:16],
+            "uuid": self.user_uuid,
             "reconnect": "0",
         }
         
