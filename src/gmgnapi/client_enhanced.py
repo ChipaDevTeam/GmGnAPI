@@ -99,7 +99,7 @@ class GmGnEnhancedClient:
         ```
     """
     
-    WEBSOCKET_URL = "wss://gmgn.ai/query"
+    WEBSOCKET_URL = "wss://gmgn.ai/ws"
     SUPPORTED_CHANNELS = {
         "new_pools",
         "pair_update", 
@@ -186,17 +186,41 @@ class GmGnEnhancedClient:
             ssl_context.verify_mode = ssl.CERT_NONE
             
             # Build connection URL with parameters
+            app_version = "20260202-10623-98faccb"
             params = {
-                "vsn": "2.0.0",
-                "timeout": "60000"
+                "device_id": str(uuid.uuid4()),
+                "fp_did": uuid.uuid4().hex,
+                "client_id": f"gmgn_web_{app_version}",
+                "from_app": "gmgn",
+                "app_ver": app_version,
+                "tz_name": "Europe/Paris",
+                "tz_offset": "3600",
+                "app_lang": "en-US",
+                "os": "web",
+                "worker": "0",
+                "uuid": uuid.uuid4().hex[:16],
+                "reconnect": "0",
             }
             url = f"{self.WEBSOCKET_URL}?{urlencode(params)}"
+            
+            # Add strict headers to match browser behavior
+            headers = {
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 OPR/126.0.0.0",
+                "Origin": "https://gmgn.ai",
+                "Cache-Control": "no-cache",
+                "Pragma": "no-cache",
+                "Accept-Language": "fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7",
+                "Upgrade": "websocket",
+                "Sec-WebSocket-Version": "13",
+                "Sec-WebSocket-Extensions": "permessage-deflate; client_max_window_bits",
+            }
             
             logger.info(f"Connecting to {url}")
             
             self._websocket = await websockets.connect(
                 url,
                 ssl=ssl_context,
+                extra_headers=headers,
                 ping_interval=30,
                 ping_timeout=10,
                 close_timeout=10,

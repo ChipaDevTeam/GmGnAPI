@@ -43,8 +43,8 @@ class GmGnClient:
     - Blockchain statistics
     """
 
-    DEFAULT_WS_URL = "wss://ws.gmgn.ai/quotation"
-    DEFAULT_USER_AGENT = "GmGnAPI/0.1.0 Python Client"
+    DEFAULT_WS_URL = "wss://gmgn.ai/ws"
+    DEFAULT_USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 OPR/126.0.0.0"
     
     SUPPORTED_CHANNELS = {
         "new_pool_info",
@@ -116,17 +116,20 @@ class GmGnClient:
 
     def _build_connection_url(self) -> str:
         """Build the WebSocket connection URL with query parameters."""
+        app_version = "20260202-10623-98faccb"
         params = {
             "device_id": self.device_id,
-            "client_id": self.client_id,
-            "from_app": "gmgn",
-            "app_ver": "20250729-1647-ffac485",
-            "tz_name": "UTC",
-            "tz_offset": "0", 
-            "app_lang": "en-US",
             "fp_did": uuid.uuid4().hex,
-            "os": "python",
-            "uuid": uuid.uuid4().hex,
+            "client_id": f"gmgn_web_{app_version}",
+            "from_app": "gmgn",
+            "app_ver": app_version,
+            "tz_name": "Europe/Paris",
+            "tz_offset": "3600",
+            "app_lang": "en-US",
+            "os": "web",
+            "worker": "0",
+            "uuid": uuid.uuid4().hex[:16],
+            "reconnect": "0",
         }
         
         query_string = urlencode(params)
@@ -139,6 +142,10 @@ class GmGnClient:
             "Origin": "https://gmgn.ai",
             "Cache-Control": "no-cache",
             "Pragma": "no-cache",
+            "Accept-Language": "fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7",
+            "Upgrade": "websocket",
+            "Sec-WebSocket-Version": "13",
+            "Sec-WebSocket-Extensions": "permessage-deflate; client_max_window_bits",
         }
 
     async def connect(self) -> None:
