@@ -7,6 +7,7 @@ import json
 import logging
 import os
 import uuid
+from http.cookies import SimpleCookie
 from typing import Any, AsyncIterator, Callable, Dict, List, Optional, Union
 from urllib.parse import urlencode
 
