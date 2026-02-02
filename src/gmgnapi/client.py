@@ -179,15 +179,10 @@ class GmGnClient:
                 
                 logger.info(f"Connecting to GMGN WebSocket: {self.ws_url}")
                 
-                # Create SSL context optimized for compatibility
-                ssl_context = ssl.create_default_context()
-                ssl_context.check_hostname = False
-                ssl_context.verify_mode = ssl.CERT_NONE
-                
+                # Use default SSL context management by websockets
                 self._websocket = await websockets.connect(
                     url,
                     extra_headers=headers,
-                    ssl=ssl_context,
                     ping_interval=self.ping_interval,
                     ping_timeout=self.ping_timeout,
                     max_size=2**20,  # 1MB max message size
