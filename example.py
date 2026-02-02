@@ -19,7 +19,16 @@ async def handle_token_launch(data):
     logger.info(f"🚀 Token launch data: {data}")
 
 async def main():
-    client = GmGnClient()
+    # Cookies from your browser session (required for connection)
+    cookies = {
+        "__cf_bm": "AJoMSE2nVGkQBw517YaUKbnh2fTKue.rIiVFPk1adEI-1770052484-1.0.1.1-5_Ma1MK0d4faXcUfqgqkh3icGFL.qfTs0T9.alJfG45Nm9u7yGOaihmp0jQutIrJoP2Q5R6fpjVYmJHOtiKwPAwznSyHmerusjuzfP_LmN8",
+        "_ga": "GA1.1.1679316283.1770052488",
+        "sid": "gmgn%7Cb832083bf7577661314742d93fcc3fa4",
+        "_ga_UGLVBMV4Z0": "GS1.2.1770052551374447.b660ff2d16ef55e527fbd41da44a650a.LPefI3GLwvJAZvcCerWQEA%3D%3D.VXM%2FiSQDiZQqEIk2yytV%2FQ%3D%3D.05A79i5172t4yba6oMhJuQ%3D%3D.oHMWEJIlhkk7YVBO3T8U5w%3D%3D",
+        "_ga_0XM0LYXGC8": "GS2.1.s1770052487$o1$g1$t1770052644$j60$l0$h0",
+    }
+
+    client = GmGnClient(cookies=cookies)
     
     # Register event handlers
     client.on("new_pool_info", handle_new_pool)
