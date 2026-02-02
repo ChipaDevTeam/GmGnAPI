@@ -344,6 +344,8 @@ class GmGnClient:
 
         try:
             message = subscription.json()
+            # curl_cffi send is awaitable (usually) or sync. 
+            # In 0.7.x async interface, send is async.
             await self._websocket.send(message)
             logger.debug(f"Sent subscription: {subscription.channel}")
             
