@@ -483,6 +483,34 @@ section {
     box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
 }
 
+.btn.btn-gmgn {
+    background: linear-gradient(135deg, #10b981, #34d399);
+    color: white;
+    border: none;
+    font-weight: 600;
+}
+
+.btn.btn-gmgn:hover {
+    background: linear-gradient(135deg, #059669, #10b981);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+}
+
+.nav-link.btn-signup {
+    background: linear-gradient(135deg, #10b981, #34d399);
+    color: white !important;
+    padding: 0.4rem 1rem !important;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.nav-link.btn-signup:hover {
+    background: linear-gradient(135deg, #059669, #10b981);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+}
+
 /* Features Section */
 .features {
     background: var(--bg-secondary);
