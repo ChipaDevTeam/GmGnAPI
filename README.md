@@ -13,7 +13,7 @@ GmGnAPI provides real-time access to Solana blockchain data through GMGN.ai's We
 
 - 📚 **[Documentation](https://yourusername.github.io/GmGnAPI/)** - Complete guides and API reference
 - 💬 **[Discord Community](https://discord.gg/ub46R9Dk)** - Get help and discuss strategies
-- 🌐 **[Create GMGN Account](https://gmgn.ai/?ref=9dLKvFyE&chain=sol)** - Sign up with our referral link to support the project
+- 🌐 **[Create GMGN Account](https://gmgn.ai/r/9dLKvFyE)** - Sign up with our referral link to support the project
 
 ## 🚀 Features
 
@@ -51,7 +51,7 @@ pip install -e .
 
 ### 1. Create GMGN Account
 Create your GMGN account using our referral link to support the project:
-👉 **[Create GMGN Account](https://gmgn.ai/?ref=9dLKvFyE&chain=sol)**
+👉 **[Create GMGN Account](https://gmgn.ai/r/9dLKvFyE)**
 
 ### 2. Get API Token
 1. Log in to your GMGN account
