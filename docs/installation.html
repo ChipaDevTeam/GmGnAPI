@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Installation Guide - GmGnAPI Documentation</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <meta name="description" content="Complete installation guide for GmGnAPI - Install via PyPI, from source, or with Docker">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="logo-icon">🚀</span>
+                <span class="logo-text">GmGnAPI</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="getting-started.html" class="nav-link">Getting Started</a></li>
+                <li><a href="api-reference.html" class="nav-link">API Reference</a></li>
+                <li><a href="examples.html" class="nav-link">Examples</a></li>
+                <li><a href="advanced.html" class="nav-link">Advanced</a></li>
+                <li><a href="https://github.com/ChipaDevTeam/GmGnAPI" class="nav-link" target="_blank">
+                    <i class="fab fa-github"></i> GitHub
+                </a></li>
+                <li><a href="https://gmgn.ai/r/9dLKvFyE" class="nav-link btn-signup" target="_blank">
+                    <i class="fas fa-rocket"></i> Sign Up on GMGN
+                </a></li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <main style="margin-top: 70px;">
+        <div class="container" style="padding: 3rem 1.5rem;">
+            <header class="page-header">
+                <h1>Installation Guide</h1>
+                <p class="page-description">
+                    Multiple ways to install GmGnAPI — from a simple pip install to a full development setup.
+                </p>
+            </header>
+
+            <div class="content-grid">
+                <nav class="sidebar">
+                    <h3>On This Page</h3>
+                    <ul class="toc">
+                        <li><a href="#prerequisites">Prerequisites</a></li>
+                        <li><a href="#pip-install">Install via pip</a></li>
+                        <li><a href="#from-source">Install from Source</a></li>
+                        <li><a href="#optional-deps">Optional Dependencies</a></li>
+                        <li><a href="#docker">Docker Setup</a></li>
+                        <li><a href="#virtual-env">Virtual Environments</a></li>
+                        <li><a href="#verify">Verify Installation</a></li>
+                        <li><a href="#troubleshooting">Troubleshooting</a></li>
+                    </ul>
+
+                    <div class="sidebar-promo" style="margin-top: 2rem; padding: 1rem; background: var(--bg-tertiary); border-radius: var(--radius-md); border: 1px solid var(--border-secondary);">
+                        <h4 style="color: var(--primary-color); font-size: 0.9rem; margin-bottom: 0.5rem;">
+                            <i class="fab fa-discord"></i> Need Help?
+                        </h4>
+                        <p style="font-size: 0.85rem; margin-bottom: 0.75rem;">Join our Discord for installation support and community help.</p>
+                        <a href="https://discord.gg/ub46R9Dk" class="btn btn-accent" target="_blank" style="width: 100%; justify-content: center; font-size: 0.85rem; padding: 0.5rem 1rem;">
+                            <i class="fab fa-discord"></i> Join Discord
+                        </a>
+                    </div>
+                </nav>
+
+                <article class="main-content">
+                    <section id="prerequisites">
+                        <h2><i class="fas fa-check-circle"></i> Prerequisites</h2>
+                        <p>Before installing GmGnAPI, make sure you have the following:</p>
+
+                        <div class="requirements-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin: 1.5rem 0;">
+                            <div class="requirement-card" style="background: var(--bg-tertiary); padding: 1.5rem; border-radius: var(--radius-md); border: 1px solid var(--border-secondary);">
+                                <h4 style="color: var(--primary-color);">Python 3.8+</h4>
+                                <p>GmGnAPI requires Python 3.8 or higher.</p>
+                                <div class="code-block">
+                                    <pre><code class="language-bash">python --version
+# Python 3.8.0 or higher</code></pre>
+                                </div>
+                            </div>
+                            <div class="requirement-card" style="background: var(--bg-tertiary); padding: 1.5rem; border-radius: var(--radius-md); border: 1px solid var(--border-secondary);">
+                                <h4 style="color: var(--primary-color);">pip Package Manager</h4>
+                                <p>Make sure pip is up to date.</p>
+                                <div class="code-block">
+                                    <pre><code class="language-bash">pip install --upgrade pip</code></pre>
+                                </div>
+                            </div>
+                            <div class="requirement-card" style="background: var(--bg-tertiary); padding: 1.5rem; border-radius: var(--radius-md); border: 1px solid var(--border-secondary);">
+                                <h4 style="color: var(--primary-color);">GMGN Account</h4>
+                                <p>Create a free account for API access.</p>
+                                <a href="https://gmgn.ai/r/9dLKvFyE" class="btn btn-gmgn" target="_blank" style="margin-top: 0.5rem; font-size: 0.85rem;">
+                                    <i class="fas fa-chart-line"></i> Create GMGN Account
+                                </a>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="pip-install">
+                        <h2><i class="fas fa-download"></i> Install via pip (Recommended)</h2>
+                        <p>The easiest way to install GmGnAPI is from PyPI:</p>
+
+                        <div class="code-block">
+                            <pre><code class="language-bash">pip install gmgnapi</code></pre>
+                            <button class="copy-btn" onclick="copyToClipboard(this)">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+
+                        <p>This will install the latest stable release along with all required dependencies:</p>
+                        <ul style="color: var(--text-secondary); margin: 1rem 0; padding-left: 1.5rem;">
+                            <li><strong>websockets</strong> >= 12.0 — WebSocket client library</li>
+                            <li><strong>pydantic</strong> >= 2.0 — Data validation using Python type annotations</li>
+                            <li><strong>aiofiles</strong> >= 23.0 — Async file operations</li>
+                        </ul>
+
+                        <div class="info-box" style="background: rgba(99, 102, 241, 0.1); border: 1px solid var(--primary-color); border-radius: var(--radius-md); padding: 1rem; margin: 1.5rem 0;">
+                            <h4><i class="fas fa-info-circle"></i> Pin Your Version</h4>
+                            <p>For production use, pin the version in your requirements.txt:</p>
+                            <div class="code-block">
+                                <pre><code class="language-bash">pip install gmgnapi==1.0.0</code></pre>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="from-source">
+                        <h2><i class="fab fa-git-alt"></i> Install from Source</h2>
+                        <p>To get the latest development version or contribute to the project:</p>
+
+                        <div class="code-block">
+                            <pre><code class="language-bash"># Clone the repository
+git clone https://github.com/ChipaDevTeam/GmGnAPI.git
+cd GmGnAPI
+
+# Install in development mode
+pip install -e .
+
+# Install with development dependencies
+pip install -e ".[dev]"</code></pre>
+                            <button class="copy-btn" onclick="copyToClipboard(this)">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+
+                        <p>Development dependencies include:</p>
+                        <ul style="color: var(--text-secondary); margin: 1rem 0; padding-left: 1.5rem;">
+                            <li><strong>pytest</strong> — Testing framework</li>
+                            <li><strong>pytest-asyncio</strong> — Async test support</li>
+                            <li><strong>black</strong> — Code formatting</li>
+                            <li><strong>mypy</strong> — Static type checking</li>
+                            <li><strong>ruff</strong> — Fast Python linter</li>
+                        </ul>
+                    </section>
+
+                    <section id="optional-deps">
+                        <h2><i class="fas fa-puzzle-piece"></i> Optional Dependencies</h2>
+                        <p>GmGnAPI supports optional extras for specific use cases:</p>
+
+                        <div class="code-block">
+                            <pre><code class="language-bash"># Install with all optional dependencies
+pip install gmgnapi[all]
+
+# Data analysis extras (pandas, numpy)
+pip install gmgnapi[analysis]
+
+# Webhook & notification extras (aiohttp)
+pip install gmgnapi[webhooks]
+
+# Export extras (openpyxl for Excel export)
+pip install gmgnapi[export]</code></pre>
+                            <button class="copy-btn" onclick="copyToClipboard(this)">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin: 1.5rem 0;">
+                            <div style="background: var(--bg-tertiary); padding: 1.5rem; border-radius: var(--radius-md); border: 1px solid var(--border-secondary);">
+                                <h4 style="color: var(--secondary-color);"><i class="fas fa-chart-bar"></i> Analysis</h4>
+                                <p style="font-size: 0.9rem;">pandas, numpy — For advanced data analysis and manipulation of pool/token data.</p>
+                            </div>
+                            <div style="background: var(--bg-tertiary); padding: 1.5rem; border-radius: var(--radius-md); border: 1px solid var(--border-secondary);">
+                                <h4 style="color: var(--secondary-color);"><i class="fas fa-bell"></i> Webhooks</h4>
+                                <p style="font-size: 0.9rem;">aiohttp — For sending webhook notifications to Slack, Discord, or custom endpoints.</p>
+                            </div>
+                            <div style="background: var(--bg-tertiary); padding: 1.5rem; border-radius: var(--radius-md); border: 1px solid var(--border-secondary);">
+                                <h4 style="color: var(--secondary-color);"><i class="fas fa-file-export"></i> Export</h4>
+                                <p style="font-size: 0.9rem;">openpyxl — For exporting data to Excel spreadsheets alongside JSON and CSV.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="docker">
+                        <h2><i class="fab fa-docker"></i> Docker Setup</h2>
+                        <p>Run GmGnAPI inside a Docker container for isolated, reproducible environments:</p>
+
+                        <div class="code-block">
+                            <pre><code class="language-dockerfile">FROM python:3.11-slim
+
+WORKDIR /app
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . .
+
+CMD ["python", "main.py"]</code></pre>
+                            <button class="copy-btn" onclick="copyToClipboard(this)">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+
+                        <div class="code-block">
+                            <pre><code class="language-bash"># Build and run
+docker build -t gmgnapi-app .
+docker run -e GMGN_ACCESS_TOKEN=your_token gmgnapi-app</code></pre>
+                            <button class="copy-btn" onclick="copyToClipboard(this)">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                    </section>
+
+                    <section id="virtual-env">
+                        <h2><i class="fas fa-box"></i> Virtual Environments</h2>
+                        <p>We strongly recommend using virtual environments to isolate your project dependencies:</p>
+
+                        <h3>venv (Built-in)</h3>
+                        <div class="code-block">
+                            <pre><code class="language-bash"># Create virtual environment
+python -m venv .venv
+
+# Activate (macOS/Linux)
+source .venv/bin/activate
+
+# Activate (Windows)
+.venv\Scripts\activate
+
+# Install GmGnAPI
+pip install gmgnapi</code></pre>
+                            <button class="copy-btn" onclick="copyToClipboard(this)">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+
+                        <h3>Poetry</h3>
+                        <div class="code-block">
+                            <pre><code class="language-bash"># Add GmGnAPI to your project
+poetry add gmgnapi
+
+# With optional extras
+poetry add "gmgnapi[all]"</code></pre>
+                            <button class="copy-btn" onclick="copyToClipboard(this)">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+
+                        <h3>Conda</h3>
+                        <div class="code-block">
+                            <pre><code class="language-bash"># Create conda environment
+conda create -n gmgnapi python=3.11
+conda activate gmgnapi
+
+# Install via pip inside conda
+pip install gmgnapi</code></pre>
+                            <button class="copy-btn" onclick="copyToClipboard(this)">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                    </section>
+
+                    <section id="verify">
+                        <h2><i class="fas fa-check-double"></i> Verify Installation</h2>
+                        <p>Confirm that GmGnAPI is installed correctly:</p>
+
+                        <div class="code-block">
+                            <pre><code class="language-python">import gmgnapi
+print(f"GmGnAPI version: {gmgnapi.__version__}")
+
+# Test basic import
+from gmgnapi import GmGnClient
+print("✅ GmGnAPI installed successfully!")</code></pre>
+                            <button class="copy-btn" onclick="copyToClipboard(this)">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+
+                        <div class="code-block">
+                            <pre><code class="language-bash"># Quick verification from command line
+python -c "from gmgnapi import GmGnClient; print('✅ GmGnAPI ready!')"</code></pre>
+                            <button class="copy-btn" onclick="copyToClipboard(this)">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                    </section>
+
+                    <section id="troubleshooting">
+                        <h2><i class="fas fa-wrench"></i> Troubleshooting</h2>
+                        
+                        <div style="display: grid; gap: 1.5rem; margin: 1.5rem 0;">
+                            <div style="background: var(--bg-tertiary); padding: 1.5rem; border-radius: var(--radius-md); border: 1px solid var(--border-secondary);">
+                                <h4 style="color: var(--danger-color);"><i class="fas fa-exclamation-triangle"></i> Python version too old</h4>
+                                <p>GmGnAPI requires Python 3.8+. Update Python or use <code>pyenv</code> to manage versions:</p>
+                                <div class="code-block">
+                                    <pre><code class="language-bash">pyenv install 3.11.0
+pyenv local 3.11.0</code></pre>
+                                </div>
+                            </div>
+
+                            <div style="background: var(--bg-tertiary); padding: 1.5rem; border-radius: var(--radius-md); border: 1px solid var(--border-secondary);">
+                                <h4 style="color: var(--danger-color);"><i class="fas fa-exclamation-triangle"></i> Permission errors on install</h4>
+                                <p>Use the <code>--user</code> flag or a virtual environment:</p>
+                                <div class="code-block">
+                                    <pre><code class="language-bash">pip install --user gmgnapi</code></pre>
+                                </div>
+                            </div>
+
+                            <div style="background: var(--bg-tertiary); padding: 1.5rem; border-radius: var(--radius-md); border: 1px solid var(--border-secondary);">
+                                <h4 style="color: var(--danger-color);"><i class="fas fa-exclamation-triangle"></i> Pydantic v1 conflict</h4>
+                                <p>GmGnAPI requires Pydantic v2. Upgrade with:</p>
+                                <div class="code-block">
+                                    <pre><code class="language-bash">pip install --upgrade pydantic>=2.0</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="info-box" style="background: rgba(99, 102, 241, 0.1); border: 1px solid var(--primary-color); border-radius: var(--radius-md); padding: 1.5rem; margin: 2rem 0;">
+                            <h4><i class="fas fa-life-ring"></i> Still having issues?</h4>
+                            <p>Get help from the community or report a bug:</p>
+                            <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1rem;">
+                                <a href="https://discord.gg/ub46R9Dk" class="btn btn-accent" target="_blank">
+                                    <i class="fab fa-discord"></i> Ask on Discord
+                                </a>
+                                <a href="https://github.com/ChipaDevTeam/GmGnAPI/issues" class="btn btn-secondary" target="_blank">
+                                    <i class="fab fa-github"></i> Open an Issue
+                                </a>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Promo Banner -->
+                    <section class="promo-banner" style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(139, 92, 246, 0.15)); border: 1px solid var(--primary-color); border-radius: var(--radius-lg); padding: 2rem; margin-top: 3rem; text-align: center;">
+                        <h3 style="margin-bottom: 1rem;">🚀 Ready to Start Building?</h3>
+                        <p style="margin-bottom: 1.5rem; max-width: 600px; margin-left: auto; margin-right: auto;">
+                            Create your free GMGN account to get API access and join our Discord community for tips, support, and updates.
+                        </p>
+                        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                            <a href="https://gmgn.ai/r/9dLKvFyE" class="btn btn-gmgn" target="_blank">
+                                <i class="fas fa-chart-line"></i> Sign Up on GMGN
+                            </a>
+                            <a href="https://discord.gg/ub46R9Dk" class="btn btn-accent" target="_blank">
+                                <i class="fab fa-discord"></i> Join Discord Server
+                            </a>
+                        </div>
+                    </section>
+                </article>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>GmGnAPI</h4>
+                    <p>Professional Python client for GMGN.ai WebSocket API</p>
+                    <div class="social-links">
+                        <a href="https://github.com/ChipaDevTeam/GmGnAPI" target="_blank"><i class="fab fa-github"></i></a>
+                        <a href="https://pypi.org/project/gmgnapi/" target="_blank"><i class="fab fa-python"></i></a>
+                        <a href="https://discord.gg/ub46R9Dk" target="_blank"><i class="fab fa-discord"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Documentation</h4>
+                    <ul>
+                        <li><a href="getting-started.html">Getting Started</a></li>
+                        <li><a href="installation.html">Installation</a></li>
+                        <li><a href="api-reference.html">API Reference</a></li>
+                        <li><a href="examples.html">Examples</a></li>
+                        <li><a href="advanced.html">Advanced</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Guides</h4>
+                    <ul>
+                        <li><a href="websocket-guide.html">WebSocket Guide</a></li>
+                        <li><a href="channels.html">Channels</a></li>
+                        <li><a href="data-models.html">Data Models</a></li>
+                        <li><a href="error-handling.html">Error Handling</a></li>
+                        <li><a href="configuration.html">Configuration</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Community</h4>
+                    <ul>
+                        <li><a href="https://discord.gg/ub46R9Dk" target="_blank"><i class="fab fa-discord"></i> Discord Server</a></li>
+                        <li><a href="https://gmgn.ai/r/9dLKvFyE" target="_blank"><i class="fas fa-external-link-alt"></i> Create GMGN Account</a></li>
+                        <li><a href="https://github.com/ChipaDevTeam/GmGnAPI" target="_blank"><i class="fab fa-github"></i> GitHub Repository</a></li>
+                        <li><a href="contributing.html">Contributing Guide</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 GmGnAPI. Open source under MIT License.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="assets/js/main.js"></script>
+</body>
+</html>
