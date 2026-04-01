@@ -397,9 +397,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🔗 Links
 
-- **Documentation**: [https://gmgnapi.readthedocs.io/](https://gmgnapi.readthedocs.io/)
+- **Documentation**: [https://chipadevteam.github.io/GmGnAPI/](https://chipadevteam.github.io/GmGnAPI/)
 - **PyPI Package**: [https://pypi.org/project/gmgnapi/](https://pypi.org/project/gmgnapi/)
-- **GitHub Issues**: [https://github.com/yourusername/gmgnapi/issues](https://github.com/yourusername/gmgnapi/issues)
+- **GitHub Issues**: [https://github.com/ChipaDevTeam/GmGnAPI/issues](https://github.com/ChipaDevTeam/GmGnAPI/issues)
 - **GMGN.ai**: [https://gmgn.ai/](https://gmgn.ai/)
 
 ---
