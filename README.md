@@ -7,6 +7,12 @@
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![Discord](https://img.shields.io/discord/YOUR_DISCORD_ID?color=7289da&label=Discord&logo=discord&logoColor=white)](https://discord.gg/ub46R9Dk)
 
+---
+
+> **✨ Built with [Chipa Editor](https://chipaeditor.com/?utm_source=github&utm_medium=readme&utm_campaign=gmgn_api&utm_term=support&utm_content=header) — the AI-powered code editor for Python developers. Try it free!**
+
+---
+
 GmGnAPI provides real-time access to Solana blockchain data through GMGN.ai's WebSocket API with advanced features including intelligent filtering, data export capabilities, monitoring statistics, and automated alerting.
 
 ## 🔗 Quick Links
@@ -14,6 +20,7 @@ GmGnAPI provides real-time access to Solana blockchain data through GMGN.ai's We
 - 📚 **[Documentation](https://yourusername.github.io/GmGnAPI/)** - Complete guides and API reference
 - 💬 **[Discord Community](https://discord.gg/ub46R9Dk)** - Get help and discuss strategies
 - 🌐 **[Create GMGN Account](https://gmgn.ai/r/9dLKvFyE)** - Sign up with our referral link to support the project
+- ✨ **[Chipa Editor](https://chipaeditor.com/?utm_source=github&utm_medium=readme&utm_campaign=gmgn_api&utm_term=editor&utm_content=quicklinks)** - AI-powered code editor used to build this project
 
 ## 🚀 Features
 
@@ -385,7 +392,34 @@ make html
 8. Push to the branch (`git push origin feature/amazing-feature`)
 9. Open a Pull Request
 
-## 📄 License
+## � Sponsors & Tools
+
+This project is proudly built and maintained using:
+
+<table>
+  <tr>
+    <td align="center">
+      <a href="https://chipaeditor.com/?utm_source=github&utm_medium=readme&utm_campaign=gmgn_api&utm_term=sponsor&utm_content=sponsors_section">
+        <strong>✨ Chipa Editor</strong>
+      </a>
+      <br />
+      <sub>AI-powered code editor for Python developers</sub>
+      <br />
+      <a href="https://chipaeditor.com/?utm_source=github&utm_medium=readme&utm_campaign=gmgn_api&utm_term=sponsor&utm_content=sponsors_cta">Try it free →</a>
+    </td>
+    <td align="center">
+      <a href="https://gmgn.ai/r/9dLKvFyE">
+        <strong>🚀 GMGN.ai</strong>
+      </a>
+      <br />
+      <sub>Real-time Solana blockchain data</sub>
+      <br />
+      <a href="https://gmgn.ai/r/9dLKvFyE">Create free account →</a>
+    </td>
+  </tr>
+</table>
+
+## �📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
@@ -405,3 +439,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ---
 
 **⚡ Built for speed, designed for reliability, crafted for the Solana ecosystem.**
+
+**✨ Developed with [Chipa Editor](https://chipaeditor.com/?utm_source=github&utm_medium=readme&utm_campaign=gmgn_api&utm_term=support&utm_content=footer) — the AI-powered code editor that makes Python development faster.**
