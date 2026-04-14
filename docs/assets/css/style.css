@@ -513,6 +513,83 @@ section {
     box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
 }
 
+/* Chipa Editor Button Styles */
+.nav-link.btn-chipa {
+    background: linear-gradient(135deg, var(--chipa-color), #fbbf24);
+    color: var(--text-inverse) !important;
+    padding: 0.4rem 1rem !important;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.nav-link.btn-chipa:hover {
+    background: linear-gradient(135deg, var(--chipa-dark), var(--chipa-color));
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+}
+
+.btn-chipa-small {
+    background: linear-gradient(135deg, var(--chipa-color), #fbbf24);
+    color: var(--text-inverse) !important;
+    border-radius: 6px;
+    font-weight: 600;
+    display: inline-block;
+    text-decoration: none;
+}
+
+/* Top Promo Banner */
+.top-promo-banner {
+    background: linear-gradient(135deg, #1e1b4b, #312e81);
+    color: var(--text-primary);
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+    text-align: center;
+    border-bottom: 1px solid rgba(99, 102, 241, 0.3);
+    position: relative;
+    z-index: 1001;
+}
+
+.top-promo-banner a {
+    color: var(--accent-color);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.top-promo-banner a:hover {
+    text-decoration: underline;
+}
+
+.btn-banner-cta {
+    background: var(--accent-color);
+    color: var(--text-inverse) !important;
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-decoration: none !important;
+    margin-left: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.btn-banner-cta:hover {
+    background: var(--chipa-dark);
+    transform: translateY(-1px);
+}
+
+/* Sponsor card hover */
+.sponsor-card:hover {
+    border-color: var(--primary-color) !important;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+/* Sponsors section */
+.sponsors-section {
+    padding: 4rem 0;
+    background: var(--bg-primary);
+}
+
 /* Features Section */
 .features {
     background: var(--bg-secondary);
