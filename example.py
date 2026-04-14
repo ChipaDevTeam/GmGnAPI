@@ -20,6 +20,12 @@ async def handle_token_launch(data):
     logger.info(f"🚀 Token launch data: {data}")
 
 async def main():
+    """Main example function."""
+    print("\n" + "=" * 60)
+    print("\u2728 GmGnAPI - Real-time Solana Blockchain Data")
+    print("\u2728 Built with Chipa Editor - https://chipaeditor.com")
+    print("=" * 60 + "\n")
+
     # Cookies from your browser session (required for connection)
     cookies = {
         "_ga": "GA1.1.1679316283.1770052488",

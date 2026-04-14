@@ -97,6 +97,7 @@ Repository = "https://github.com/theshadow76/GmGnAPI.git"
 "Bug Tracker" = "https://github.com/theshadow76/GmGnAPI/issues"
 Changelog = "https://github.com/theshadow76/GmGnAPI/releases"
 Discussions = "https://github.com/theshadow76/GmGnAPI/discussions"
+Sponsor = "https://chipaeditor.com/?utm_source=pypi&utm_medium=project_urls&utm_campaign=gmgn_api&utm_term=sponsor&utm_content=pypi_link"
 
 [tool.setuptools.packages.find]
 where = ["src"]

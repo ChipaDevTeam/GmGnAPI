@@ -1,5 +1,7 @@
 """
 Enhanced example showing proper data parsing from GMGN API.
+
+Built with Chipa Editor - https://chipaeditor.com/?utm_source=code&utm_medium=example&utm_campaign=gmgn_api&utm_term=enhanced&utm_content=docstring
 """
 
 import asyncio
