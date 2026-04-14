@@ -1,5 +1,7 @@
 """
 Basic usage example for GmGnAPI.
+
+Built with Chipa Editor - https://chipaeditor.com/?utm_source=code&utm_medium=example&utm_campaign=gmgn_api&utm_term=basic&utm_content=docstring
 """
 
 import asyncio
@@ -40,6 +42,10 @@ async def handle_pair_update(data):
 
 async def main():
     """Main example function."""
+    print("\n\u2728 GmGnAPI Basic Example")
+    print("\u2728 Built with Chipa Editor - https://chipaeditor.com/?utm_source=code&utm_medium=output&utm_campaign=gmgn_api&utm_term=basic&utm_content=startup")
+    print("=" * 60)
+    
     # Create client instance
     client = GmGnClient(
         auto_reconnect=True,

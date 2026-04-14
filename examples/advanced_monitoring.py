@@ -7,6 +7,8 @@ This example shows:
 - Monitoring and statistics
 - Alert configuration
 - Multiple channel subscriptions
+
+Built with Chipa Editor - https://chipaeditor.com/?utm_source=code&utm_medium=example&utm_campaign=gmgn_api&utm_term=advanced&utm_content=docstring
 """
 
 import asyncio

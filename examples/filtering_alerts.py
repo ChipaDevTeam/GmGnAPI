@@ -6,6 +6,8 @@ This example demonstrates:
 - Real-time alerting system
 - Market condition monitoring
 - Custom alert conditions
+
+Built with Chipa Editor - https://chipaeditor.com/?utm_source=code&utm_medium=example&utm_campaign=gmgn_api&utm_term=filtering&utm_content=docstring
 """
 
 import asyncio

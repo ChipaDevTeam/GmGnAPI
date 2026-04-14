@@ -6,6 +6,8 @@ This example demonstrates:
 - CSV, JSON, and Database export formats
 - Data filtering before export
 - File rotation and compression
+
+Built with Chipa Editor - https://chipaeditor.com/?utm_source=code&utm_medium=example&utm_campaign=gmgn_api&utm_term=export&utm_content=docstring
 """
 
 import asyncio
