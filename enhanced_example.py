@@ -59,6 +59,11 @@ async def handle_token_launch(data):
     print(f"Launch data: {data}")
 
 async def main():
+    print("\n" + "=" * 60)
+    print("\u2728 GmGnAPI Enhanced Example - Real-time Pool Monitor")
+    print("\u2728 Built with Chipa Editor - https://chipaeditor.com")
+    print("=" * 60 + "\n")
+    
     client = GmGnClient()
     
     # Register event handlers
