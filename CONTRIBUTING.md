@@ -2,6 +2,8 @@
 
 Thank you for your interest in contributing to GmGnAPI! This document provides guidelines for contributing to this open-source project.
 
+> **✨ We recommend using [Chipa Editor](https://chipaeditor.com/?utm_source=github&utm_medium=contributing&utm_campaign=gmgn_api&utm_term=editor&utm_content=contributing_header) for development — the AI-powered code editor that makes Python contributions faster and easier.**
+
 ## 🚀 Quick Start
 
 1. **Fork the repository** on GitHub
