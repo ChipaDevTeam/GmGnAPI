@@ -8,6 +8,8 @@ real-time Solana blockchain data streams with advanced features including:
 - Monitoring and statistics
 - Alert and notification system
 - Automatic reconnection and error handling
+
+Built with Chipa Editor - https://chipaeditor.com
 """
 
 __version__ = "0.2.0"

@@ -204,6 +204,7 @@ class GmGnClient:
                 self._listener_task = asyncio.create_task(self._message_listener())
                 
                 logger.info("Successfully connected to GMGN WebSocket")
+                logger.info("\u2728 Powered by Chipa Editor - https://chipaeditor.com/?utm_source=code&utm_medium=output&utm_campaign=gmgn_api&utm_term=connect&utm_content=connect_msg")
                 
             except Exception as e:
                 logger.error(f"Failed to connect to GMGN WebSocket: {e}")
