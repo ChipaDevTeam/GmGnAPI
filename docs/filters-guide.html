@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filters Guide - GmGnAPI Documentation</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <meta name="description" content="Complete guide to GmGnAPI's token filtering system — every parameter explained with examples.">
+</head>
+<body>
+    <div class="top-promo-banner">
+        <div class="container" style="display:flex;align-items:center;justify-content:center;gap:0.5rem;">
+            <span>🔥</span>
+            <span><a href="https://chipaeditor.com/?utm_source=docs&utm_medium=banner&utm_campaign=gmgn_api&utm_content=filters_banner" target="_blank"><strong>Chipa Editor</strong></a> has autocomplete for every GmGnAPI filter parameter. Never look up docs again.</span>
+            <a href="https://chipaeditor.com/?utm_source=docs&utm_medium=banner&utm_campaign=gmgn_api&utm_content=filters_banner_cta" class="btn-banner-cta" target="_blank">Get it free →</a>
+        </div>
+    </div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo"><span class="logo-icon">🚀</span><span class="logo-text">GmGnAPI</span></div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="getting-started.html" class="nav-link">Getting Started</a></li>
+                <li><a href="tutorials.html" class="nav-link">Tutorials</a></li>
+                <li><a href="api-reference.html" class="nav-link">API Reference</a></li>
+                <li><a href="examples.html" class="nav-link">Examples</a></li>
+                <li><a href="advanced.html" class="nav-link">Advanced</a></li>
+                <li><a href="filters-guide.html" class="nav-link active">Filters</a></li>
+                <li><a href="trading-bots.html" class="nav-link">Trading Bots</a></li>
+                <li><a href="faq.html" class="nav-link">FAQ</a></li>
+                <li><a href="community.html" class="nav-link">Community</a></li>
+                <li><a href="https://github.com/ChipaDevTeam/GmGnAPI" class="nav-link" target="_blank"><i class="fab fa-github"></i> GitHub</a></li>
+                <li><a href="https://gmgn.ai/r/9dLKvFyE" class="nav-link btn-signup" target="_blank"><i class="fas fa-rocket"></i> Sign Up on GMGN</a></li>
+                <li><a href="https://chipaeditor.com/?utm_source=docs&utm_medium=navbar&utm_campaign=gmgn_api&utm_content=filters_nav" class="nav-link btn-chipa" target="_blank"><i class="fas fa-code"></i> Chipa Editor</a></li>
+            </ul>
+            <div class="hamburger"><span class="bar"></span><span class="bar"></span><span class="bar"></span></div>
+        </div>
+    </nav>
+
+    <main style="margin-top:70px;">
+        <div class="container" style="padding:3rem 1.5rem;">
+            <header class="page-header">
+                <h1><i class="fas fa-filter" style="color:var(--accent-color)"></i> Filters Guide</h1>
+                <p class="page-description">
+                    GmGnAPI's filter system lets you define exactly which tokens fire your handlers.
+                    Filters run server-side before your callback — only matching tokens consume your processing time.
+                </p>
+                <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:1.5rem;">
+                    <a href="tutorials.html#tutorial-2" class="btn btn-primary"><i class="fas fa-graduation-cap"></i> Filter Tutorial</a>
+                    <a href="https://discord.gg/ub46R9Dk" class="btn btn-accent" target="_blank"><i class="fab fa-discord"></i> Ask on Discord</a>
+                    <a href="https://gmgn.ai/r/9dLKvFyE" class="btn btn-gmgn" target="_blank"><i class="fas fa-chart-line"></i> Open GMGN Dashboard</a>
+                </div>
+            </header>
+
+            <!-- Quick start -->
+            <section style="margin:3rem 0;">
+                <h2>Quick Start</h2>
+                <div class="code-window">
+                    <div class="code-header"><div class="code-dots"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div><span class="code-title">quick_filter.py</span></div>
+                    <pre><code class="language-python">from gmgnapi.filters import TokenFilter
+
+# Only tokens that pass ALL conditions will trigger your handler
+f = TokenFilter(
+    min_market_cap=50_000,    # $50k minimum
+    max_market_cap=2_000_000, # $2M maximum
+    min_liquidity=10_000,     # $10k liquidity floor
+    min_volume_1h=3_000,      # some hourly activity
+    chains=["solana"],        # Solana only
+)</code></pre>
+                </div>
+            </section>
+
+            <!-- Parameter reference table -->
+            <section style="margin:3rem 0;">
+                <h2>All Filter Parameters</h2>
+
+                <h3 style="margin:1.5rem 0 0.75rem;color:var(--accent-color);">Market Cap</h3>
+                <table style="width:100%;border-collapse:collapse;">
+                    <thead><tr style="background:var(--bg-secondary);">
+                        <th style="padding:0.75rem;text-align:left;border:1px solid var(--border-primary);">Parameter</th>
+                        <th style="padding:0.75rem;text-align:left;border:1px solid var(--border-primary);">Type</th>
+                        <th style="padding:0.75rem;text-align:left;border:1px solid var(--border-primary);">Description</th>
+                    </tr></thead>
+                    <tbody>
+                        <tr><td style="padding:0.75rem;border:1px solid var(--border-primary);"><code>min_market_cap</code></td><td style="padding:0.75rem;border:1px solid var(--border-primary);">float</td><td style="padding:0.75rem;border:1px solid var(--border-primary);">Minimum market cap in USD</td></tr>
+                        <tr><td style="padding:0.75rem;border:1px solid var(--border-primary);"><code>max_market_cap</code></td><td style="padding:0.75rem;border:1px solid var(--border-primary);">float</td><td style="padding:0.75rem;border:1px solid var(--border-primary);">Maximum market cap in USD</td></tr>
+                    </tbody>
+                </table>
+
+                <h3 style="margin:1.5rem 0 0.75rem;color:var(--accent-color);">Liquidity</h3>
+                <table style="width:100%;border-collapse:collapse;">
+                    <thead><tr style="background:var(--bg-secondary);">
+                        <th style="padding:0.75rem;text-align:left;border:1px solid var(--border-primary);">Parameter</th>
+                        <th style="padding:0.75rem;text-align:left;border:1px solid var(--border-primary);">Type</th>
+                        <th style="padding:0.75rem;text-align:left;border:1px solid var(--border-primary);">Description</th>
+                    </tr></thead>
+                    <tbody>
+                        <tr><td style="padding:0.75rem;border:1px solid var(--border-primary);"><code>min_liquidity</code></td><td style="padding:0.75rem;border:1px solid var(--border-primary);">float</td><td style="padding:0.75rem;border:1px solid var(--border-primary);">Minimum pool liquidity in USD</td></tr>
+                        <tr><td style="padding:0.75rem;border:1px solid var(--border-primary);"><code>max_liquidity</code></td><td style="padding:0.75rem;border:1px solid var(--border-primary);">float</td><td style="padding:0.75rem;border:1px solid var(--border-primary);">Maximum pool liquidity in USD</td></tr>
+                    </tbody>
+                </table>
+
+                <h3 style="margin:1.5rem 0 0.75rem;color:var(--accent-color);">Volume</h3>
+                <table style="width:100%;border-collapse:collapse;">
+                    <thead><tr style="background:var(--bg-secondary);">
+                        <th style="padding:0.75rem;text-align:left;border:1px solid var(--border-primary);">Parameter</th>
+                        <th style="padding:0.75rem;text-align:left;border:1px solid var(--border-primary);">Type</th>
+                        <th style="padding:0.75rem;text-align:left;border:1px solid var(--border-primary);">Description</th>
+                    </tr></thead>
+                    <tbody>
+                        <tr><td style="padding:0.75rem;border:1px solid var(--border-primary);"><code>min_volume_1h</code></td><td style="padding:0.75rem;border:1px solid var(--border-primary);">float</td><td style="padding:0.75rem;border:1px solid var(--border-primary);">Minimum 1-hour volume in USD</td></tr>
+                        <tr><td style="padding:0.75rem;border:1px solid var(--border-primary);"><code>min_volume_24h</code></td><td style="padding:0.75rem;border:1px solid var(--border-primary);">float</td><td style="padding:0.75rem;border:1px solid var(--border-primary);">Minimum 24-hour volume in USD</td></tr>
+                        <tr><td style="padding:0.75rem;border:1px solid var(--border-primary);"><code>min_buy_count_1h</code></td><td style="padding:0.75rem;border:1px solid var(--border-primary);">int</td><td style="padding:0.75rem;border:1px solid var(--border-primary);">Minimum number of buy transactions in 1h</td></tr>
+                        <tr><td style="padding:0.75rem;border:1px solid var(--border-primary);"><code>min_sell_count_1h</code></td><td style="padding:0.75rem;border:1px solid var(--border-primary);">int</td><td style="padding:0.75rem;border:1px solid var(--border-primary);">Minimum number of sell transactions in 1h</td></tr>
+                    </tbody>
+                </table>
+
+                <h3 style="margin:1.5rem 0 0.75rem;color:var(--accent-color);">Chain &amp; Token</h3>
+                <table style="width:100%;border-collapse:collapse;">
+                    <thead><tr style="background:var(--bg-secondary);">
+                        <th style="padding:0.75rem;text-align:left;border:1px solid var(--border-primary);">Parameter</th>
+                        <th style="padding:0.75rem;text-align:left;border:1px solid var(--border-primary);">Type</th>
+                        <th style="padding:0.75rem;text-align:left;border:1px solid var(--border-primary);">Description</th>
+                    </tr></thead>
+                    <tbody>
+                        <tr><td style="padding:0.75rem;border:1px solid var(--border-primary);"><code>chains</code></td><td style="padding:0.75rem;border:1px solid var(--border-primary);">list[str]</td><td style="padding:0.75rem;border:1px solid var(--border-primary);">e.g. <code>["solana"]</code>, <code>["eth","bsc"]</code></td></tr>
+                        <tr><td style="padding:0.75rem;border:1px solid var(--border-primary);"><code>require_verified</code></td><td style="padding:0.75rem;border:1px solid var(--border-primary);">bool</td><td style="padding:0.75rem;border:1px solid var(--border-primary);">Only include GMGN-verified tokens</td></tr>
+                        <tr><td style="padding:0.75rem;border:1px solid var(--border-primary);"><code>exclude_honeypots</code></td><td style="padding:0.75rem;border:1px solid var(--border-primary);">bool</td><td style="padding:0.75rem;border:1px solid var(--border-primary);">Filter out detected honeypot contracts</td></tr>
+                        <tr><td style="padding:0.75rem;border:1px solid var(--border-primary);"><code>max_holder_concentration</code></td><td style="padding:0.75rem;border:1px solid var(--border-primary);">float (0–1)</td><td style="padding:0.75rem;border:1px solid var(--border-primary);">Max % held by top wallet (e.g. 0.3 = 30%)</td></tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Presets section -->
+            <section style="margin:3rem 0;">
+                <h2>Starter Presets</h2>
+                <p>Copy-paste these presets as a starting point and tune to your strategy.</p>
+
+                <h3 style="margin:1.5rem 0 0.5rem;">Early Gem Sniper</h3>
+                <div class="code-window">
+                    <div class="code-header"><div class="code-dots"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div><span class="code-title">presets.py</span></div>
+                    <pre><code class="language-python">early_gem = TokenFilter(
+    min_market_cap=10_000,
+    max_market_cap=200_000,
+    min_liquidity=5_000,
+    min_volume_1h=1_000,
+    chains=["solana"],
+    exclude_honeypots=True,
+)
+
+mid_cap = TokenFilter(
+    min_market_cap=500_000,
+    max_market_cap=10_000_000,
+    min_liquidity=50_000,
+    min_volume_24h=100_000,
+    require_verified=True,
+)
+
+high_volume = TokenFilter(
+    min_volume_1h=50_000,
+    min_buy_count_1h=100,
+    max_holder_concentration=0.25,
+)</code></pre>
+                </div>
+            </section>
+
+            <!-- Combining filters -->
+            <section style="margin:3rem 0;">
+                <h2>Custom Filter Logic</h2>
+                <p>For conditions not covered by <code>TokenFilter</code>, add a guard inside your handler:</p>
+                <div class="code-window">
+                    <div class="code-header"><div class="code-dots"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div><span class="code-title">custom_logic.py</span></div>
+                    <pre><code class="language-python">@client.on_new_pool
+async def on_pool(pool):
+    # custom ratio check
+    if pool.volume_1h / max(pool.liquidity, 1) < 0.1:
+        return  # skip low activity
+
+    # keyword filter on token name
+    if any(word in pool.name.lower() for word in ["scam", "fake", "test"]):
+        return
+
+    print(f"Passed all checks: {pool.address}")</code></pre>
+                </div>
+            </section>
+
+            <!-- Cross-links -->
+            <section style="margin:3rem 0;padding:2rem;background:var(--bg-secondary);border-radius:var(--radius-lg);border:1px solid var(--border-primary);">
+                <h2 style="margin-bottom:1rem;">Keep Building</h2>
+                <div class="docs-grid">
+                    <a href="tutorials.html#tutorial-2" class="doc-card"><div class="doc-icon"><i class="fas fa-graduation-cap"></i></div><h3>Filter Tutorial</h3><p>Step-by-step walkthrough of building a filtered monitor.</p></a>
+                    <a href="trading-bots.html" class="doc-card"><div class="doc-icon"><i class="fas fa-robot"></i></div><h3>Trading Bots</h3><p>Use filters as entry signals in automated bots.</p></a>
+                    <a href="api-reference.html" class="doc-card"><div class="doc-icon"><i class="fas fa-book"></i></div><h3>API Reference</h3><p>Full TokenFilter class documentation.</p></a>
+                    <a href="examples.html" class="doc-card"><div class="doc-icon"><i class="fas fa-code"></i></div><h3>Examples</h3><p>Real-world filter combos used in production.</p></a>
+                </div>
+            </section>
+
+            <!-- GMGN signup CTA -->
+            <section style="margin:3rem 0;padding:2.5rem;background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);border-radius:var(--radius-lg);text-align:center;">
+                <i class="fas fa-chart-line" style="font-size:3rem;color:var(--secondary-color);margin-bottom:1rem;display:block;"></i>
+                <h2 style="color:#fff;margin-bottom:0.75rem;">GMGN.ai — The Data Behind the Filters</h2>
+                <p style="color:#aaa;max-width:600px;margin:0 auto 1.5rem;">Every filter parameter maps directly to GMGN.ai's live blockchain data. Create a free account to explore the dashboard, understand the data, and build better filter strategies.</p>
+                <a href="https://gmgn.ai/r/9dLKvFyE" class="btn btn-gmgn" target="_blank" style="font-size:1.1rem;padding:0.75rem 2rem;"><i class="fas fa-user-plus"></i> Create Free GMGN Account →</a>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>GmGnAPI</h4>
+                    <p>Professional Python client for GMGN.ai WebSocket API</p>
+                    <div class="social-links">
+                        <a href="https://github.com/ChipaDevTeam/GmGnAPI" target="_blank"><i class="fab fa-github"></i></a>
+                        <a href="https://discord.gg/ub46R9Dk" target="_blank"><i class="fab fa-discord"></i></a>
+                        <a href="https://pypi.org/project/gmgnapi/" target="_blank"><i class="fab fa-python"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Documentation</h4>
+                    <ul>
+                        <li><a href="getting-started.html">Getting Started</a></li>
+                        <li><a href="tutorials.html">Tutorials</a></li>
+                        <li><a href="api-reference.html">API Reference</a></li>
+                        <li><a href="examples.html">Examples</a></li>
+                        <li><a href="advanced.html">Advanced</a></li>
+                        <li><a href="filters-guide.html">Filters Guide</a></li>
+                        <li><a href="trading-bots.html">Trading Bots</a></li>
+                        <li><a href="websocket-guide.html">WebSocket Guide</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="changelog.html">Changelog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Community</h4>
+                    <ul>
+                        <li><a href="https://discord.gg/ub46R9Dk" target="_blank"><i class="fab fa-discord"></i> Discord Server</a></li>
+                        <li><a href="https://gmgn.ai/r/9dLKvFyE" target="_blank"><i class="fas fa-external-link-alt"></i> Create GMGN Account</a></li>
+                        <li><a href="https://chipaeditor.com/?utm_source=docs&utm_medium=footer&utm_campaign=gmgn_api&utm_content=filters_footer" target="_blank"><i class="fas fa-code"></i> Chipa Editor</a></li>
+                        <li><a href="community.html"><i class="fas fa-users"></i> Community Page</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 GmGnAPI. Open source under MIT License.</p>
+                <p style="margin-top:0.5rem;font-size:0.85rem;opacity:0.7;">✨ Proudly built with <a href="https://chipaeditor.com/?utm_source=docs&utm_medium=footer&utm_campaign=gmgn_api&utm_content=filters_footer_credit" target="_blank" style="color:var(--accent-color);">Chipa Editor</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="assets/js/main.js"></script>
+</body>
+</html>
