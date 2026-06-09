@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutorials - GmGnAPI Documentation</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <meta name="description" content="Step-by-step tutorials for GmGnAPI — learn to build Solana token monitors, trading bots, and data pipelines.">
+</head>
+<body>
+    <div class="top-promo-banner">
+        <div class="container" style="display:flex;align-items:center;justify-content:center;gap:0.5rem;">
+            <span>✨</span>
+            <span>Write smarter Python faster with <a href="https://chipaeditor.com/?utm_source=docs&utm_medium=banner&utm_campaign=gmgn_api&utm_content=tutorials_banner" target="_blank"><strong>Chipa Editor</strong></a> — AI-powered editor built for blockchain devs.</span>
+            <a href="https://chipaeditor.com/?utm_source=docs&utm_medium=banner&utm_campaign=gmgn_api&utm_content=tutorials_banner_cta" class="btn-banner-cta" target="_blank">Try it free →</a>
+        </div>
+    </div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="logo-icon">🚀</span>
+                <span class="logo-text">GmGnAPI</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="getting-started.html" class="nav-link">Getting Started</a></li>
+                <li><a href="tutorials.html" class="nav-link active">Tutorials</a></li>
+                <li><a href="api-reference.html" class="nav-link">API Reference</a></li>
+                <li><a href="examples.html" class="nav-link">Examples</a></li>
+                <li><a href="advanced.html" class="nav-link">Advanced</a></li>
+                <li><a href="filters-guide.html" class="nav-link">Filters</a></li>
+                <li><a href="trading-bots.html" class="nav-link">Trading Bots</a></li>
+                <li><a href="faq.html" class="nav-link">FAQ</a></li>
+                <li><a href="community.html" class="nav-link">Community</a></li>
+                <li><a href="https://github.com/ChipaDevTeam/GmGnAPI" class="nav-link" target="_blank"><i class="fab fa-github"></i> GitHub</a></li>
+                <li><a href="https://gmgn.ai/r/9dLKvFyE" class="nav-link btn-signup" target="_blank"><i class="fas fa-rocket"></i> Sign Up on GMGN</a></li>
+                <li><a href="https://chipaeditor.com/?utm_source=docs&utm_medium=navbar&utm_campaign=gmgn_api&utm_content=tutorials_nav" class="nav-link btn-chipa" target="_blank"><i class="fas fa-code"></i> Chipa Editor</a></li>
+            </ul>
+            <div class="hamburger"><span class="bar"></span><span class="bar"></span><span class="bar"></span></div>
+        </div>
+    </nav>
+
+    <main style="margin-top:70px;">
+        <div class="container" style="padding:3rem 1.5rem;">
+            <header class="page-header">
+                <h1><i class="fas fa-graduation-cap" style="color:var(--accent-color)"></i> Tutorials</h1>
+                <p class="page-description">
+                    Hands-on, step-by-step guides that take you from zero to production.
+                    Each tutorial builds on the previous — follow them in order or jump straight to what you need.
+                </p>
+                <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:1.5rem;">
+                    <a href="https://discord.gg/ub46R9Dk" class="btn btn-accent" target="_blank"><i class="fab fa-discord"></i> Get Help on Discord</a>
+                    <a href="https://gmgn.ai/r/9dLKvFyE" class="btn btn-gmgn" target="_blank"><i class="fas fa-chart-line"></i> Create Free GMGN Account</a>
+                    <a href="https://chipaeditor.com/?utm_source=docs&utm_medium=cta&utm_campaign=gmgn_api&utm_content=tutorials_header" class="btn btn-chipa" target="_blank"><i class="fas fa-code"></i> Code with Chipa Editor</a>
+                </div>
+            </header>
+
+            <!-- Tutorial Index -->
+            <section style="margin:3rem 0;">
+                <h2 style="color:var(--text-primary);margin-bottom:1.5rem;">All Tutorials</h2>
+                <div class="docs-grid">
+                    <a href="#tutorial-1" class="doc-card"><div class="doc-icon"><i class="fas fa-plug"></i></div><h3>1. First Connection</h3><p>Connect to GMGN.ai WebSocket and receive your first live token event in under 5 minutes.</p></a>
+                    <a href="#tutorial-2" class="doc-card"><div class="doc-icon"><i class="fas fa-filter"></i></div><h3>2. Filtering Tokens</h3><p>Use the built-in filter system to only receive tokens that match your criteria.</p></a>
+                    <a href="#tutorial-3" class="doc-card"><div class="doc-icon"><i class="fas fa-bell"></i></div><h3>3. Alerts & Webhooks</h3><p>Send Discord or Telegram notifications when high-potential tokens are spotted.</p></a>
+                    <a href="#tutorial-4" class="doc-card"><div class="doc-icon"><i class="fas fa-database"></i></div><h3>4. Saving to Database</h3><p>Persist token data to SQLite or CSV for backtesting and analysis.</p></a>
+                    <a href="#tutorial-5" class="doc-card"><div class="doc-icon"><i class="fas fa-robot"></i></div><h3>5. Simple Trading Bot</h3><p>Wire GmGnAPI to a buy/sell execution layer for automated trading.</p></a>
+                    <a href="#tutorial-6" class="doc-card"><div class="doc-icon"><i class="fas fa-server"></i></div><h3>6. Production Deployment</h3><p>Run your bot reliably with Docker, systemd, and health checks.</p></a>
+                </div>
+            </section>
+
+            <!-- Tip box -->
+            <div class="callout callout-tip" style="margin:2rem 0;padding:1.5rem;background:var(--bg-secondary);border-left:4px solid var(--accent-color);border-radius:var(--radius-md);">
+                <strong><i class="fas fa-lightbulb" style="color:var(--accent-color)"></i> Pro Tip</strong>
+                <p style="margin:0.5rem 0 0;">All tutorials were written and tested inside <a href="https://chipaeditor.com/?utm_source=docs&utm_medium=inline&utm_campaign=gmgn_api&utm_content=tutorials_tip" target="_blank"><strong>Chipa Editor</strong></a> — an AI-powered code editor that autocompletes async Python, explains errors in plain English, and lets you run snippets instantly. <a href="https://chipaeditor.com/?utm_source=docs&utm_medium=inline&utm_campaign=gmgn_api&utm_content=tutorials_tip_cta" target="_blank">Try it free →</a></p>
+            </div>
+
+            <!-- Tutorial 1 -->
+            <section id="tutorial-1" style="margin:3rem 0;padding-top:1rem;">
+                <h2 style="border-bottom:2px solid var(--border-primary);padding-bottom:0.75rem;"><span style="color:var(--accent-color)">01.</span> Your First Connection</h2>
+                <p>This tutorial assumes you have Python 3.8+ installed. If you haven't installed GmGnAPI yet, see the <a href="installation.html">Installation Guide</a>.</p>
+
+                <h3 style="margin-top:1.5rem;">Step 1 — Install the package</h3>
+                <pre><code class="language-bash">pip install gmgnapi</code></pre>
+
+                <h3 style="margin-top:1.5rem;">Step 2 — Create a GMGN account</h3>
+                <p>You need a free <a href="https://gmgn.ai/r/9dLKvFyE" target="_blank">GMGN.ai account</a> to access the API. Use our referral link — it's free and helps support development.</p>
+                <a href="https://gmgn.ai/r/9dLKvFyE" class="btn btn-gmgn" target="_blank" style="display:inline-flex;margin:0.75rem 0;"><i class="fas fa-user-plus"></i>&nbsp;Create Free Account →</a>
+
+                <h3 style="margin-top:1.5rem;">Step 3 — Write the code</h3>
+                <div class="code-window">
+                    <div class="code-header"><div class="code-dots"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div><span class="code-title">first_connection.py</span></div>
+                    <pre><code class="language-python">import asyncio
+from gmgnapi import GmGnClient
+
+async def main():
+    async with GmGnClient() as client:
+        await client.subscribe_new_pools()
+
+        @client.on_new_pool
+        async def on_pool(pool):
+            print(f"🆕 New pool on {pool.chain}: {pool.address}")
+            print(f"   Market cap: ${pool.market_cap:,.0f}")
+
+        print("Listening for new pools… (Ctrl+C to stop)")
+        await client.listen()
+
+asyncio.run(main())</code></pre>
+                </div>
+
+                <h3 style="margin-top:1.5rem;">Step 4 — Run it</h3>
+                <pre><code class="language-bash">python first_connection.py</code></pre>
+                <p>You should see new Solana token pools streaming in within seconds. Next, learn to <a href="#tutorial-2">filter them</a>.</p>
+            </section>
+
+            <!-- Tutorial 2 -->
+            <section id="tutorial-2" style="margin:3rem 0;padding-top:1rem;">
+                <h2 style="border-bottom:2px solid var(--border-primary);padding-bottom:0.75rem;"><span style="color:var(--accent-color)">02.</span> Filtering Tokens</h2>
+                <p>Most new pools are noise. The filter system lets you set hard conditions — only tokens that pass all filters fire your handler. See the full <a href="filters-guide.html">Filters Guide</a> for every available option.</p>
+
+                <div class="code-window">
+                    <div class="code-header"><div class="code-dots"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div><span class="code-title">filtered_monitor.py</span></div>
+                    <pre><code class="language-python">import asyncio
+from gmgnapi import GmGnClient
+from gmgnapi.filters import TokenFilter
+
+async def main():
+    filters = TokenFilter(
+        min_market_cap=50_000,       # at least $50k market cap
+        max_market_cap=5_000_000,    # not already mega-cap
+        min_liquidity=10_000,        # enough liquidity to trade
+        min_volume_1h=5_000,         # some trading activity
+        require_verified=False,      # include unverified
+    )
+
+    async with GmGnClient(filters=filters) as client:
+        await client.subscribe_new_pools()
+
+        @client.on_new_pool
+        async def on_pool(pool):
+            print(f"✅ PASSED FILTER: {pool.address} — mcap ${pool.market_cap:,.0f}")
+
+        await client.listen()
+
+asyncio.run(main())</code></pre>
+                </div>
+                <p>Continue to <a href="#tutorial-3">Tutorial 3 — Alerts</a> to notify yourself when these tokens appear.</p>
+            </section>
+
+            <!-- Tutorial 3 -->
+            <section id="tutorial-3" style="margin:3rem 0;padding-top:1rem;">
+                <h2 style="border-bottom:2px solid var(--border-primary);padding-bottom:0.75rem;"><span style="color:var(--accent-color)">03.</span> Alerts &amp; Webhooks</h2>
+                <p>Send real-time Discord alerts when a token passes your filters. Join our <a href="https://discord.gg/ub46R9Dk" target="_blank">Discord community</a> to share your setups.</p>
+
+                <div class="code-window">
+                    <div class="code-header"><div class="code-dots"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div><span class="code-title">discord_alerts.py</span></div>
+                    <pre><code class="language-python">import asyncio, aiohttp
+from gmgnapi import GmGnClient
+from gmgnapi.filters import TokenFilter
+
+DISCORD_WEBHOOK = "https://discord.com/api/webhooks/YOUR_WEBHOOK_HERE"
+
+async def send_discord(pool):
+    payload = {
+        "embeds": [{
+            "title": f"🚀 New Token Alert",
+            "description": f"`{pool.address}`",
+            "color": 0x00ff88,
+            "fields": [
+                {"name": "Chain", "value": pool.chain, "inline": True},
+                {"name": "Market Cap", "value": f"${pool.market_cap:,.0f}", "inline": True},
+                {"name": "Liquidity", "value": f"${pool.liquidity:,.0f}", "inline": True},
+                {"name": "GMGN Link", "value": f"[View on GMGN](https://gmgn.ai/token/{pool.address})", "inline": False},
+            ]
+        }]
+    }
+    async with aiohttp.ClientSession() as session:
+        await session.post(DISCORD_WEBHOOK, json=payload)
+
+async def main():
+    filters = TokenFilter(min_market_cap=50_000, min_liquidity=10_000)
+    async with GmGnClient(filters=filters) as client:
+        await client.subscribe_new_pools()
+
+        @client.on_new_pool
+        async def on_pool(pool):
+            await send_discord(pool)
+
+        await client.listen()
+
+asyncio.run(main())</code></pre>
+                </div>
+            </section>
+
+            <!-- Tutorial 4 -->
+            <section id="tutorial-4" style="margin:3rem 0;padding-top:1rem;">
+                <h2 style="border-bottom:2px solid var(--border-primary);padding-bottom:0.75rem;"><span style="color:var(--accent-color)">04.</span> Saving to Database</h2>
+                <p>Persist every token event for later analysis. GmGnAPI has built-in export helpers. See the <a href="advanced.html">Advanced docs</a> for full options.</p>
+
+                <div class="code-window">
+                    <div class="code-header"><div class="code-dots"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div><span class="code-title">save_to_db.py</span></div>
+                    <pre><code class="language-python">import asyncio
+from gmgnapi import GmGnClient
+from gmgnapi.export import SQLiteExporter
+
+async def main():
+    exporter = SQLiteExporter("tokens.db")
+    await exporter.init()
+
+    async with GmGnClient() as client:
+        await client.subscribe_new_pools()
+
+        @client.on_new_pool
+        async def on_pool(pool):
+            await exporter.save(pool)
+            print(f"Saved {pool.address}")
+
+        await client.listen()
+
+asyncio.run(main())</code></pre>
+                </div>
+            </section>
+
+            <!-- Tutorial 5 -->
+            <section id="tutorial-5" style="margin:3rem 0;padding-top:1rem;">
+                <h2 style="border-bottom:2px solid var(--border-primary);padding-bottom:0.75rem;"><span style="color:var(--accent-color)">05.</span> Simple Trading Bot</h2>
+                <p>Wire the stream to your execution layer. See the full <a href="trading-bots.html">Trading Bots guide</a> for patterns, risk management, and position sizing.</p>
+
+                <div class="code-window">
+                    <div class="code-header"><div class="code-dots"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div><span class="code-title">simple_bot.py</span></div>
+                    <pre><code class="language-python">import asyncio
+from gmgnapi import GmGnClient
+from gmgnapi.filters import TokenFilter
+
+async def buy_token(address: str, amount_sol: float):
+    # plug in your own DEX / wallet execution here
+    print(f"BUY {amount_sol} SOL worth of {address}")
+
+async def main():
+    filters = TokenFilter(
+        min_market_cap=30_000,
+        max_market_cap=500_000,
+        min_liquidity=8_000,
+    )
+    async with GmGnClient(filters=filters) as client:
+        await client.subscribe_new_pools()
+
+        @client.on_new_pool
+        async def on_pool(pool):
+            print(f"Signal: {pool.address}")
+            await buy_token(pool.address, amount_sol=0.1)
+
+        await client.listen()
+
+asyncio.run(main())</code></pre>
+                </div>
+                <div class="callout callout-warning" style="margin-top:1rem;padding:1rem 1.5rem;background:var(--bg-secondary);border-left:4px solid #f59e0b;border-radius:var(--radius-md);">
+                    <strong><i class="fas fa-exclamation-triangle" style="color:#f59e0b"></i> Risk Warning</strong>
+                    <p style="margin:0.5rem 0 0;">Automated trading carries real financial risk. Always test with small amounts first. Read the full <a href="trading-bots.html">Trading Bots guide</a> before running live.</p>
+                </div>
+            </section>
+
+            <!-- Tutorial 6 -->
+            <section id="tutorial-6" style="margin:3rem 0;padding-top:1rem;">
+                <h2 style="border-bottom:2px solid var(--border-primary);padding-bottom:0.75rem;"><span style="color:var(--accent-color)">06.</span> Production Deployment</h2>
+                <p>Run your bot reliably 24/7. See the full <a href="advanced.html#production">Advanced → Production</a> section for Docker Compose, systemd, and monitoring dashboards.</p>
+
+                <h3 style="margin-top:1.5rem;">Minimal Dockerfile</h3>
+                <div class="code-window">
+                    <div class="code-header"><div class="code-dots"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div><span class="code-title">Dockerfile</span></div>
+                    <pre><code class="language-docker">FROM python:3.11-slim
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+COPY . .
+CMD ["python", "bot.py"]</code></pre>
+                </div>
+
+                <h3 style="margin-top:1.5rem;">requirements.txt</h3>
+                <pre><code class="language-text">gmgnapi>=1.0.0
+aiohttp>=3.9.0</code></pre>
+
+                <h3 style="margin-top:1.5rem;">Run it</h3>
+                <pre><code class="language-bash">docker build -t my-gmgn-bot .
+docker run -d --restart=always --name gmgn-bot my-gmgn-bot</code></pre>
+            </section>
+
+            <!-- Cross-links -->
+            <section style="margin:3rem 0;padding:2rem;background:var(--bg-secondary);border-radius:var(--radius-lg);border:1px solid var(--border-primary);">
+                <h2 style="margin-bottom:1rem;">What's Next?</h2>
+                <div class="docs-grid">
+                    <a href="filters-guide.html" class="doc-card"><div class="doc-icon"><i class="fas fa-filter"></i></div><h3>Filters Guide</h3><p>Every filter option explained with examples.</p></a>
+                    <a href="trading-bots.html" class="doc-card"><div class="doc-icon"><i class="fas fa-robot"></i></div><h3>Trading Bots</h3><p>Full bot patterns, risk management, position sizing.</p></a>
+                    <a href="api-reference.html" class="doc-card"><div class="doc-icon"><i class="fas fa-book"></i></div><h3>API Reference</h3><p>Complete method and model documentation.</p></a>
+                    <a href="community.html" class="doc-card"><div class="doc-icon"><i class="fab fa-discord"></i></div><h3>Community</h3><p>Share your bot, get feedback, find collaborators.</p></a>
+                </div>
+            </section>
+
+            <!-- ChipaEditor CTA -->
+            <section style="margin:3rem 0;padding:2.5rem;background:linear-gradient(135deg,#1a1a2e,#16213e);border-radius:var(--radius-lg);border:1px solid var(--accent-color);text-align:center;">
+                <i class="fas fa-code" style="font-size:3rem;color:var(--accent-color);margin-bottom:1rem;display:block;"></i>
+                <h2 style="color:#fff;margin-bottom:0.75rem;">Write These Tutorials Faster with Chipa Editor</h2>
+                <p style="color:#aaa;max-width:600px;margin:0 auto 1.5rem;">Chipa Editor is the AI-powered code editor purpose-built for Python developers. It autocompletes async patterns, explains library docs inline, and catches bugs before you run your code.</p>
+                <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+                    <a href="https://chipaeditor.com/?utm_source=docs&utm_medium=cta_block&utm_campaign=gmgn_api&utm_content=tutorials_bottom_cta" class="btn btn-primary" target="_blank"><i class="fas fa-download"></i> Download Free</a>
+                    <a href="https://discord.gg/ub46R9Dk" class="btn btn-accent" target="_blank"><i class="fab fa-discord"></i> Join the Community</a>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>GmGnAPI</h4>
+                    <p>Professional Python client for GMGN.ai WebSocket API</p>
+                    <div class="social-links">
+                        <a href="https://github.com/ChipaDevTeam/GmGnAPI" target="_blank"><i class="fab fa-github"></i></a>
+                        <a href="https://discord.gg/ub46R9Dk" target="_blank"><i class="fab fa-discord"></i></a>
+                        <a href="https://pypi.org/project/gmgnapi/" target="_blank"><i class="fab fa-python"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Documentation</h4>
+                    <ul>
+                        <li><a href="getting-started.html">Getting Started</a></li>
+                        <li><a href="tutorials.html">Tutorials</a></li>
+                        <li><a href="api-reference.html">API Reference</a></li>
+                        <li><a href="examples.html">Examples</a></li>
+                        <li><a href="advanced.html">Advanced</a></li>
+                        <li><a href="filters-guide.html">Filters Guide</a></li>
+                        <li><a href="trading-bots.html">Trading Bots</a></li>
+                        <li><a href="websocket-guide.html">WebSocket Guide</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="changelog.html">Changelog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Community</h4>
+                    <ul>
+                        <li><a href="https://discord.gg/ub46R9Dk" target="_blank"><i class="fab fa-discord"></i> Discord Server</a></li>
+                        <li><a href="https://gmgn.ai/r/9dLKvFyE" target="_blank"><i class="fas fa-external-link-alt"></i> Create GMGN Account</a></li>
+                        <li><a href="https://github.com/ChipaDevTeam/GmGnAPI" target="_blank"><i class="fab fa-github"></i> GitHub</a></li>
+                        <li><a href="https://chipaeditor.com/?utm_source=docs&utm_medium=footer&utm_campaign=gmgn_api&utm_content=tutorials_footer" target="_blank"><i class="fas fa-code"></i> Chipa Editor</a></li>
+                        <li><a href="community.html"><i class="fas fa-users"></i> Community Page</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Tools</h4>
+                    <ul>
+                        <li><a href="installation.html">Installation</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="changelog.html">Changelog</a></li>
+                        <li><a href="https://github.com/ChipaDevTeam/GmGnAPI/issues" target="_blank">Report Issues</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 GmGnAPI. Open source under MIT License.</p>
+                <p style="margin-top:0.5rem;font-size:0.85rem;opacity:0.7;">✨ Proudly built with <a href="https://chipaeditor.com/?utm_source=docs&utm_medium=footer&utm_campaign=gmgn_api&utm_content=tutorials_footer_credit" target="_blank" style="color:var(--accent-color);">Chipa Editor</a> — AI-powered code editor for Python</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="assets/js/main.js"></script>
+</body>
+</html>
