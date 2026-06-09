@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Guide - GmGnAPI Documentation</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <meta name="description" content="Deep dive into GmGnAPI WebSocket internals — connection lifecycle, reconnection, message types, and performance tuning.">
+</head>
+<body>
+    <div class="top-promo-banner">
+        <div class="container" style="display:flex;align-items:center;justify-content:center;gap:0.5rem;">
+            <span>⚡</span>
+            <span><a href="https://chipaeditor.com/?utm_source=docs&utm_medium=banner&utm_campaign=gmgn_api&utm_content=ws_banner" target="_blank"><strong>Chipa Editor</strong></a> highlights async/await patterns and WebSocket code as you type. Way faster than any other editor.</span>
+            <a href="https://chipaeditor.com/?utm_source=docs&utm_medium=banner&utm_campaign=gmgn_api&utm_content=ws_banner_cta" class="btn-banner-cta" target="_blank">Try free →</a>
+        </div>
+    </div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo"><span class="logo-icon">🚀</span><span class="logo-text">GmGnAPI</span></div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="getting-started.html" class="nav-link">Getting Started</a></li>
+                <li><a href="tutorials.html" class="nav-link">Tutorials</a></li>
+                <li><a href="api-reference.html" class="nav-link">API Reference</a></li>
+                <li><a href="examples.html" class="nav-link">Examples</a></li>
+                <li><a href="advanced.html" class="nav-link">Advanced</a></li>
+                <li><a href="filters-guide.html" class="nav-link">Filters</a></li>
+                <li><a href="trading-bots.html" class="nav-link">Trading Bots</a></li>
+                <li><a href="websocket-guide.html" class="nav-link active">WebSocket</a></li>
+                <li><a href="faq.html" class="nav-link">FAQ</a></li>
+                <li><a href="community.html" class="nav-link">Community</a></li>
+                <li><a href="https://github.com/ChipaDevTeam/GmGnAPI" class="nav-link" target="_blank"><i class="fab fa-github"></i> GitHub</a></li>
+                <li><a href="https://gmgn.ai/r/9dLKvFyE" class="nav-link btn-signup" target="_blank"><i class="fas fa-rocket"></i> Sign Up on GMGN</a></li>
+                <li><a href="https://chipaeditor.com/?utm_source=docs&utm_medium=navbar&utm_campaign=gmgn_api&utm_content=ws_nav" class="nav-link btn-chipa" target="_blank"><i class="fas fa-code"></i> Chipa Editor</a></li>
+            </ul>
+            <div class="hamburger"><span class="bar"></span><span class="bar"></span><span class="bar"></span></div>
+        </div>
+    </nav>
+
+    <main style="margin-top:70px;">
+        <div class="container" style="padding:3rem 1.5rem;">
+            <header class="page-header">
+                <h1><i class="fas fa-wifi" style="color:var(--accent-color)"></i> WebSocket Guide</h1>
+                <p class="page-description">
+                    Everything you need to know about GmGnAPI's WebSocket layer — connection lifecycle, message types, reconnection logic, and performance tuning for low-latency token monitoring.
+                </p>
+                <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:1.5rem;">
+                    <a href="api-reference.html" class="btn btn-primary"><i class="fas fa-book"></i> API Reference</a>
+                    <a href="https://discord.gg/ub46R9Dk" class="btn btn-accent" target="_blank"><i class="fab fa-discord"></i> Ask on Discord</a>
+                    <a href="https://gmgn.ai/r/9dLKvFyE" class="btn btn-gmgn" target="_blank"><i class="fas fa-chart-line"></i> GMGN Dashboard</a>
+                </div>
+            </header>
+
+            <!-- How it works -->
+            <section style="margin:3rem 0;">
+                <h2>How the WebSocket Connection Works</h2>
+                <p>GmGnAPI maintains a single persistent WebSocket connection to <code>wss://gmgn.ai/ws</code>. When you call <code>subscribe_new_pools()</code>, a subscription message is sent over this connection. GMGN.ai's servers push matching events to your client as they happen — zero polling, minimal latency.</p>
+
+                <div style="margin:1.5rem 0;padding:1.5rem;background:var(--bg-secondary);border-radius:var(--radius-lg);border:1px solid var(--border-primary);">
+                    <h3 style="margin-bottom:1rem;">Connection Lifecycle</h3>
+                    <ol style="padding-left:1.5rem;line-height:2;">
+                        <li><strong>Connect</strong> — <code>GmGnClient.__aenter__</code> opens the WebSocket</li>
+                        <li><strong>Authenticate</strong> — session handshake with GMGN servers</li>
+                        <li><strong>Subscribe</strong> — send subscription message(s) for the channels you want</li>
+                        <li><strong>Listen</strong> — <code>client.listen()</code> enters the event loop</li>
+                        <li><strong>Reconnect</strong> — on disconnect, exponential backoff auto-reconnects and re-subscribes</li>
+                        <li><strong>Close</strong> — <code>__aexit__</code> sends a clean close frame</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- Subscription types -->
+            <section style="margin:3rem 0;">
+                <h2>Subscription Types</h2>
+                <table style="width:100%;border-collapse:collapse;">
+                    <thead><tr style="background:var(--bg-secondary);">
+                        <th style="padding:0.75rem;text-align:left;border:1px solid var(--border-primary);">Method</th>
+                        <th style="padding:0.75rem;text-align:left;border:1px solid var(--border-primary);">Channel</th>
+                        <th style="padding:0.75rem;text-align:left;border:1px solid var(--border-primary);">Description</th>
+                    </tr></thead>
+                    <tbody>
+                        <tr><td style="padding:0.75rem;border:1px solid var(--border-primary);"><code>subscribe_new_pools()</code></td><td style="padding:0.75rem;border:1px solid var(--border-primary);"><code>new_pools</code></td><td style="padding:0.75rem;border:1px solid var(--border-primary);">New liquidity pool creation events</td></tr>
+                        <tr><td style="padding:0.75rem;border:1px solid var(--border-primary);"><code>subscribe_token_updates(address)</code></td><td style="padding:0.75rem;border:1px solid var(--border-primary);"><code>token:{address}</code></td><td style="padding:0.75rem;border:1px solid var(--border-primary);">Price, volume, and holder updates for a specific token</td></tr>
+                        <tr><td style="padding:0.75rem;border:1px solid var(--border-primary);"><code>subscribe_trades(address)</code></td><td style="padding:0.75rem;border:1px solid var(--border-primary);"><code>trades:{address}</code></td><td style="padding:0.75rem;border:1px solid var(--border-primary);">Individual buy/sell transactions for a token</td></tr>
+                        <tr><td style="padding:0.75rem;border:1px solid var(--border-primary);"><code>subscribe_trending()</code></td><td style="padding:0.75rem;border:1px solid var(--border-primary);"><code>trending</code></td><td style="padding:0.75rem;border:1px solid var(--border-primary);">GMGN trending token list updates</td></tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Reconnection -->
+            <section style="margin:3rem 0;">
+                <h2>Reconnection &amp; Resilience</h2>
+                <p>GmGnAPI uses exponential backoff: 1s → 2s → 4s → 8s → 16s → 32s, capped at 60s. After reconnecting, all active subscriptions are automatically re-sent.</p>
+                <div class="code-window">
+                    <div class="code-header"><div class="code-dots"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div><span class="code-title">reconnect_config.py</span></div>
+                    <pre><code class="language-python">from gmgnapi import GmGnClient, ConnectionConfig
+
+config = ConnectionConfig(
+    max_reconnect_attempts=20,   # give up after 20 attempts
+    initial_backoff=1.0,         # first retry after 1 second
+    max_backoff=60.0,            # cap at 60 seconds
+    backoff_multiplier=2.0,      # double each time
+    ping_interval=30,            # send ping every 30s to keep alive
+    ping_timeout=10,             # disconnect if no pong within 10s
+)
+
+async with GmGnClient(connection_config=config) as client:
+    await client.subscribe_new_pools()
+
+    @client.on_reconnect
+    async def on_reconnect(attempt: int):
+        print(f"Reconnected (attempt #{attempt})")
+
+    await client.listen()</code></pre>
+                </div>
+            </section>
+
+            <!-- Message format -->
+            <section style="margin:3rem 0;">
+                <h2>Raw Message Format</h2>
+                <p>If you need low-level access to the raw JSON before it's parsed into Pydantic models:</p>
+                <div class="code-window">
+                    <div class="code-header"><div class="code-dots"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div><span class="code-title">raw_messages.py</span></div>
+                    <pre><code class="language-python">@client.on_raw_message
+async def on_raw(message: dict):
+    print(f"Channel: {message.get('channel')}")
+    print(f"Raw data: {message.get('data')}")</code></pre>
+                </div>
+
+                <h3 style="margin-top:1.5rem;">Example raw new_pool message</h3>
+                <div class="code-window">
+                    <div class="code-header"><div class="code-dots"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div><span class="code-title">example_message.json</span></div>
+                    <pre><code class="language-json">{
+  "channel": "new_pools",
+  "data": {
+    "address": "7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU",
+    "chain": "solana",
+    "market_cap": 125000.50,
+    "liquidity": 22500.00,
+    "volume_1h": 8700.20,
+    "buy_count_1h": 34,
+    "sell_count_1h": 12,
+    "top_holder_pct": 0.18,
+    "created_at": "2025-06-09T14:22:00Z"
+  }
+}</code></pre>
+                </div>
+            </section>
+
+            <!-- Performance tuning -->
+            <section style="margin:3rem 0;">
+                <h2>Performance Tuning</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-tachometer-alt"></i></div>
+                        <h3>Keep Handlers Fast</h3>
+                        <p>Your <code>on_new_pool</code> handler should return in &lt;10ms. Offload slow work (DB writes, HTTP calls) to a background queue.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-layer-group"></i></div>
+                        <h3>Use asyncio.Queue</h3>
+                        <p>Decouple the WebSocket receive loop from processing by pushing events to a queue and consuming them in a separate coroutine.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-filter"></i></div>
+                        <h3>Filter Early</h3>
+                        <p>Use <code>TokenFilter</code> to reduce events at the source. Fewer events = less handler overhead = lower latency on the ones that matter.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-network-wired"></i></div>
+                        <h3>Co-locate Your Bot</h3>
+                        <p>Run your bot on a VPS in a US data center close to GMGN's servers to minimize network latency.</p>
+                    </div>
+                </div>
+
+                <h3 style="margin:1.5rem 0 0.5rem;">Queue Pattern Example</h3>
+                <div class="code-window">
+                    <div class="code-header"><div class="code-dots"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div><span class="code-title">queue_pattern.py</span></div>
+                    <pre><code class="language-python">import asyncio
+from gmgnapi import GmGnClient
+
+queue: asyncio.Queue = asyncio.Queue(maxsize=1000)
+
+async def processor():
+    while True:
+        pool = await queue.get()
+        # slow work here — DB, HTTP, etc.
+        print(f"Processing: {pool.address}")
+        await asyncio.sleep(0)  # yield to event loop
+        queue.task_done()
+
+async def main():
+    async with GmGnClient() as client:
+        await client.subscribe_new_pools()
+
+        @client.on_new_pool
+        async def on_pool(pool):
+            try:
+                queue.put_nowait(pool)  # non-blocking
+            except asyncio.QueueFull:
+                print("⚠️ Queue full, dropping event")
+
+        # run processor concurrently
+        asyncio.create_task(processor())
+        await client.listen()
+
+asyncio.run(main())</code></pre>
+                </div>
+            </section>
+
+            <!-- Cross-links -->
+            <section style="margin:3rem 0;padding:2rem;background:var(--bg-secondary);border-radius:var(--radius-lg);border:1px solid var(--border-primary);">
+                <h2 style="margin-bottom:1rem;">Related Docs</h2>
+                <div class="docs-grid">
+                    <a href="api-reference.html" class="doc-card"><div class="doc-icon"><i class="fas fa-book"></i></div><h3>API Reference</h3><p>Full GmGnClient class documentation.</p></a>
+                    <a href="advanced.html" class="doc-card"><div class="doc-icon"><i class="fas fa-cogs"></i></div><h3>Advanced</h3><p>Monitoring, stats, and production patterns.</p></a>
+                    <a href="trading-bots.html" class="doc-card"><div class="doc-icon"><i class="fas fa-robot"></i></div><h3>Trading Bots</h3><p>Apply this knowledge to build fast bots.</p></a>
+                    <a href="faq.html" class="doc-card"><div class="doc-icon"><i class="fas fa-question-circle"></i></div><h3>FAQ</h3><p>Common WebSocket questions answered.</p></a>
+                </div>
+            </section>
+
+            <!-- ChipaEditor CTA -->
+            <section style="margin:3rem 0;padding:2.5rem;background:linear-gradient(135deg,#1a1a2e,#16213e);border-radius:var(--radius-lg);border:1px solid var(--accent-color);text-align:center;">
+                <i class="fas fa-code" style="font-size:3rem;color:var(--accent-color);margin-bottom:1rem;display:block;"></i>
+                <h2 style="color:#fff;margin-bottom:0.75rem;">Code Async Python Faster with Chipa Editor</h2>
+                <p style="color:#aaa;max-width:600px;margin:0 auto 1.5rem;">Chipa Editor understands asyncio patterns, offers inline docs for every GmGnAPI method, and catches common async mistakes before you run your code. Built by developers, for developers.</p>
+                <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+                    <a href="https://chipaeditor.com/?utm_source=docs&utm_medium=cta_block&utm_campaign=gmgn_api&utm_content=ws_bottom_cta" class="btn btn-primary" target="_blank"><i class="fas fa-download"></i> Download Free</a>
+                    <a href="https://discord.gg/ub46R9Dk" class="btn btn-accent" target="_blank"><i class="fab fa-discord"></i> Join Community</a>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>GmGnAPI</h4>
+                    <p>Professional Python client for GMGN.ai WebSocket API</p>
+                    <div class="social-links">
+                        <a href="https://github.com/ChipaDevTeam/GmGnAPI" target="_blank"><i class="fab fa-github"></i></a>
+                        <a href="https://discord.gg/ub46R9Dk" target="_blank"><i class="fab fa-discord"></i></a>
+                        <a href="https://pypi.org/project/gmgnapi/" target="_blank"><i class="fab fa-python"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Documentation</h4>
+                    <ul>
+                        <li><a href="getting-started.html">Getting Started</a></li>
+                        <li><a href="tutorials.html">Tutorials</a></li>
+                        <li><a href="api-reference.html">API Reference</a></li>
+                        <li><a href="examples.html">Examples</a></li>
+                        <li><a href="advanced.html">Advanced</a></li>
+                        <li><a href="filters-guide.html">Filters Guide</a></li>
+                        <li><a href="trading-bots.html">Trading Bots</a></li>
+                        <li><a href="websocket-guide.html">WebSocket Guide</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="changelog.html">Changelog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Community</h4>
+                    <ul>
+                        <li><a href="https://discord.gg/ub46R9Dk" target="_blank"><i class="fab fa-discord"></i> Discord Server</a></li>
+                        <li><a href="https://gmgn.ai/r/9dLKvFyE" target="_blank"><i class="fas fa-external-link-alt"></i> Create GMGN Account</a></li>
+                        <li><a href="https://chipaeditor.com/?utm_source=docs&utm_medium=footer&utm_campaign=gmgn_api&utm_content=ws_footer" target="_blank"><i class="fas fa-code"></i> Chipa Editor</a></li>
+                        <li><a href="community.html"><i class="fas fa-users"></i> Community Page</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 GmGnAPI. Open source under MIT License.</p>
+                <p style="margin-top:0.5rem;font-size:0.85rem;opacity:0.7;">✨ Proudly built with <a href="https://chipaeditor.com/?utm_source=docs&utm_medium=footer&utm_campaign=gmgn_api&utm_content=ws_footer_credit" target="_blank" style="color:var(--accent-color);">Chipa Editor</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="assets/js/main.js"></script>
+</body>
+</html>

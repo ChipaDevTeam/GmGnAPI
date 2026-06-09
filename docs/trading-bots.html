@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trading Bots - GmGnAPI Documentation</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <meta name="description" content="Build automated Solana trading bots with GmGnAPI — patterns, risk management, position sizing, and production deployment.">
+</head>
+<body>
+    <div class="top-promo-banner">
+        <div class="container" style="display:flex;align-items:center;justify-content:center;gap:0.5rem;">
+            <span>🤖</span>
+            <span>Building a trading bot? <a href="https://chipaeditor.com/?utm_source=docs&utm_medium=banner&utm_campaign=gmgn_api&utm_content=bots_banner" target="_blank"><strong>Chipa Editor</strong></a> has AI that understands async Python and GmGnAPI patterns.</span>
+            <a href="https://chipaeditor.com/?utm_source=docs&utm_medium=banner&utm_campaign=gmgn_api&utm_content=bots_banner_cta" class="btn-banner-cta" target="_blank">Try free →</a>
+        </div>
+    </div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo"><span class="logo-icon">🚀</span><span class="logo-text">GmGnAPI</span></div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="getting-started.html" class="nav-link">Getting Started</a></li>
+                <li><a href="tutorials.html" class="nav-link">Tutorials</a></li>
+                <li><a href="api-reference.html" class="nav-link">API Reference</a></li>
+                <li><a href="examples.html" class="nav-link">Examples</a></li>
+                <li><a href="advanced.html" class="nav-link">Advanced</a></li>
+                <li><a href="filters-guide.html" class="nav-link">Filters</a></li>
+                <li><a href="trading-bots.html" class="nav-link active">Trading Bots</a></li>
+                <li><a href="faq.html" class="nav-link">FAQ</a></li>
+                <li><a href="community.html" class="nav-link">Community</a></li>
+                <li><a href="https://github.com/ChipaDevTeam/GmGnAPI" class="nav-link" target="_blank"><i class="fab fa-github"></i> GitHub</a></li>
+                <li><a href="https://gmgn.ai/r/9dLKvFyE" class="nav-link btn-signup" target="_blank"><i class="fas fa-rocket"></i> Sign Up on GMGN</a></li>
+                <li><a href="https://chipaeditor.com/?utm_source=docs&utm_medium=navbar&utm_campaign=gmgn_api&utm_content=bots_nav" class="nav-link btn-chipa" target="_blank"><i class="fas fa-code"></i> Chipa Editor</a></li>
+            </ul>
+            <div class="hamburger"><span class="bar"></span><span class="bar"></span><span class="bar"></span></div>
+        </div>
+    </nav>
+
+    <main style="margin-top:70px;">
+        <div class="container" style="padding:3rem 1.5rem;">
+            <header class="page-header">
+                <h1><i class="fas fa-robot" style="color:var(--accent-color)"></i> Trading Bots</h1>
+                <p class="page-description">
+                    Patterns, architectures, risk management, and production tips for building automated Solana trading bots powered by GmGnAPI's real-time data streams.
+                </p>
+                <div class="callout callout-warning" style="margin-top:1.5rem;padding:1rem 1.5rem;background:rgba(245,158,11,0.1);border-left:4px solid #f59e0b;border-radius:var(--radius-md);">
+                    <strong><i class="fas fa-exclamation-triangle" style="color:#f59e0b"></i> Risk Disclaimer</strong>
+                    <p style="margin:0.5rem 0 0;">Automated cryptocurrency trading involves substantial financial risk. This documentation is for educational purposes. Always test with amounts you can afford to lose entirely.</p>
+                </div>
+                <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:1.5rem;">
+                    <a href="https://discord.gg/ub46R9Dk" class="btn btn-accent" target="_blank"><i class="fab fa-discord"></i> Share Your Bot on Discord</a>
+                    <a href="https://gmgn.ai/r/9dLKvFyE" class="btn btn-gmgn" target="_blank"><i class="fas fa-chart-line"></i> GMGN Dashboard</a>
+                </div>
+            </header>
+
+            <!-- Bot Architecture -->
+            <section style="margin:3rem 0;">
+                <h2>Bot Architecture Overview</h2>
+                <p>A GmGnAPI-based trading bot has four layers:</p>
+                <div class="features-grid" style="margin-top:1.5rem;">
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-satellite-dish"></i></div>
+                        <h3>1. Data Layer</h3>
+                        <p>GmGnAPI WebSocket stream — real-time token events filtered to your criteria.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-brain"></i></div>
+                        <h3>2. Signal Layer</h3>
+                        <p>Your logic that decides whether a token event is worth acting on.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-exchange-alt"></i></div>
+                        <h3>3. Execution Layer</h3>
+                        <p>The code that calls a DEX, Jupiter, or your wallet to place the trade.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+                        <h3>4. Risk Layer</h3>
+                        <p>Position sizing, max loss limits, stop losses, and circuit breakers.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Pattern 1: Sniper -->
+            <section style="margin:3rem 0;">
+                <h2>Pattern 1: New Pool Sniper</h2>
+                <p>Buy tiny positions in brand-new pools that pass strict quality filters. High risk, high reward.</p>
+                <div class="code-window">
+                    <div class="code-header"><div class="code-dots"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div><span class="code-title">sniper_bot.py</span></div>
+                    <pre><code class="language-python">import asyncio
+from gmgnapi import GmGnClient
+from gmgnapi.filters import TokenFilter
+
+MAX_SOL_PER_TRADE = 0.05   # never risk more than this
+MAX_TRADES_PER_HOUR = 10   # circuit breaker
+trades_this_hour = 0
+
+async def execute_buy(address: str, sol_amount: float):
+    print(f"[BUY] {sol_amount} SOL → {address}")
+    # TODO: plug in Jupiter or your DEX SDK here
+
+async def execute_sell(address: str):
+    print(f"[SELL] {address}")
+
+async def main():
+    global trades_this_hour
+
+    filters = TokenFilter(
+        min_market_cap=5_000,
+        max_market_cap=100_000,
+        min_liquidity=3_000,
+        chains=["solana"],
+        exclude_honeypots=True,
+        max_holder_concentration=0.3,
+    )
+
+    async with GmGnClient(filters=filters) as client:
+        await client.subscribe_new_pools()
+
+        @client.on_new_pool
+        async def on_pool(pool):
+            global trades_this_hour
+            if trades_this_hour >= MAX_TRADES_PER_HOUR:
+                print("⛔ Circuit breaker: max trades reached this hour")
+                return
+
+            sol_amount = min(MAX_SOL_PER_TRADE, pool.liquidity * 0.001)
+            await execute_buy(pool.address, sol_amount)
+            trades_this_hour += 1
+
+            # simple time-based exit: sell after 5 minutes
+            await asyncio.sleep(300)
+            await execute_sell(pool.address)
+
+        await client.listen()
+
+asyncio.run(main())</code></pre>
+                </div>
+            </section>
+
+            <!-- Pattern 2: Trend follower -->
+            <section style="margin:3rem 0;">
+                <h2>Pattern 2: Volume Trend Follower</h2>
+                <p>Wait for volume to confirm momentum before entering. Lower risk than sniping.</p>
+                <div class="code-window">
+                    <div class="code-header"><div class="code-dots"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div><span class="code-title">trend_bot.py</span></div>
+                    <pre><code class="language-python">import asyncio
+from gmgnapi import GmGnClient
+from gmgnapi.filters import TokenFilter
+
+seen_tokens: dict[str, dict] = {}
+
+async def main():
+    filters = TokenFilter(
+        min_market_cap=200_000,
+        min_volume_1h=20_000,
+        min_buy_count_1h=50,
+        chains=["solana"],
+    )
+
+    async with GmGnClient(filters=filters) as client:
+        await client.subscribe_new_pools()
+
+        @client.on_new_pool
+        async def on_pool(pool):
+            prev = seen_tokens.get(pool.address)
+            seen_tokens[pool.address] = {
+                "volume": pool.volume_1h,
+                "mcap": pool.market_cap,
+            }
+
+            if prev is None:
+                return  # first time seeing this token
+
+            volume_growth = pool.volume_1h / max(prev["volume"], 1)
+            if volume_growth > 2.0:
+                print(f"📈 Volume 2x spike: {pool.address}")
+                print(f"   Old vol: ${prev['volume']:,.0f} → New: ${pool.volume_1h:,.0f}")
+                # place trade here
+
+        await client.listen()
+
+asyncio.run(main())</code></pre>
+                </div>
+            </section>
+
+            <!-- Pattern 3: Multi-signal -->
+            <section style="margin:3rem 0;">
+                <h2>Pattern 3: Multi-Signal Scoring</h2>
+                <p>Score each token across multiple dimensions. Only trade when the combined score exceeds a threshold.</p>
+                <div class="code-window">
+                    <div class="code-header"><div class="code-dots"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div><span class="code-title">scored_bot.py</span></div>
+                    <pre><code class="language-python">def score_token(pool) -> float:
+    score = 0.0
+
+    # market cap sweet spot
+    if 50_000 <= pool.market_cap <= 500_000:
+        score += 2.0
+
+    # healthy liquidity ratio
+    if pool.liquidity / max(pool.market_cap, 1) > 0.15:
+        score += 1.5
+
+    # strong buy pressure
+    if pool.buy_count_1h > pool.sell_count_1h * 1.5:
+        score += 2.0
+
+    # low concentration risk
+    if pool.top_holder_pct < 0.15:
+        score += 1.0
+
+    # volume momentum
+    if pool.volume_1h > 10_000:
+        score += 1.0
+
+    return score
+
+@client.on_new_pool
+async def on_pool(pool):
+    s = score_token(pool)
+    print(f"Score: {s:.1f} | {pool.address}")
+    if s >= 6.0:
+        print(f"🎯 HIGH CONFIDENCE SIGNAL: {pool.address}")
+        # execute trade</code></pre>
+                </div>
+            </section>
+
+            <!-- Risk management -->
+            <section style="margin:3rem 0;">
+                <h2>Risk Management Essentials</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-percentage"></i></div>
+                        <h3>Position Sizing</h3>
+                        <p>Never risk more than 1-2% of your total capital on a single trade. Use <code>min(MAX_SOL, total_capital * 0.01)</code>.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-stop-circle"></i></div>
+                        <h3>Stop Losses</h3>
+                        <p>Set automatic sells when price drops 30-50%. Track entry price and poll periodically.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-plug"></i></div>
+                        <h3>Circuit Breakers</h3>
+                        <p>Pause trading after N consecutive losses, or when daily loss exceeds a threshold.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-vial"></i></div>
+                        <h3>Paper Trade First</h3>
+                        <p>Log trades without executing them for at least 48 hours before going live.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Discord CTA -->
+            <section style="margin:3rem 0;padding:2.5rem;background:linear-gradient(135deg,#5865f2,#404eed);border-radius:var(--radius-lg);text-align:center;">
+                <i class="fab fa-discord" style="font-size:3rem;color:#fff;margin-bottom:1rem;display:block;"></i>
+                <h2 style="color:#fff;margin-bottom:0.75rem;">Share Your Bot — Get Feedback</h2>
+                <p style="color:rgba(255,255,255,0.85);max-width:600px;margin:0 auto 1.5rem;">Our Discord has a dedicated <strong>#trading-bots</strong> channel where builders share strategies, get code reviews, and collaborate. Join 500+ developers who are already building.</p>
+                <a href="https://discord.gg/ub46R9Dk" class="btn btn-primary" target="_blank" style="background:#fff;color:#5865f2;font-weight:700;"><i class="fab fa-discord"></i> Join Discord →</a>
+            </section>
+
+            <!-- Cross-links -->
+            <section style="margin:3rem 0;padding:2rem;background:var(--bg-secondary);border-radius:var(--radius-lg);border:1px solid var(--border-primary);">
+                <h2 style="margin-bottom:1rem;">Related Docs</h2>
+                <div class="docs-grid">
+                    <a href="filters-guide.html" class="doc-card"><div class="doc-icon"><i class="fas fa-filter"></i></div><h3>Filters Guide</h3><p>Build better entry signals with precise filters.</p></a>
+                    <a href="advanced.html" class="doc-card"><div class="doc-icon"><i class="fas fa-cogs"></i></div><h3>Advanced</h3><p>Production deployment, monitoring, and scaling.</p></a>
+                    <a href="examples.html" class="doc-card"><div class="doc-icon"><i class="fas fa-code"></i></div><h3>Examples</h3><p>Complete runnable bot examples.</p></a>
+                    <a href="websocket-guide.html" class="doc-card"><div class="doc-icon"><i class="fas fa-wifi"></i></div><h3>WebSocket Guide</h3><p>Understand the data stream your bot reads.</p></a>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>GmGnAPI</h4>
+                    <p>Professional Python client for GMGN.ai WebSocket API</p>
+                    <div class="social-links">
+                        <a href="https://github.com/ChipaDevTeam/GmGnAPI" target="_blank"><i class="fab fa-github"></i></a>
+                        <a href="https://discord.gg/ub46R9Dk" target="_blank"><i class="fab fa-discord"></i></a>
+                        <a href="https://pypi.org/project/gmgnapi/" target="_blank"><i class="fab fa-python"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Documentation</h4>
+                    <ul>
+                        <li><a href="getting-started.html">Getting Started</a></li>
+                        <li><a href="tutorials.html">Tutorials</a></li>
+                        <li><a href="api-reference.html">API Reference</a></li>
+                        <li><a href="examples.html">Examples</a></li>
+                        <li><a href="advanced.html">Advanced</a></li>
+                        <li><a href="filters-guide.html">Filters Guide</a></li>
+                        <li><a href="trading-bots.html">Trading Bots</a></li>
+                        <li><a href="websocket-guide.html">WebSocket Guide</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="changelog.html">Changelog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Community</h4>
+                    <ul>
+                        <li><a href="https://discord.gg/ub46R9Dk" target="_blank"><i class="fab fa-discord"></i> Discord Server</a></li>
+                        <li><a href="https://gmgn.ai/r/9dLKvFyE" target="_blank"><i class="fas fa-external-link-alt"></i> Create GMGN Account</a></li>
+                        <li><a href="https://chipaeditor.com/?utm_source=docs&utm_medium=footer&utm_campaign=gmgn_api&utm_content=bots_footer" target="_blank"><i class="fas fa-code"></i> Chipa Editor</a></li>
+                        <li><a href="community.html"><i class="fas fa-users"></i> Community Page</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 GmGnAPI. Open source under MIT License.</p>
+                <p style="margin-top:0.5rem;font-size:0.85rem;opacity:0.7;">✨ Proudly built with <a href="https://chipaeditor.com/?utm_source=docs&utm_medium=footer&utm_campaign=gmgn_api&utm_content=bots_footer_credit" target="_blank" style="color:var(--accent-color);">Chipa Editor</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="assets/js/main.js"></script>
+</body>
+</html>
