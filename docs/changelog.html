@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Changelog - GmGnAPI Documentation</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <meta name="description" content="GmGnAPI version history — new features, bug fixes, and breaking changes.">
+    <style>
+        .version-block { margin-bottom:2.5rem; }
+        .version-header { display:flex; align-items:center; gap:1rem; margin-bottom:1rem; }
+        .version-badge { background:var(--accent-color); color:#000; font-weight:700; padding:0.3rem 0.9rem; border-radius:2rem; font-size:0.9rem; }
+        .version-date { color:var(--text-secondary); font-size:0.9rem; }
+        .change-list { list-style:none; padding:0; }
+        .change-list li { padding:0.5rem 0; border-bottom:1px solid var(--border-primary); display:flex; gap:0.75rem; align-items:flex-start; }
+        .tag { display:inline-block; padding:0.2rem 0.6rem; border-radius:0.3rem; font-size:0.75rem; font-weight:700; white-space:nowrap; }
+        .tag-new { background:rgba(34,197,94,0.15); color:#22c55e; }
+        .tag-fix { background:rgba(239,68,68,0.15); color:#ef4444; }
+        .tag-improve { background:rgba(59,130,246,0.15); color:#3b82f6; }
+        .tag-break { background:rgba(245,158,11,0.15); color:#f59e0b; }
+    </style>
+</head>
+<body>
+    <div class="top-promo-banner">
+        <div class="container" style="display:flex;align-items:center;justify-content:center;gap:0.5rem;">
+            <span>🆕</span>
+            <span>Keep up with new releases faster by writing your upgrade scripts in <a href="https://chipaeditor.com/?utm_source=docs&utm_medium=banner&utm_campaign=gmgn_api&utm_content=changelog_banner" target="_blank"><strong>Chipa Editor</strong></a>.</span>
+            <a href="https://chipaeditor.com/?utm_source=docs&utm_medium=banner&utm_campaign=gmgn_api&utm_content=changelog_banner_cta" class="btn-banner-cta" target="_blank">Try free →</a>
+        </div>
+    </div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo"><span class="logo-icon">🚀</span><span class="logo-text">GmGnAPI</span></div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="getting-started.html" class="nav-link">Getting Started</a></li>
+                <li><a href="tutorials.html" class="nav-link">Tutorials</a></li>
+                <li><a href="api-reference.html" class="nav-link">API Reference</a></li>
+                <li><a href="examples.html" class="nav-link">Examples</a></li>
+                <li><a href="advanced.html" class="nav-link">Advanced</a></li>
+                <li><a href="filters-guide.html" class="nav-link">Filters</a></li>
+                <li><a href="trading-bots.html" class="nav-link">Trading Bots</a></li>
+                <li><a href="faq.html" class="nav-link">FAQ</a></li>
+                <li><a href="community.html" class="nav-link">Community</a></li>
+                <li><a href="changelog.html" class="nav-link active">Changelog</a></li>
+                <li><a href="https://github.com/ChipaDevTeam/GmGnAPI" class="nav-link" target="_blank"><i class="fab fa-github"></i> GitHub</a></li>
+                <li><a href="https://gmgn.ai/r/9dLKvFyE" class="nav-link btn-signup" target="_blank"><i class="fas fa-rocket"></i> Sign Up on GMGN</a></li>
+                <li><a href="https://chipaeditor.com/?utm_source=docs&utm_medium=navbar&utm_campaign=gmgn_api&utm_content=changelog_nav" class="nav-link btn-chipa" target="_blank"><i class="fas fa-code"></i> Chipa Editor</a></li>
+            </ul>
+            <div class="hamburger"><span class="bar"></span><span class="bar"></span><span class="bar"></span></div>
+        </div>
+    </nav>
+
+    <main style="margin-top:70px;">
+        <div class="container" style="padding:3rem 1.5rem;max-width:860px;">
+            <header class="page-header">
+                <h1><i class="fas fa-history" style="color:var(--accent-color)"></i> Changelog</h1>
+                <p class="page-description">
+                    All notable changes to GmGnAPI. Follows <a href="https://keepachangelog.com" target="_blank">Keep a Changelog</a> format and <a href="https://semver.org" target="_blank">Semantic Versioning</a>.
+                </p>
+                <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:1.5rem;">
+                    <a href="https://github.com/ChipaDevTeam/GmGnAPI/releases" class="btn btn-secondary" target="_blank"><i class="fab fa-github"></i> GitHub Releases</a>
+                    <a href="https://discord.gg/ub46R9Dk" class="btn btn-accent" target="_blank"><i class="fab fa-discord"></i> Announce on Discord</a>
+                </div>
+            </header>
+
+            <!-- v1.3.0 -->
+            <div class="version-block" style="margin-top:3rem;">
+                <div class="version-header">
+                    <span class="version-badge">v1.3.0</span>
+                    <span class="version-date">2025-06-01 — Latest</span>
+                </div>
+                <ul class="change-list">
+                    <li><span class="tag tag-new">NEW</span> Added <code>subscribe_trending()</code> channel for GMGN trending token list updates</li>
+                    <li><span class="tag tag-new">NEW</span> <code>TokenFilter.max_holder_concentration</code> parameter to filter high-risk concentrated tokens</li>
+                    <li><span class="tag tag-new">NEW</span> <code>ConnectionConfig.ping_interval</code> and <code>ping_timeout</code> for keep-alive control</li>
+                    <li><span class="tag tag-improve">IMPROVE</span> Reconnection now re-subscribes all active channels automatically after reconnect</li>
+                    <li><span class="tag tag-improve">IMPROVE</span> Pydantic v2 migration complete — 40% faster model parsing</li>
+                    <li><span class="tag tag-fix">FIX</span> Race condition in <code>listen()</code> when multiple subscriptions were active simultaneously</li>
+                    <li><span class="tag tag-fix">FIX</span> Memory leak in long-running sessions when <code>on_statistics_update</code> was registered</li>
+                </ul>
+            </div>
+
+            <!-- v1.2.0 -->
+            <div class="version-block">
+                <div class="version-header">
+                    <span class="version-badge" style="background:var(--text-secondary);color:var(--bg-primary);">v1.2.0</span>
+                    <span class="version-date">2025-04-15</span>
+                </div>
+                <ul class="change-list">
+                    <li><span class="tag tag-new">NEW</span> <code>SQLiteExporter</code> and <code>CSVExporter</code> for persistent data storage</li>
+                    <li><span class="tag tag-new">NEW</span> <code>on_reconnect</code> event hook with attempt count parameter</li>
+                    <li><span class="tag tag-new">NEW</span> <code>subscribe_trades(address)</code> for individual transaction streams</li>
+                    <li><span class="tag tag-improve">IMPROVE</span> Exponential backoff now capped at 60 seconds (was uncapped)</li>
+                    <li><span class="tag tag-improve">IMPROVE</span> Type stubs (<code>.pyi</code> files) now shipped with the package for full IDE support</li>
+                    <li><span class="tag tag-fix">FIX</span> <code>on_raw_message</code> now fires before model validation, not after</li>
+                    <li><span class="tag tag-fix">FIX</span> <code>TokenFilter.chains</code> case-insensitive matching</li>
+                </ul>
+            </div>
+
+            <!-- v1.1.0 -->
+            <div class="version-block">
+                <div class="version-header">
+                    <span class="version-badge" style="background:var(--text-secondary);color:var(--bg-primary);">v1.1.0</span>
+                    <span class="version-date">2025-02-28</span>
+                </div>
+                <ul class="change-list">
+                    <li><span class="tag tag-new">NEW</span> <code>TokenFilter</code> class for declarative event filtering</li>
+                    <li><span class="tag tag-new">NEW</span> <code>on_statistics_update</code> hook with connection metrics</li>
+                    <li><span class="tag tag-new">NEW</span> <code>subscribe_token_updates(address)</code> for per-token monitoring</li>
+                    <li><span class="tag tag-improve">IMPROVE</span> Context manager (<code>async with</code>) now properly closes on exception</li>
+                    <li><span class="tag tag-fix">FIX</span> Handler exceptions no longer kill the entire event loop</li>
+                </ul>
+            </div>
+
+            <!-- v1.0.0 -->
+            <div class="version-block">
+                <div class="version-header">
+                    <span class="version-badge" style="background:var(--text-secondary);color:var(--bg-primary);">v1.0.0</span>
+                    <span class="version-date">2025-01-10 — Initial Release</span>
+                </div>
+                <ul class="change-list">
+                    <li><span class="tag tag-new">NEW</span> <code>GmGnClient</code> with async context manager support</li>
+                    <li><span class="tag tag-new">NEW</span> <code>subscribe_new_pools()</code> WebSocket channel</li>
+                    <li><span class="tag tag-new">NEW</span> <code>on_new_pool</code> event decorator</li>
+                    <li><span class="tag tag-new">NEW</span> Pydantic v2 models for all data types</li>
+                    <li><span class="tag tag-new">NEW</span> Automatic reconnection with backoff</li>
+                    <li><span class="tag tag-new">NEW</span> Python 3.8+ support</li>
+                </ul>
+            </div>
+
+            <!-- Upgrade guide -->
+            <section style="margin:3rem 0;padding:2rem;background:var(--bg-secondary);border-radius:var(--radius-lg);border:1px solid var(--border-primary);">
+                <h2 style="margin-bottom:1rem;">Upgrading</h2>
+                <p>Always upgrade in a virtual environment and pin your version in production:</p>
+                <pre><code class="language-bash"># Upgrade to latest
+pip install --upgrade gmgnapi
+
+# Pin a specific version
+pip install gmgnapi==1.3.0</code></pre>
+                <p style="margin-top:1rem;">Breaking changes are marked <span class="tag tag-break">BREAK</span> and described in the <a href="https://github.com/ChipaDevTeam/GmGnAPI/releases" target="_blank">GitHub Releases</a> page with migration instructions. Join <a href="https://discord.gg/ub46R9Dk" target="_blank">Discord</a> to get upgrade announcements first.</p>
+            </section>
+
+            <!-- CTA -->
+            <section style="margin:3rem 0;padding:2.5rem;background:linear-gradient(135deg,#1a1a2e,#16213e);border-radius:var(--radius-lg);border:1px solid var(--accent-color);text-align:center;">
+                <h2 style="color:#fff;margin-bottom:0.75rem;">Stay in the Loop</h2>
+                <p style="color:#aaa;max-width:600px;margin:0 auto 1.5rem;">Join our Discord to get release announcements, beta previews, and early access to new features before they ship to PyPI.</p>
+                <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+                    <a href="https://discord.gg/ub46R9Dk" class="btn btn-accent" target="_blank"><i class="fab fa-discord"></i> Join Discord</a>
+                    <a href="https://github.com/ChipaDevTeam/GmGnAPI" class="btn btn-secondary" target="_blank"><i class="fab fa-github"></i> Watch on GitHub</a>
+                    <a href="https://chipaeditor.com/?utm_source=docs&utm_medium=cta_block&utm_campaign=gmgn_api&utm_content=changelog_bottom" class="btn btn-chipa" target="_blank"><i class="fas fa-code"></i> Try Chipa Editor</a>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>GmGnAPI</h4>
+                    <p>Professional Python client for GMGN.ai WebSocket API</p>
+                    <div class="social-links">
+                        <a href="https://github.com/ChipaDevTeam/GmGnAPI" target="_blank"><i class="fab fa-github"></i></a>
+                        <a href="https://discord.gg/ub46R9Dk" target="_blank"><i class="fab fa-discord"></i></a>
+                        <a href="https://pypi.org/project/gmgnapi/" target="_blank"><i class="fab fa-python"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Documentation</h4>
+                    <ul>
+                        <li><a href="getting-started.html">Getting Started</a></li>
+                        <li><a href="tutorials.html">Tutorials</a></li>
+                        <li><a href="api-reference.html">API Reference</a></li>
+                        <li><a href="examples.html">Examples</a></li>
+                        <li><a href="advanced.html">Advanced</a></li>
+                        <li><a href="filters-guide.html">Filters Guide</a></li>
+                        <li><a href="trading-bots.html">Trading Bots</a></li>
+                        <li><a href="websocket-guide.html">WebSocket Guide</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="changelog.html">Changelog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Community</h4>
+                    <ul>
+                        <li><a href="https://discord.gg/ub46R9Dk" target="_blank"><i class="fab fa-discord"></i> Discord Server</a></li>
+                        <li><a href="https://gmgn.ai/r/9dLKvFyE" target="_blank"><i class="fas fa-external-link-alt"></i> Create GMGN Account</a></li>
+                        <li><a href="https://chipaeditor.com/?utm_source=docs&utm_medium=footer&utm_campaign=gmgn_api&utm_content=changelog_footer" target="_blank"><i class="fas fa-code"></i> Chipa Editor</a></li>
+                        <li><a href="community.html"><i class="fas fa-users"></i> Community Page</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 GmGnAPI. Open source under MIT License.</p>
+                <p style="margin-top:0.5rem;font-size:0.85rem;opacity:0.7;">✨ Proudly built with <a href="https://chipaeditor.com/?utm_source=docs&utm_medium=footer&utm_campaign=gmgn_api&utm_content=changelog_footer_credit" target="_blank" style="color:var(--accent-color);">Chipa Editor</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="assets/js/main.js"></script>
+</body>
+</html>

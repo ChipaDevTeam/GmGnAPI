@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ - GmGnAPI Documentation</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <meta name="description" content="Frequently asked questions about GmGnAPI — installation, WebSocket, filters, rate limits, and trading bots.">
+    <style>
+        .faq-item { border:1px solid var(--border-primary); border-radius:var(--radius-md); margin-bottom:1rem; overflow:hidden; }
+        .faq-question { padding:1.25rem 1.5rem; background:var(--bg-secondary); cursor:pointer; display:flex; justify-content:space-between; align-items:center; font-weight:600; }
+        .faq-answer { padding:1.25rem 1.5rem; display:none; line-height:1.7; }
+        .faq-answer.open { display:block; }
+        .faq-question:hover { background:var(--bg-tertiary,#1e293b); }
+    </style>
+</head>
+<body>
+    <div class="top-promo-banner">
+        <div class="container" style="display:flex;align-items:center;justify-content:center;gap:0.5rem;">
+            <span>💡</span>
+            <span>Can't find your answer? Ask in the <a href="https://discord.gg/ub46R9Dk" target="_blank"><strong>Discord server</strong></a> — or write your code faster with <a href="https://chipaeditor.com/?utm_source=docs&utm_medium=banner&utm_campaign=gmgn_api&utm_content=faq_banner" target="_blank"><strong>Chipa Editor</strong></a>.</span>
+            <a href="https://chipaeditor.com/?utm_source=docs&utm_medium=banner&utm_campaign=gmgn_api&utm_content=faq_banner_cta" class="btn-banner-cta" target="_blank">Try free →</a>
+        </div>
+    </div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo"><span class="logo-icon">🚀</span><span class="logo-text">GmGnAPI</span></div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="getting-started.html" class="nav-link">Getting Started</a></li>
+                <li><a href="tutorials.html" class="nav-link">Tutorials</a></li>
+                <li><a href="api-reference.html" class="nav-link">API Reference</a></li>
+                <li><a href="examples.html" class="nav-link">Examples</a></li>
+                <li><a href="advanced.html" class="nav-link">Advanced</a></li>
+                <li><a href="filters-guide.html" class="nav-link">Filters</a></li>
+                <li><a href="trading-bots.html" class="nav-link">Trading Bots</a></li>
+                <li><a href="faq.html" class="nav-link active">FAQ</a></li>
+                <li><a href="community.html" class="nav-link">Community</a></li>
+                <li><a href="https://github.com/ChipaDevTeam/GmGnAPI" class="nav-link" target="_blank"><i class="fab fa-github"></i> GitHub</a></li>
+                <li><a href="https://gmgn.ai/r/9dLKvFyE" class="nav-link btn-signup" target="_blank"><i class="fas fa-rocket"></i> Sign Up on GMGN</a></li>
+                <li><a href="https://chipaeditor.com/?utm_source=docs&utm_medium=navbar&utm_campaign=gmgn_api&utm_content=faq_nav" class="nav-link btn-chipa" target="_blank"><i class="fas fa-code"></i> Chipa Editor</a></li>
+            </ul>
+            <div class="hamburger"><span class="bar"></span><span class="bar"></span><span class="bar"></span></div>
+        </div>
+    </nav>
+
+    <main style="margin-top:70px;">
+        <div class="container" style="padding:3rem 1.5rem;max-width:860px;">
+            <header class="page-header">
+                <h1><i class="fas fa-question-circle" style="color:var(--accent-color)"></i> Frequently Asked Questions</h1>
+                <p class="page-description">
+                    Quick answers to the most common questions. Can't find what you're looking for?
+                    <a href="https://discord.gg/ub46R9Dk" target="_blank">Ask on Discord →</a>
+                </p>
+            </header>
+
+            <!-- Getting Started -->
+            <section style="margin:3rem 0;">
+                <h2 style="border-bottom:2px solid var(--border-primary);padding-bottom:0.5rem;margin-bottom:1.5rem;">Getting Started</h2>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="this.nextElementSibling.classList.toggle('open');this.querySelector('.faq-icon').textContent=this.nextElementSibling.classList.contains('open')?'−':'+'">
+                        <span>Do I need a GMGN.ai account to use this library?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        Yes. GmGnAPI connects to GMGN.ai's WebSocket infrastructure, which requires an account. Sign up for free using our referral link — it costs nothing and helps support the project:<br><br>
+                        <a href="https://gmgn.ai/r/9dLKvFyE" class="btn btn-gmgn" target="_blank" style="display:inline-flex;"><i class="fas fa-user-plus"></i>&nbsp;Create Free Account →</a>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="this.nextElementSibling.classList.toggle('open');this.querySelector('.faq-icon').textContent=this.nextElementSibling.classList.contains('open')?'−':'+'">
+                        <span>What Python versions are supported?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        GmGnAPI supports <strong>Python 3.8 and above</strong>. We recommend Python 3.11+ for best performance with asyncio. Run <code>python --version</code> to check yours.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="this.nextElementSibling.classList.toggle('open');this.querySelector('.faq-icon').textContent=this.nextElementSibling.classList.contains('open')?'−':'+'">
+                        <span>How do I install GmGnAPI?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <pre><code class="language-bash">pip install gmgnapi</code></pre>
+                        See the full <a href="installation.html">Installation Guide</a> for virtual environment setup and optional dependencies.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="this.nextElementSibling.classList.toggle('open');this.querySelector('.faq-icon').textContent=this.nextElementSibling.classList.contains('open')?'−':'+'">
+                        <span>Is GmGnAPI free to use?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        Yes — GmGnAPI is fully open source under the MIT License. You can use it commercially, modify it, and redistribute it. Check the <a href="https://github.com/ChipaDevTeam/GmGnAPI" target="_blank">GitHub repo</a> for the full license.
+                    </div>
+                </div>
+            </section>
+
+            <!-- WebSocket -->
+            <section style="margin:3rem 0;">
+                <h2 style="border-bottom:2px solid var(--border-primary);padding-bottom:0.5rem;margin-bottom:1.5rem;">WebSocket &amp; Connection</h2>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="this.nextElementSibling.classList.toggle('open');this.querySelector('.faq-icon').textContent=this.nextElementSibling.classList.contains('open')?'−':'+'">
+                        <span>The connection drops after a few minutes. How do I fix it?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        GmGnAPI reconnects automatically with exponential backoff. If you're seeing frequent drops, try enabling ping keepalives:
+                        <pre style="margin-top:0.75rem;"><code class="language-python">from gmgnapi import ConnectionConfig
+config = ConnectionConfig(ping_interval=20, ping_timeout=10)
+async with GmGnClient(connection_config=config) as client: ...</code></pre>
+                        See the <a href="websocket-guide.html">WebSocket Guide</a> for more reconnection options.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="this.nextElementSibling.classList.toggle('open');this.querySelector('.faq-icon').textContent=this.nextElementSibling.classList.contains('open')?'−':'+'">
+                        <span>Can I subscribe to multiple channels at once?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        Yes. Call multiple subscribe methods before <code>listen()</code>:
+                        <pre style="margin-top:0.75rem;"><code class="language-python">await client.subscribe_new_pools()
+await client.subscribe_trending()
+await client.subscribe_token_updates("7xKXt...")
+await client.listen()</code></pre>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="this.nextElementSibling.classList.toggle('open');this.querySelector('.faq-icon').textContent=this.nextElementSibling.classList.contains('open')?'−':'+'">
+                        <span>How many events per second will I receive?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        Without filters, the <code>new_pools</code> channel can produce dozens of events per minute on a busy market day. With filters applied, expect a much lower rate matching only tokens you care about. See the <a href="filters-guide.html">Filters Guide</a>.
+                    </div>
+                </div>
+            </section>
+
+            <!-- Filters -->
+            <section style="margin:3rem 0;">
+                <h2 style="border-bottom:2px solid var(--border-primary);padding-bottom:0.5rem;margin-bottom:1.5rem;">Filters</h2>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="this.nextElementSibling.classList.toggle('open');this.querySelector('.faq-icon').textContent=this.nextElementSibling.classList.contains('open')?'−':'+'">
+                        <span>Do filters run client-side or server-side?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <code>TokenFilter</code> parameters that map to GMGN subscription options are sent server-side — GMGN only pushes matching events. Additional custom logic in your handler runs client-side. See the <a href="filters-guide.html">Filters Guide</a> for details.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="this.nextElementSibling.classList.toggle('open');this.querySelector('.faq-icon').textContent=this.nextElementSibling.classList.contains('open')?'−':'+'">
+                        <span>Can I change filters without reconnecting?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        Currently, filter changes require re-subscribing, which the client handles automatically if you call <code>subscribe_new_pools(filters=new_filter)</code> on a live connection.
+                    </div>
+                </div>
+            </section>
+
+            <!-- Trading Bots -->
+            <section style="margin:3rem 0;">
+                <h2 style="border-bottom:2px solid var(--border-primary);padding-bottom:0.5rem;margin-bottom:1.5rem;">Trading Bots</h2>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="this.nextElementSibling.classList.toggle('open');this.querySelector('.faq-icon').textContent=this.nextElementSibling.classList.contains('open')?'−':'+'">
+                        <span>Does GmGnAPI execute trades?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        No — GmGnAPI is purely a data library. It streams market data from GMGN.ai. You connect trade execution yourself (Jupiter, Raydium SDK, custom wallet integration, etc.). See the <a href="trading-bots.html">Trading Bots guide</a>.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="this.nextElementSibling.classList.toggle('open');this.querySelector('.faq-icon').textContent=this.nextElementSibling.classList.contains('open')?'−':'+'">
+                        <span>How do I test my bot without spending real money?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        Replace your buy/sell functions with <code>print()</code> statements ("paper trading"). Log what the bot would have done, check the results after 24–48 hours, then go live. This is described in <a href="trading-bots.html">Tutorial 5</a>.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="this.nextElementSibling.classList.toggle('open');this.querySelector('.faq-icon').textContent=this.nextElementSibling.classList.contains('open')?'−':'+'">
+                        <span>Where can I share my bot and get feedback?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        Join our <a href="https://discord.gg/ub46R9Dk" target="_blank">Discord server</a> — the <strong>#trading-bots</strong> channel is active with builders sharing strategies, reviewing code, and collaborating. Or visit the <a href="community.html">Community page</a> to see what others have built.
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tooling -->
+            <section style="margin:3rem 0;">
+                <h2 style="border-bottom:2px solid var(--border-primary);padding-bottom:0.5rem;margin-bottom:1.5rem;">Development Tooling</h2>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="this.nextElementSibling.classList.toggle('open');this.querySelector('.faq-icon').textContent=this.nextElementSibling.classList.contains('open')?'−':'+'">
+                        <span>What editor do you recommend for building with GmGnAPI?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        We built GmGnAPI using <a href="https://chipaeditor.com/?utm_source=docs&utm_medium=faq&utm_campaign=gmgn_api&utm_content=faq_editor" target="_blank"><strong>Chipa Editor</strong></a> — an AI-powered code editor purpose-built for Python developers. It has first-class support for async/await, inline type hints, and fast debugging. It's free to download.<br><br>
+                        <a href="https://chipaeditor.com/?utm_source=docs&utm_medium=faq&utm_campaign=gmgn_api&utm_content=faq_editor_cta" class="btn btn-chipa" target="_blank"><i class="fas fa-download"></i> Download Chipa Editor →</a>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="this.nextElementSibling.classList.toggle('open');this.querySelector('.faq-icon').textContent=this.nextElementSibling.classList.contains('open')?'−':'+'">
+                        <span>How do I report a bug?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        Open an issue on <a href="https://github.com/ChipaDevTeam/GmGnAPI/issues" target="_blank">GitHub Issues</a>. Include your Python version, GmGnAPI version (<code>pip show gmgnapi</code>), and a minimal reproducible example.
+                    </div>
+                </div>
+            </section>
+
+            <!-- Still stuck -->
+            <section style="margin:3rem 0;padding:2.5rem;background:linear-gradient(135deg,#5865f2,#404eed);border-radius:var(--radius-lg);text-align:center;">
+                <i class="fab fa-discord" style="font-size:3rem;color:#fff;margin-bottom:1rem;display:block;"></i>
+                <h2 style="color:#fff;margin-bottom:0.75rem;">Still Have Questions?</h2>
+                <p style="color:rgba(255,255,255,0.85);max-width:580px;margin:0 auto 1.5rem;">Join our Discord — the community is friendly, the maintainers are active, and you'll usually get a response within the hour.</p>
+                <a href="https://discord.gg/ub46R9Dk" class="btn btn-primary" target="_blank" style="background:#fff;color:#5865f2;font-weight:700;"><i class="fab fa-discord"></i> Join Discord →</a>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>GmGnAPI</h4>
+                    <p>Professional Python client for GMGN.ai WebSocket API</p>
+                    <div class="social-links">
+                        <a href="https://github.com/ChipaDevTeam/GmGnAPI" target="_blank"><i class="fab fa-github"></i></a>
+                        <a href="https://discord.gg/ub46R9Dk" target="_blank"><i class="fab fa-discord"></i></a>
+                        <a href="https://pypi.org/project/gmgnapi/" target="_blank"><i class="fab fa-python"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Documentation</h4>
+                    <ul>
+                        <li><a href="getting-started.html">Getting Started</a></li>
+                        <li><a href="tutorials.html">Tutorials</a></li>
+                        <li><a href="api-reference.html">API Reference</a></li>
+                        <li><a href="examples.html">Examples</a></li>
+                        <li><a href="advanced.html">Advanced</a></li>
+                        <li><a href="filters-guide.html">Filters Guide</a></li>
+                        <li><a href="trading-bots.html">Trading Bots</a></li>
+                        <li><a href="websocket-guide.html">WebSocket Guide</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="changelog.html">Changelog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Community</h4>
+                    <ul>
+                        <li><a href="https://discord.gg/ub46R9Dk" target="_blank"><i class="fab fa-discord"></i> Discord Server</a></li>
+                        <li><a href="https://gmgn.ai/r/9dLKvFyE" target="_blank"><i class="fas fa-external-link-alt"></i> Create GMGN Account</a></li>
+                        <li><a href="https://chipaeditor.com/?utm_source=docs&utm_medium=footer&utm_campaign=gmgn_api&utm_content=faq_footer" target="_blank"><i class="fas fa-code"></i> Chipa Editor</a></li>
+                        <li><a href="community.html"><i class="fas fa-users"></i> Community Page</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 GmGnAPI. Open source under MIT License.</p>
+                <p style="margin-top:0.5rem;font-size:0.85rem;opacity:0.7;">✨ Proudly built with <a href="https://chipaeditor.com/?utm_source=docs&utm_medium=footer&utm_campaign=gmgn_api&utm_content=faq_footer_credit" target="_blank" style="color:var(--accent-color);">Chipa Editor</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="assets/js/main.js"></script>
+</body>
+</html>
