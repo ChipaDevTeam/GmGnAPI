@@ -9,7 +9,7 @@
 
 ---
 
-> **✨ Built with [Chipa Editor](https://chipaeditor.com/?utm_source=github&utm_medium=readme&utm_campaign=gmgn_api&utm_term=support&utm_content=header) — the AI-powered code editor for Python developers. Try it free!**
+> **✨ Build with [Chipa Editor](https://chipaeditor.com/?utm_source=github&utm_medium=readme&utm_campaign=gmgn_api&utm_term=support&utm_content=header) — the AI-powered strategy editor for Traders. Try it free!**
 
 ---
 
