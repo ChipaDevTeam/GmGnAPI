@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AdvancedGmGnMonitor.setup_handlers — async method — GmGnAPI Python Docs</title>
+<meta name="description" content="examples.advanced_monitoring.AdvancedGmGnMonitor.setup_handlers (async method). Setup event handlers for different data types.">
+<meta name="robots" content="index, follow">
+<meta name="keywords" content="gmgnapi, AdvancedGmGnMonitor.setup_handlers, setup_handlers, examples.advanced_monitoring, GMGN API python, solana websocket, async method">
+<link rel="canonical" href="https://chipadevteam.github.io/GmGnAPI/api/examples-advanced-monitoring/advancedgmgnmonitor-setup-handlers.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AdvancedGmGnMonitor.setup_handlers — async method — GmGnAPI Python Docs">
+<meta property="og:description" content="examples.advanced_monitoring.AdvancedGmGnMonitor.setup_handlers (async method). Setup event handlers for different data types.">
+<meta property="og:url" content="https://chipadevteam.github.io/GmGnAPI/api/examples-advanced-monitoring/advancedgmgnmonitor-setup-handlers.html">
+<meta property="og:site_name" content="GmGnAPI Documentation">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AdvancedGmGnMonitor.setup_handlers — async method — GmGnAPI Python Docs">
+<meta name="twitter:description" content="examples.advanced_monitoring.AdvancedGmGnMonitor.setup_handlers (async method). Setup event handlers for different data types.">
+<link rel="stylesheet" href="../../assets/css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "TechArticle", "headline": "AdvancedGmGnMonitor.setup_handlers \u2014 async method", "name": "AdvancedGmGnMonitor.setup_handlers", "description": "examples.advanced_monitoring.AdvancedGmGnMonitor.setup_handlers (async method). Setup event handlers for different data types.", "url": "https://chipadevteam.github.io/GmGnAPI/api/examples-advanced-monitoring/advancedgmgnmonitor-setup-handlers.html", "dateModified": "2026-08-18", "inLanguage": "en", "isPartOf": {"@type": "WebSite", "name": "GmGnAPI Documentation", "url": "https://chipadevteam.github.io/GmGnAPI/"}, "author": {"@type": "Organization", "name": "ChipaDevTeam"}, "publisher": {"@type": "Organization", "name": "ChipaDevTeam", "url": "https://chipaeditor.com/"}, "programmingLanguage": "Python", "keywords": "gmgnapi, AdvancedGmGnMonitor.setup_handlers, setup_handlers, examples.advanced_monitoring, GMGN API python, solana websocket, async method"}</script>
+<style>
+.api-badge{display:inline-block;padding:.2rem .7rem;border-radius:999px;font-size:.75rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;}
+.api-crumb{font-size:.85rem;color:var(--text-muted);margin-bottom:1rem;}
+.api-crumb a{color:var(--text-secondary);text-decoration:none;} .api-crumb a:hover{color:var(--primary-color);}
+.api-table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.92rem;}
+.api-table th{background:var(--bg-secondary);padding:.7rem;text-align:left;border:1px solid var(--border-primary);}
+.api-table td{padding:.7rem;border:1px solid var(--border-primary);vertical-align:top;}
+.api-table code{white-space:nowrap;}
+.api-card{background:var(--bg-card);border:1px solid var(--border-primary);border-radius:12px;padding:1.25rem;margin:1rem 0;}
+.api-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem;margin:1.25rem 0;}
+.api-grid a{display:block;background:var(--bg-card);border:1px solid var(--border-primary);border-radius:10px;padding:.9rem 1rem;text-decoration:none;transition:.15s;}
+.api-grid a:hover{border-color:var(--primary-color);transform:translateY(-2px);}
+.api-grid strong{color:var(--text-primary);display:block;font-family:monospace;font-size:.95rem;word-break:break-word;}
+.api-grid span{color:var(--text-muted);font-size:.8rem;}
+details.api-src summary{cursor:pointer;padding:.6rem 0;font-weight:600;color:var(--accent-color);}
+.api-prevnext{display:flex;justify-content:space-between;gap:1rem;margin:2.5rem 0 0;flex-wrap:wrap;}
+.api-prevnext a{background:var(--bg-card);border:1px solid var(--border-primary);border-radius:10px;padding:.8rem 1.1rem;text-decoration:none;color:var(--text-secondary);}
+.api-prevnext a:hover{border-color:var(--primary-color);}
+</style>
+</head>
+<body>
+<div class="top-promo-banner"><div class="container" style="display:flex;align-items:center;justify-content:center;gap:.5rem;flex-wrap:wrap;">
+<span>🔥</span><span><a href="https://chipaeditor.com/?utm_source=docs&utm_medium=banner&utm_campaign=gmgn_api&utm_content=api_banner" target="_blank"><strong>Chipa Editor</strong></a> ships full autocomplete for the entire GmGnAPI surface.</span>
+<a href="https://chipaeditor.com/?utm_source=docs&utm_medium=banner&utm_campaign=gmgn_api&utm_content=api_banner_cta" class="btn-banner-cta" target="_blank">Get it free →</a></div></div>
+<nav class="navbar">
+    <div class="nav-container">
+      <a href="../../index.html" class="nav-logo" style="text-decoration:none;color:inherit;"><span class="logo-icon">🚀</span><span class="logo-text">GmGnAPI</span></a>
+      <ul class="nav-menu"><li><a href="../../index.html" class="nav-link">Home</a></li><li><a href="../../getting-started.html" class="nav-link">Getting Started</a></li><li><a href="../../tutorials.html" class="nav-link">Tutorials</a></li><li><a href="../../api-reference.html" class="nav-link">API Reference</a></li><li><a href="../../api/index.html" class="nav-link">API Index</a></li><li><a href="../../examples.html" class="nav-link">Examples</a></li><li><a href="../../advanced.html" class="nav-link">Advanced</a></li><li><a href="../../filters-guide.html" class="nav-link">Filters</a></li><li><a href="../../faq.html" class="nav-link">FAQ</a></li>
+        <li><a href="https://github.com/ChipaDevTeam/GmGnAPI" class="nav-link" target="_blank"><i class="fab fa-github"></i> GitHub</a></li>
+        <li><a href="https://gmgn.ai/r/9dLKvFyE" class="nav-link btn-signup" target="_blank"><i class="fas fa-rocket"></i> Sign Up on GMGN</a></li>
+        <li><a href="https://chipaeditor.com/?utm_source=docs&utm_medium=navbar&utm_campaign=gmgn_api&utm_content=api_nav" class="nav-link btn-chipa" target="_blank"><i class="fas fa-code"></i> Chipa Editor</a></li>
+      </ul>
+      <div class="hamburger"><span class="bar"></span><span class="bar"></span><span class="bar"></span></div>
+    </div></nav>
+<main style="margin-top:70px;"><div class="container" style="padding:2.5rem 1.5rem;max-width:1000px;">
+<div class="api-crumb"><a href="../../index.html">Docs</a> / <a href="../../api/index.html">API</a> / <a href="../../api/index.html#examples-advanced-monitoring">examples.advanced_monitoring</a> / <a href="../../api/examples-advanced-monitoring/advancedgmgnmonitor.html">AdvancedGmGnMonitor</a> / <span style="color:var(--text-primary)">setup_handlers</span></div>
+<header class="page-header"><span class="api-badge" style="background:#f59e0b22;color:#f59e0b;border:1px solid #f59e0b55;"><i class="fas fa-bolt"></i> async method</span><h1 style="margin-top:.75rem;font-family:monospace;word-break:break-word;">AdvancedGmGnMonitor.setup_handlers</h1><p class="page-description">Setup event handlers for different data types.</p><p style="font-size:.85rem;color:var(--text-muted);">Module <code>examples.advanced_monitoring</code> · <a href="https://github.com/ChipaDevTeam/GmGnAPI/blob/main/examples/advanced_monitoring.py#L98-L117" target="_blank" style="color:var(--accent-color);">examples/advanced_monitoring.py:98 <i class="fas fa-external-link-alt" style="font-size:.75rem;"></i></a></p></header>
+<section style="margin:2rem 0;"><h2>Signature</h2>
+<div class="code-window"><div class="code-header"><div class="code-dots"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div><span class="code-title">signature.py</span></div><pre><code class="language-python">async def setup_handlers(self)</code></pre></div>
+</section>
+<section style="margin:2rem 0;"><h2>Description</h2><p style="color:var(--text-secondary);line-height:1.75;">Setup event handlers for different data types.</p></section>
+<section style="margin:2rem 0;"><h2>Source</h2><details class="api-src"><summary>Show source (20 lines)</summary><div class="code-window"><div class="code-header"><div class="code-dots"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div><span class="code-title">examples/advanced_monitoring.py</span></div><pre><code class="language-python">    async def setup_handlers(self):
+        &quot;&quot;&quot;Setup event handlers for different data types.&quot;&quot;&quot;
+        
+        # New pool handler with advanced filtering
+        self.client.on_new_pool(self.handle_new_pool)
+        
+        # Pair update handler for price monitoring
+        self.client.on_pair_update(self.handle_pair_update)
+        
+        # Token launch handler
+        self.client.on_token_launch(self.handle_token_launch)
+        
+        # Chain statistics handler
+        self.client.on_chain_stats(self.handle_chain_stats)
+        
+        # Wallet trades handler (requires authentication)
+        self.client.on_wallet_trades(self.handle_wallet_trades)
+        
+        # General message handler for debugging
+        self.client.on_message(self.handle_general_message)</code></pre></div></details></section>
+<section style="margin:2.5rem 0;"><h2>Also in <code>examples.advanced_monitoring</code></h2><div><a href="../../api/examples-advanced-monitoring/advancedgmgnmonitor.html" style="color:var(--text-secondary);text-decoration:none;border:1px solid var(--border-primary);border-radius:6px;padding:.25rem .6rem;font-size:.82rem;display:inline-block;margin:.2rem;font-family:monospace;">AdvancedGmGnMonitor</a> <a href="../../api/examples-advanced-monitoring/advancedgmgnmonitor-init.html" style="color:var(--text-secondary);text-decoration:none;border:1px solid var(--border-primary);border-radius:6px;padding:.25rem .6rem;font-size:.82rem;display:inline-block;margin:.2rem;font-family:monospace;">AdvancedGmGnMonitor.__init__</a> <a href="../../api/examples-advanced-monitoring/advancedgmgnmonitor-handle-new-pool.html" style="color:var(--text-secondary);text-decoration:none;border:1px solid var(--border-primary);border-radius:6px;padding:.25rem .6rem;font-size:.82rem;display:inline-block;margin:.2rem;font-family:monospace;">AdvancedGmGnMonitor.handle_new_pool</a> <a href="../../api/examples-advanced-monitoring/advancedgmgnmonitor-handle-pair-update.html" style="color:var(--text-secondary);text-decoration:none;border:1px solid var(--border-primary);border-radius:6px;padding:.25rem .6rem;font-size:.82rem;display:inline-block;margin:.2rem;font-family:monospace;">AdvancedGmGnMonitor.handle_pair_update</a> <a href="../../api/examples-advanced-monitoring/advancedgmgnmonitor-handle-token-launch.html" style="color:var(--text-secondary);text-decoration:none;border:1px solid var(--border-primary);border-radius:6px;padding:.25rem .6rem;font-size:.82rem;display:inline-block;margin:.2rem;font-family:monospace;">AdvancedGmGnMonitor.handle_token_launch</a> <a href="../../api/examples-advanced-monitoring/advancedgmgnmonitor-handle-chain-stats.html" style="color:var(--text-secondary);text-decoration:none;border:1px solid var(--border-primary);border-radius:6px;padding:.25rem .6rem;font-size:.82rem;display:inline-block;margin:.2rem;font-family:monospace;">AdvancedGmGnMonitor.handle_chain_stats</a> <a href="../../api/examples-advanced-monitoring/advancedgmgnmonitor-handle-wallet-trades.html" style="color:var(--text-secondary);text-decoration:none;border:1px solid var(--border-primary);border-radius:6px;padding:.25rem .6rem;font-size:.82rem;display:inline-block;margin:.2rem;font-family:monospace;">AdvancedGmGnMonitor.handle_wallet_trades</a> <a href="../../api/examples-advanced-monitoring/advancedgmgnmonitor-handle-general-message.html" style="color:var(--text-secondary);text-decoration:none;border:1px solid var(--border-primary);border-radius:6px;padding:.25rem .6rem;font-size:.82rem;display:inline-block;margin:.2rem;font-family:monospace;">AdvancedGmGnMonitor.handle_general_message</a> <a href="../../api/examples-advanced-monitoring/advancedgmgnmonitor-print-periodic-stats.html" style="color:var(--text-secondary);text-decoration:none;border:1px solid var(--border-primary);border-radius:6px;padding:.25rem .6rem;font-size:.82rem;display:inline-block;margin:.2rem;font-family:monospace;">AdvancedGmGnMonitor.print_periodic_stats</a> <a href="../../api/examples-advanced-monitoring/advancedgmgnmonitor-run.html" style="color:var(--text-secondary);text-decoration:none;border:1px solid var(--border-primary);border-radius:6px;padding:.25rem .6rem;font-size:.82rem;display:inline-block;margin:.2rem;font-family:monospace;">AdvancedGmGnMonitor.run</a> <a href="../../api/examples-advanced-monitoring/main.html" style="color:var(--text-secondary);text-decoration:none;border:1px solid var(--border-primary);border-radius:6px;padding:.25rem .6rem;font-size:.82rem;display:inline-block;margin:.2rem;font-family:monospace;">main</a></div></section>
+<div class="api-prevnext"><a href="../../api/examples-advanced-monitoring/advancedgmgnmonitor-init.html">← AdvancedGmGnMonitor.__init__</a><a href="../../api/examples-advanced-monitoring/advancedgmgnmonitor-handle-new-pool.html">AdvancedGmGnMonitor.handle_new_pool →</a></div>
+</div></main>
+<footer class="footer"><div class="container"><div class="footer-content">
+      <div class="footer-section"><h4>GmGnAPI</h4>
+        <p>Professional Python client for GMGN.ai WebSocket API</p>
+        <div class="social-links">
+          <a href="https://github.com/ChipaDevTeam/GmGnAPI" target="_blank"><i class="fab fa-github"></i></a>
+          <a href="https://discord.gg/ub46R9Dk" target="_blank"><i class="fab fa-discord"></i></a>
+          <a href="https://pypi.org/project/gmgnapi/" target="_blank"><i class="fab fa-python"></i></a>
+        </div></div>
+      <div class="footer-section"><h4>Documentation</h4><ul>
+        <li><a href="../../getting-started.html">Getting Started</a></li>
+        <li><a href="../../tutorials.html">Tutorials</a></li>
+        <li><a href="../../api-reference.html">API Reference</a></li>
+        <li><a href="../../api/index.html">Full API Index</a></li>
+        <li><a href="../../examples.html">Examples</a></li>
+        <li><a href="../../filters-guide.html">Filters Guide</a></li>
+        <li><a href="../../websocket-guide.html">WebSocket Guide</a></li>
+        <li><a href="../../faq.html">FAQ</a></li></ul></div>
+      <div class="footer-section"><h4>Community</h4><ul>
+        <li><a href="https://discord.gg/ub46R9Dk" target="_blank"><i class="fab fa-discord"></i> Discord Server</a></li>
+        <li><a href="https://gmgn.ai/r/9dLKvFyE" target="_blank"><i class="fas fa-external-link-alt"></i> Create GMGN Account</a></li>
+        <li><a href="https://chipaeditor.com/?utm_source=docs&utm_medium=footer&utm_campaign=gmgn_api&utm_content=api_footer" target="_blank"><i class="fas fa-code"></i> Chipa Editor</a></li>
+        <li><a href="../../community.html"><i class="fas fa-users"></i> Community Page</a></li></ul></div>
+      </div>
+      <div class="footer-bottom"><p>&copy; 2025 GmGnAPI. Open source under MIT License.</p>
+      <p style="margin-top:0.5rem;font-size:0.85rem;opacity:0.7;">✨ Proudly built with <a href="https://chipaeditor.com/?utm_source=docs&utm_medium=footer&utm_campaign=gmgn_api&utm_content=api_credit" target="_blank" style="color:var(--accent-color);">Chipa Editor</a></p></div>
+      </div></footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="../../assets/js/main.js"></script></body></html>

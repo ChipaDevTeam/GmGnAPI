@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TestGmGnClient — class — GmGnAPI Python Docs</title>
+<meta name="description" content="tests.test_client.TestGmGnClient (class). Test cases for GmGnClient.">
+<meta name="robots" content="noindex, follow">
+<meta name="keywords" content="gmgnapi, TestGmGnClient, TestGmGnClient, tests.test_client, GMGN API python, solana websocket, class">
+<link rel="canonical" href="https://chipadevteam.github.io/GmGnAPI/api/tests-test-client/testgmgnclient.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TestGmGnClient — class — GmGnAPI Python Docs">
+<meta property="og:description" content="tests.test_client.TestGmGnClient (class). Test cases for GmGnClient.">
+<meta property="og:url" content="https://chipadevteam.github.io/GmGnAPI/api/tests-test-client/testgmgnclient.html">
+<meta property="og:site_name" content="GmGnAPI Documentation">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="TestGmGnClient — class — GmGnAPI Python Docs">
+<meta name="twitter:description" content="tests.test_client.TestGmGnClient (class). Test cases for GmGnClient.">
+<link rel="stylesheet" href="../../assets/css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "TechArticle", "headline": "TestGmGnClient \u2014 class", "name": "TestGmGnClient", "description": "tests.test_client.TestGmGnClient (class). Test cases for GmGnClient.", "url": "https://chipadevteam.github.io/GmGnAPI/api/tests-test-client/testgmgnclient.html", "dateModified": "2026-08-18", "inLanguage": "en", "isPartOf": {"@type": "WebSite", "name": "GmGnAPI Documentation", "url": "https://chipadevteam.github.io/GmGnAPI/"}, "author": {"@type": "Organization", "name": "ChipaDevTeam"}, "publisher": {"@type": "Organization", "name": "ChipaDevTeam", "url": "https://chipaeditor.com/"}, "programmingLanguage": "Python", "keywords": "gmgnapi, TestGmGnClient, TestGmGnClient, tests.test_client, GMGN API python, solana websocket, class"}</script>
+<style>
+.api-badge{display:inline-block;padding:.2rem .7rem;border-radius:999px;font-size:.75rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;}
+.api-crumb{font-size:.85rem;color:var(--text-muted);margin-bottom:1rem;}
+.api-crumb a{color:var(--text-secondary);text-decoration:none;} .api-crumb a:hover{color:var(--primary-color);}
+.api-table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.92rem;}
+.api-table th{background:var(--bg-secondary);padding:.7rem;text-align:left;border:1px solid var(--border-primary);}
+.api-table td{padding:.7rem;border:1px solid var(--border-primary);vertical-align:top;}
+.api-table code{white-space:nowrap;}
+.api-card{background:var(--bg-card);border:1px solid var(--border-primary);border-radius:12px;padding:1.25rem;margin:1rem 0;}
+.api-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem;margin:1.25rem 0;}
+.api-grid a{display:block;background:var(--bg-card);border:1px solid var(--border-primary);border-radius:10px;padding:.9rem 1rem;text-decoration:none;transition:.15s;}
+.api-grid a:hover{border-color:var(--primary-color);transform:translateY(-2px);}
+.api-grid strong{color:var(--text-primary);display:block;font-family:monospace;font-size:.95rem;word-break:break-word;}
+.api-grid span{color:var(--text-muted);font-size:.8rem;}
+details.api-src summary{cursor:pointer;padding:.6rem 0;font-weight:600;color:var(--accent-color);}
+.api-prevnext{display:flex;justify-content:space-between;gap:1rem;margin:2.5rem 0 0;flex-wrap:wrap;}
+.api-prevnext a{background:var(--bg-card);border:1px solid var(--border-primary);border-radius:10px;padding:.8rem 1.1rem;text-decoration:none;color:var(--text-secondary);}
+.api-prevnext a:hover{border-color:var(--primary-color);}
+</style>
+</head>
+<body>
+<div class="top-promo-banner"><div class="container" style="display:flex;align-items:center;justify-content:center;gap:.5rem;flex-wrap:wrap;">
+<span>🔥</span><span><a href="https://chipaeditor.com/?utm_source=docs&utm_medium=banner&utm_campaign=gmgn_api&utm_content=api_banner" target="_blank"><strong>Chipa Editor</strong></a> ships full autocomplete for the entire GmGnAPI surface.</span>
+<a href="https://chipaeditor.com/?utm_source=docs&utm_medium=banner&utm_campaign=gmgn_api&utm_content=api_banner_cta" class="btn-banner-cta" target="_blank">Get it free →</a></div></div>
+<nav class="navbar">
+    <div class="nav-container">
+      <a href="../../index.html" class="nav-logo" style="text-decoration:none;color:inherit;"><span class="logo-icon">🚀</span><span class="logo-text">GmGnAPI</span></a>
+      <ul class="nav-menu"><li><a href="../../index.html" class="nav-link">Home</a></li><li><a href="../../getting-started.html" class="nav-link">Getting Started</a></li><li><a href="../../tutorials.html" class="nav-link">Tutorials</a></li><li><a href="../../api-reference.html" class="nav-link">API Reference</a></li><li><a href="../../api/index.html" class="nav-link">API Index</a></li><li><a href="../../examples.html" class="nav-link">Examples</a></li><li><a href="../../advanced.html" class="nav-link">Advanced</a></li><li><a href="../../filters-guide.html" class="nav-link">Filters</a></li><li><a href="../../faq.html" class="nav-link">FAQ</a></li>
+        <li><a href="https://github.com/ChipaDevTeam/GmGnAPI" class="nav-link" target="_blank"><i class="fab fa-github"></i> GitHub</a></li>
+        <li><a href="https://gmgn.ai/r/9dLKvFyE" class="nav-link btn-signup" target="_blank"><i class="fas fa-rocket"></i> Sign Up on GMGN</a></li>
+        <li><a href="https://chipaeditor.com/?utm_source=docs&utm_medium=navbar&utm_campaign=gmgn_api&utm_content=api_nav" class="nav-link btn-chipa" target="_blank"><i class="fas fa-code"></i> Chipa Editor</a></li>
+      </ul>
+      <div class="hamburger"><span class="bar"></span><span class="bar"></span><span class="bar"></span></div>
+    </div></nav>
+<main style="margin-top:70px;"><div class="container" style="padding:2.5rem 1.5rem;max-width:1000px;">
+<div class="api-crumb"><a href="../../index.html">Docs</a> / <a href="../../api/index.html">API</a> / <a href="../../api/index.html#tests-test-client">tests.test_client</a> / <span style="color:var(--text-primary)">TestGmGnClient</span></div>
+<header class="page-header"><span class="api-badge" style="background:#6366f122;color:#6366f1;border:1px solid #6366f155;"><i class="fas fa-cube"></i> class</span><h1 style="margin-top:.75rem;font-family:monospace;word-break:break-word;">TestGmGnClient</h1><p class="page-description">Test cases for GmGnClient.</p><p style="font-size:.85rem;color:var(--text-muted);">Module <code>tests.test_client</code> · <a href="https://github.com/ChipaDevTeam/GmGnAPI/blob/main/tests/test_client.py#L15-L201" target="_blank" style="color:var(--accent-color);">tests/test_client.py:15 <i class="fas fa-external-link-alt" style="font-size:.75rem;"></i></a></p></header>
+<section style="margin:2rem 0;"><h2>Signature</h2>
+<div class="code-window"><div class="code-header"><div class="code-dots"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div><span class="code-title">signature.py</span></div><pre><code class="language-python">class TestGmGnClient</code></pre></div>
+</section>
+<section style="margin:2rem 0;"><h2>Description</h2><p style="color:var(--text-secondary);line-height:1.75;">Test cases for GmGnClient.</p></section>
+<section style="margin:2rem 0;"><h2>Members (12)</h2><div class="api-grid"><a href="../../api/tests-test-client/testgmgnclient-test-client-initialization.html"><strong>test_client_initialization()</strong><span>Test client initialization with default values.</span></a><a href="../../api/tests-test-client/testgmgnclient-test-client-initialization-with-params.html"><strong>test_client_initialization_with_params()</strong><span>Test client initialization with custom parameters.</span></a><a href="../../api/tests-test-client/testgmgnclient-test-build-connection-url.html"><strong>test_build_connection_url()</strong><span>Test WebSocket URL building.</span></a><a href="../../api/tests-test-client/testgmgnclient-test-connect-success.html"><strong>test_connect_success()</strong><span>Test successful WebSocket connection.</span></a><a href="../../api/tests-test-client/testgmgnclient-test-connect-failure.html"><strong>test_connect_failure()</strong><span>Test WebSocket connection failure.</span></a><a href="../../api/tests-test-client/testgmgnclient-test-disconnect.html"><strong>test_disconnect()</strong><span>Test WebSocket disconnection.</span></a><a href="../../api/tests-test-client/testgmgnclient-test-subscribe-new-pools.html"><strong>test_subscribe_new_pools()</strong><span>Test subscribing to new pools.</span></a><a href="../../api/tests-test-client/testgmgnclient-test-subscribe-wallet-trades-without-token.html"><strong>test_subscribe_wallet_trades_without_token()</strong><span>Test wallet subscription without access token.</span></a><a href="../../api/tests-test-client/testgmgnclient-test-subscribe-wallet-trades-with-token.html"><strong>test_subscribe_wallet_trades_with_token()</strong><span>Test wallet subscription with access token.</span></a><a href="../../api/tests-test-client/testgmgnclient-test-event-handlers.html"><strong>test_event_handlers()</strong><span>Test event handler registration and removal.</span></a><a href="../../api/tests-test-client/testgmgnclient-test-handle-message.html"><strong>test_handle_message()</strong><span>Test message handling.</span></a><a href="../../api/tests-test-client/testgmgnclient-test-context-manager.html"><strong>test_context_manager()</strong><span>Test client as async context manager.</span></a></div></section>
+<section style="margin:2rem 0;"><h2>Source</h2><details class="api-src"><summary>Show source (187 lines)</summary><div class="code-window"><div class="code-header"><div class="code-dots"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div><span class="code-title">tests/test_client.py</span></div><pre><code class="language-python">class TestGmGnClient:
+    &quot;&quot;&quot;Test cases for GmGnClient.&quot;&quot;&quot;
+
+    def test_client_initialization(self):
+        &quot;&quot;&quot;Test client initialization with default values.&quot;&quot;&quot;
+        client = GmGnClient()
+        
+        assert client.ws_url == GmGnClient.DEFAULT_WS_URL
+        assert client.user_agent == GmGnClient.DEFAULT_USER_AGENT
+        assert client.auto_reconnect is True
+        assert client.max_reconnect_attempts == 5
+        assert not client.is_connected
+
+    def test_client_initialization_with_params(self):
+        &quot;&quot;&quot;Test client initialization with custom parameters.&quot;&quot;&quot;
+        client = GmGnClient(
+            ws_url=&quot;wss://custom.url&quot;,
+            device_id=&quot;test-device&quot;,
+            client_id=&quot;test-client&quot;,
+            user_agent=&quot;Test/1.0&quot;,
+            auto_reconnect=False,
+            max_reconnect_attempts=3
+        )
+        
+        assert client.ws_url == &quot;wss://custom.url&quot;
+        assert client.device_id == &quot;test-device&quot;
+        assert client.client_id == &quot;test-client&quot;
+        assert client.user_agent == &quot;Test/1.0&quot;
+        assert client.auto_reconnect is False
+        assert client.max_reconnect_attempts == 3
+
+    def test_build_connection_url(self):
+        &quot;&quot;&quot;Test WebSocket URL building.&quot;&quot;&quot;
+        client = GmGnClient(device_id=&quot;test-device&quot;, client_id=&quot;test-client&quot;)
+        url = client._build_connection_url()
+        
+        assert &quot;device_id=test-device&quot; in url
+        assert &quot;client_id=test-client&quot; in url
+        assert &quot;from_app=gmgn&quot; in url
+        assert client.ws_url in url
+
+    @pytest.mark.asyncio
+    async def test_connect_success(self, mock_websocket):
+        &quot;&quot;&quot;Test successful WebSocket connection.&quot;&quot;&quot;
+        with patch(&#x27;gmgnapi.client.websockets.connect&#x27;) as mock_connect:
+            mock_connect.return_value = mock_websocket
+            client = GmGnClient()
+            await client.connect()
+            
+            assert client.is_connected
+            assert client._websocket == mock_websocket
+
+    @pytest.mark.asyncio
+    async def test_connect_failure(self):
+        &quot;&quot;&quot;Test WebSocket connection failure.&quot;&quot;&quot;
+        with patch(&#x27;gmgnapi.client.websockets.connect&#x27;, side_effect=Exception(&quot;Connection failed&quot;)):
+            client = GmGnClient()
+            
+            with pytest.raises(ConnectionError):
+                await client.connect()
+            
+            assert not client.is_connected
+
+    @pytest.mark.asyncio
+    async def test_disconnect(self, mock_websocket):
+        &quot;&quot;&quot;Test WebSocket disconnection.&quot;&quot;&quot;
+        with patch(&#x27;gmgnapi.client.websockets.connect&#x27;) as mock_connect:
+            mock_connect.return_value = mock_websocket
+            client = GmGnClient()
+            await client.connect()
+            
+            assert client.is_connected
+            
+            await client.disconnect()
+            
+            assert not client.is_connected
+            mock_websocket.close.assert_called_once()
+
+    @pytest.mark.asyncio
+    async def test_subscribe_new_pools(self, mock_websocket):
+        &quot;&quot;&quot;Test subscribing to new pools.&quot;&quot;&quot;
+        with patch(&#x27;gmgnapi.client.websockets.connect&#x27;) as mock_connect:
+            mock_connect.return_value = mock_websocket
+            client = GmGnClient()
+            await client.connect()
+            
+            await client.subscribe_new_pools(chain=&quot;sol&quot;)
+            
+            # Verify subscription was sent
+            mock_websocket.send.assert_called_once()
+            sent_data = json.loads(mock_websocket.send.call_args[0][0])
+            
+            assert sent_data[&quot;action&quot;] == &quot;subscribe&quot;
+            assert sent_data[&quot;channel&quot;] == &quot;new_pool_info&quot;
+            assert sent_data[&quot;data&quot;] == [{&quot;chain&quot;: &quot;sol&quot;}]
+
+    @pytest.mark.asyncio
+    async def test_subscribe_wallet_trades_without_token(self, mock_websocket):
+        &quot;&quot;&quot;Test wallet subscription without access token.&quot;&quot;&quot;
+        with patch(&#x27;gmgnapi.client.websockets.connect&#x27;) as mock_connect:
+            mock_connect.return_value = mock_websocket
+            client = GmGnClient()
+            await client.connect()
+            
+            with pytest.raises(AuthenticationError):
+                await client.subscribe_wallet_trades(
+                    chain=&quot;sol&quot;,
+                    wallet_address=&quot;test-wallet&quot;
+                )
+
+    @pytest.mark.asyncio
+    async def test_subscribe_wallet_trades_with_token(self, mock_websocket):
+        &quot;&quot;&quot;Test wallet subscription with access token.&quot;&quot;&quot;
+        with patch(&#x27;gmgnapi.client.websockets.connect&#x27;) as mock_connect:
+            mock_connect.return_value = mock_websocket
+            client = GmGnClient(access_token=&quot;test-token&quot;)
+            await client.connect()
+            
+            await client.subscribe_wallet_trades(
+                chain=&quot;sol&quot;,
+                wallet_address=&quot;test-wallet&quot;
+            )
+            
+            mock_websocket.send.assert_called_once()
+            sent_data = json.loads(mock_websocket.send.call_args[0][0])
+            
+            assert sent_data[&quot;channel&quot;] == &quot;wallet_trade_data&quot;
+            assert sent_data[&quot;access_token&quot;] == &quot;test-token&quot;
+
+    def test_event_handlers(self):
+        &quot;&quot;&quot;Test event handler registration and removal.&quot;&quot;&quot;
+        client = GmGnClient()
+        
+        def test_handler(data):
+            pass
+            
+        # Register handler
+        client.on(&quot;new_pool_info&quot;, test_handler)
+        assert &quot;new_pool_info&quot; in client._event_handlers
+        assert test_handler in client._event_handlers[&quot;new_pool_info&quot;]
+        
+        # Remove specific handler
+        client.off(&quot;new_pool_info&quot;, test_handler)
+        assert len(client._event_handlers.get(&quot;new_pool_info&quot;, [])) == 0
+        
+        # Register and remove all handlers
+        client.on(&quot;new_pool_info&quot;, test_handler)
+        client.off(&quot;new_pool_info&quot;)
+        assert &quot;new_pool_info&quot; not in client._event_handlers
+
+    @pytest.mark.asyncio
+    async def test_handle_message(self, sample_message_data):
+        &quot;&quot;&quot;Test message handling.&quot;&quot;&quot;
+        client = GmGnClient()
+        handler_called = False
+        received_data = None
+        
+        def test_handler(data):
+            nonlocal handler_called, received_data
+            handler_called = True
+            received_data = data
+            
+        client.on(&quot;new_pool_info&quot;, test_handler)
+        
+        # Simulate message handling
+        raw_message = json.dumps(sample_message_data)
+        await client._handle_message(raw_message)
+        
+        # Check that handler was called
+        assert handler_called
+        assert received_data == sample_message_data[&quot;data&quot;]
+        
+        # Check message was added to queue
+        assert not client._message_queue.empty()
+        message = await client._message_queue.get()
+        assert message.channel == &quot;new_pool_info&quot;
+
+    @pytest.mark.asyncio
+    async def test_context_manager(self, mock_websocket):
+        &quot;&quot;&quot;Test client as async context manager.&quot;&quot;&quot;
+        with patch(&#x27;gmgnapi.client.websockets.connect&#x27;) as mock_connect:
+            mock_connect.return_value = mock_websocket
+            async with GmGnClient() as client:
+                assert client.is_connected
+            
+            # Should be disconnected after exiting context
+            mock_websocket.close.assert_called_once()</code></pre></div></details></section>
+<section style="margin:2.5rem 0;"><h2>Also in <code>tests.test_client</code></h2><div><a href="../../api/tests-test-client/testgmgnclient-test-client-initialization.html" style="color:var(--text-secondary);text-decoration:none;border:1px solid var(--border-primary);border-radius:6px;padding:.25rem .6rem;font-size:.82rem;display:inline-block;margin:.2rem;font-family:monospace;">TestGmGnClient.test_client_initialization</a> <a href="../../api/tests-test-client/testgmgnclient-test-client-initialization-with-params.html" style="color:var(--text-secondary);text-decoration:none;border:1px solid var(--border-primary);border-radius:6px;padding:.25rem .6rem;font-size:.82rem;display:inline-block;margin:.2rem;font-family:monospace;">TestGmGnClient.test_client_initialization_with_params</a> <a href="../../api/tests-test-client/testgmgnclient-test-build-connection-url.html" style="color:var(--text-secondary);text-decoration:none;border:1px solid var(--border-primary);border-radius:6px;padding:.25rem .6rem;font-size:.82rem;display:inline-block;margin:.2rem;font-family:monospace;">TestGmGnClient.test_build_connection_url</a> <a href="../../api/tests-test-client/testgmgnclient-test-connect-success.html" style="color:var(--text-secondary);text-decoration:none;border:1px solid var(--border-primary);border-radius:6px;padding:.25rem .6rem;font-size:.82rem;display:inline-block;margin:.2rem;font-family:monospace;">TestGmGnClient.test_connect_success</a> <a href="../../api/tests-test-client/testgmgnclient-test-connect-failure.html" style="color:var(--text-secondary);text-decoration:none;border:1px solid var(--border-primary);border-radius:6px;padding:.25rem .6rem;font-size:.82rem;display:inline-block;margin:.2rem;font-family:monospace;">TestGmGnClient.test_connect_failure</a> <a href="../../api/tests-test-client/testgmgnclient-test-disconnect.html" style="color:var(--text-secondary);text-decoration:none;border:1px solid var(--border-primary);border-radius:6px;padding:.25rem .6rem;font-size:.82rem;display:inline-block;margin:.2rem;font-family:monospace;">TestGmGnClient.test_disconnect</a> <a href="../../api/tests-test-client/testgmgnclient-test-subscribe-new-pools.html" style="color:var(--text-secondary);text-decoration:none;border:1px solid var(--border-primary);border-radius:6px;padding:.25rem .6rem;font-size:.82rem;display:inline-block;margin:.2rem;font-family:monospace;">TestGmGnClient.test_subscribe_new_pools</a> <a href="../../api/tests-test-client/testgmgnclient-test-subscribe-wallet-trades-without-token.html" style="color:var(--text-secondary);text-decoration:none;border:1px solid var(--border-primary);border-radius:6px;padding:.25rem .6rem;font-size:.82rem;display:inline-block;margin:.2rem;font-family:monospace;">TestGmGnClient.test_subscribe_wallet_trades_without_token</a> <a href="../../api/tests-test-client/testgmgnclient-test-subscribe-wallet-trades-with-token.html" style="color:var(--text-secondary);text-decoration:none;border:1px solid var(--border-primary);border-radius:6px;padding:.25rem .6rem;font-size:.82rem;display:inline-block;margin:.2rem;font-family:monospace;">TestGmGnClient.test_subscribe_wallet_trades_with_token</a> <a href="../../api/tests-test-client/testgmgnclient-test-event-handlers.html" style="color:var(--text-secondary);text-decoration:none;border:1px solid var(--border-primary);border-radius:6px;padding:.25rem .6rem;font-size:.82rem;display:inline-block;margin:.2rem;font-family:monospace;">TestGmGnClient.test_event_handlers</a> <a href="../../api/tests-test-client/testgmgnclient-test-handle-message.html" style="color:var(--text-secondary);text-decoration:none;border:1px solid var(--border-primary);border-radius:6px;padding:.25rem .6rem;font-size:.82rem;display:inline-block;margin:.2rem;font-family:monospace;">TestGmGnClient.test_handle_message</a> <a href="../../api/tests-test-client/testgmgnclient-test-context-manager.html" style="color:var(--text-secondary);text-decoration:none;border:1px solid var(--border-primary);border-radius:6px;padding:.25rem .6rem;font-size:.82rem;display:inline-block;margin:.2rem;font-family:monospace;">TestGmGnClient.test_context_manager</a></div></section>
+<div class="api-prevnext"><a href="../../api/tests-conftest/sample-subscription-data.html">← sample_subscription_data</a><a href="../../api/tests-test-client/testgmgnclient-test-client-initialization.html">TestGmGnClient.test_client_initialization →</a></div>
+</div></main>
+<footer class="footer"><div class="container"><div class="footer-content">
+      <div class="footer-section"><h4>GmGnAPI</h4>
+        <p>Professional Python client for GMGN.ai WebSocket API</p>
+        <div class="social-links">
+          <a href="https://github.com/ChipaDevTeam/GmGnAPI" target="_blank"><i class="fab fa-github"></i></a>
+          <a href="https://discord.gg/ub46R9Dk" target="_blank"><i class="fab fa-discord"></i></a>
+          <a href="https://pypi.org/project/gmgnapi/" target="_blank"><i class="fab fa-python"></i></a>
+        </div></div>
+      <div class="footer-section"><h4>Documentation</h4><ul>
+        <li><a href="../../getting-started.html">Getting Started</a></li>
+        <li><a href="../../tutorials.html">Tutorials</a></li>
+        <li><a href="../../api-reference.html">API Reference</a></li>
+        <li><a href="../../api/index.html">Full API Index</a></li>
+        <li><a href="../../examples.html">Examples</a></li>
+        <li><a href="../../filters-guide.html">Filters Guide</a></li>
+        <li><a href="../../websocket-guide.html">WebSocket Guide</a></li>
+        <li><a href="../../faq.html">FAQ</a></li></ul></div>
+      <div class="footer-section"><h4>Community</h4><ul>
+        <li><a href="https://discord.gg/ub46R9Dk" target="_blank"><i class="fab fa-discord"></i> Discord Server</a></li>
+        <li><a href="https://gmgn.ai/r/9dLKvFyE" target="_blank"><i class="fas fa-external-link-alt"></i> Create GMGN Account</a></li>
+        <li><a href="https://chipaeditor.com/?utm_source=docs&utm_medium=footer&utm_campaign=gmgn_api&utm_content=api_footer" target="_blank"><i class="fas fa-code"></i> Chipa Editor</a></li>
+        <li><a href="../../community.html"><i class="fas fa-users"></i> Community Page</a></li></ul></div>
+      </div>
+      <div class="footer-bottom"><p>&copy; 2025 GmGnAPI. Open source under MIT License.</p>
+      <p style="margin-top:0.5rem;font-size:0.85rem;opacity:0.7;">✨ Proudly built with <a href="https://chipaeditor.com/?utm_source=docs&utm_medium=footer&utm_campaign=gmgn_api&utm_content=api_credit" target="_blank" style="color:var(--accent-color);">Chipa Editor</a></p></div>
+      </div></footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="../../assets/js/main.js"></script></body></html>

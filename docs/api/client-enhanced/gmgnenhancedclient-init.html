@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GmGnEnhancedClient.__init__ — method — GmGnAPI Python Docs</title>
+<meta name="description" content="gmgnapi.client_enhanced.GmGnEnhancedClient.__init__ (method). Initialize the advanced GMGN client.">
+<meta name="robots" content="index, follow">
+<meta name="keywords" content="gmgnapi, GmGnEnhancedClient.__init__, __init__, gmgnapi.client_enhanced, GMGN API python, solana websocket, method">
+<link rel="canonical" href="https://chipadevteam.github.io/GmGnAPI/api/client-enhanced/gmgnenhancedclient-init.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GmGnEnhancedClient.__init__ — method — GmGnAPI Python Docs">
+<meta property="og:description" content="gmgnapi.client_enhanced.GmGnEnhancedClient.__init__ (method). Initialize the advanced GMGN client.">
+<meta property="og:url" content="https://chipadevteam.github.io/GmGnAPI/api/client-enhanced/gmgnenhancedclient-init.html">
+<meta property="og:site_name" content="GmGnAPI Documentation">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="GmGnEnhancedClient.__init__ — method — GmGnAPI Python Docs">
+<meta name="twitter:description" content="gmgnapi.client_enhanced.GmGnEnhancedClient.__init__ (method). Initialize the advanced GMGN client.">
+<link rel="stylesheet" href="../../assets/css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "TechArticle", "headline": "GmGnEnhancedClient.__init__ \u2014 method", "name": "GmGnEnhancedClient.__init__", "description": "gmgnapi.client_enhanced.GmGnEnhancedClient.__init__ (method). Initialize the advanced GMGN client.", "url": "https://chipadevteam.github.io/GmGnAPI/api/client-enhanced/gmgnenhancedclient-init.html", "dateModified": "2026-08-18", "inLanguage": "en", "isPartOf": {"@type": "WebSite", "name": "GmGnAPI Documentation", "url": "https://chipadevteam.github.io/GmGnAPI/"}, "author": {"@type": "Organization", "name": "ChipaDevTeam"}, "publisher": {"@type": "Organization", "name": "ChipaDevTeam", "url": "https://chipaeditor.com/"}, "programmingLanguage": "Python", "keywords": "gmgnapi, GmGnEnhancedClient.__init__, __init__, gmgnapi.client_enhanced, GMGN API python, solana websocket, method"}</script>
+<style>
+.api-badge{display:inline-block;padding:.2rem .7rem;border-radius:999px;font-size:.75rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;}
+.api-crumb{font-size:.85rem;color:var(--text-muted);margin-bottom:1rem;}
+.api-crumb a{color:var(--text-secondary);text-decoration:none;} .api-crumb a:hover{color:var(--primary-color);}
+.api-table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.92rem;}
+.api-table th{background:var(--bg-secondary);padding:.7rem;text-align:left;border:1px solid var(--border-primary);}
+.api-table td{padding:.7rem;border:1px solid var(--border-primary);vertical-align:top;}
+.api-table code{white-space:nowrap;}
+.api-card{background:var(--bg-card);border:1px solid var(--border-primary);border-radius:12px;padding:1.25rem;margin:1rem 0;}
+.api-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem;margin:1.25rem 0;}
+.api-grid a{display:block;background:var(--bg-card);border:1px solid var(--border-primary);border-radius:10px;padding:.9rem 1rem;text-decoration:none;transition:.15s;}
+.api-grid a:hover{border-color:var(--primary-color);transform:translateY(-2px);}
+.api-grid strong{color:var(--text-primary);display:block;font-family:monospace;font-size:.95rem;word-break:break-word;}
+.api-grid span{color:var(--text-muted);font-size:.8rem;}
+details.api-src summary{cursor:pointer;padding:.6rem 0;font-weight:600;color:var(--accent-color);}
+.api-prevnext{display:flex;justify-content:space-between;gap:1rem;margin:2.5rem 0 0;flex-wrap:wrap;}
+.api-prevnext a{background:var(--bg-card);border:1px solid var(--border-primary);border-radius:10px;padding:.8rem 1.1rem;text-decoration:none;color:var(--text-secondary);}
+.api-prevnext a:hover{border-color:var(--primary-color);}
+</style>
+</head>
+<body>
+<div class="top-promo-banner"><div class="container" style="display:flex;align-items:center;justify-content:center;gap:.5rem;flex-wrap:wrap;">
+<span>🔥</span><span><a href="https://chipaeditor.com/?utm_source=docs&utm_medium=banner&utm_campaign=gmgn_api&utm_content=api_banner" target="_blank"><strong>Chipa Editor</strong></a> ships full autocomplete for the entire GmGnAPI surface.</span>
+<a href="https://chipaeditor.com/?utm_source=docs&utm_medium=banner&utm_campaign=gmgn_api&utm_content=api_banner_cta" class="btn-banner-cta" target="_blank">Get it free →</a></div></div>
+<nav class="navbar">
+    <div class="nav-container">
+      <a href="../../index.html" class="nav-logo" style="text-decoration:none;color:inherit;"><span class="logo-icon">🚀</span><span class="logo-text">GmGnAPI</span></a>
+      <ul class="nav-menu"><li><a href="../../index.html" class="nav-link">Home</a></li><li><a href="../../getting-started.html" class="nav-link">Getting Started</a></li><li><a href="../../tutorials.html" class="nav-link">Tutorials</a></li><li><a href="../../api-reference.html" class="nav-link">API Reference</a></li><li><a href="../../api/index.html" class="nav-link">API Index</a></li><li><a href="../../examples.html" class="nav-link">Examples</a></li><li><a href="../../advanced.html" class="nav-link">Advanced</a></li><li><a href="../../filters-guide.html" class="nav-link">Filters</a></li><li><a href="../../faq.html" class="nav-link">FAQ</a></li>
+        <li><a href="https://github.com/ChipaDevTeam/GmGnAPI" class="nav-link" target="_blank"><i class="fab fa-github"></i> GitHub</a></li>
+        <li><a href="https://gmgn.ai/r/9dLKvFyE" class="nav-link btn-signup" target="_blank"><i class="fas fa-rocket"></i> Sign Up on GMGN</a></li>
+        <li><a href="https://chipaeditor.com/?utm_source=docs&utm_medium=navbar&utm_campaign=gmgn_api&utm_content=api_nav" class="nav-link btn-chipa" target="_blank"><i class="fas fa-code"></i> Chipa Editor</a></li>
+      </ul>
+      <div class="hamburger"><span class="bar"></span><span class="bar"></span><span class="bar"></span></div>
+    </div></nav>
+<main style="margin-top:70px;"><div class="container" style="padding:2.5rem 1.5rem;max-width:1000px;">
+<div class="api-crumb"><a href="../../index.html">Docs</a> / <a href="../../api/index.html">API</a> / <a href="../../api/index.html#client-enhanced">gmgnapi.client_enhanced</a> / <a href="../../api/client-enhanced/gmgnenhancedclient.html">GmGnEnhancedClient</a> / <span style="color:var(--text-primary)">__init__</span></div>
+<header class="page-header"><span class="api-badge" style="background:#f59e0b22;color:#f59e0b;border:1px solid #f59e0b55;"><i class="fas fa-gear"></i> method</span><h1 style="margin-top:.75rem;font-family:monospace;word-break:break-word;">GmGnEnhancedClient.__init__</h1><p class="page-description">Initialize the advanced GMGN client.</p><p style="font-size:.85rem;color:var(--text-muted);">Module <code>gmgnapi.client_enhanced</code> · <a href="https://github.com/ChipaDevTeam/GmGnAPI/blob/main/src/gmgnapi/client_enhanced.py#L113-L171" target="_blank" style="color:var(--accent-color);">src/gmgnapi/client_enhanced.py:113 <i class="fas fa-external-link-alt" style="font-size:.75rem;"></i></a></p></header>
+<section style="margin:2rem 0;"><h2>Signature</h2>
+<div class="code-window"><div class="code-header"><div class="code-dots"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div><span class="code-title">signature.py</span></div><pre><code class="language-python">def __init__(
+    self,
+    access_token: Optional[str] = None,
+    chain: str = &#x27;sol&#x27;,
+    auto_reconnect: bool = True,
+    reconnect_interval: float = 5.0,
+    token_filter: Optional[TokenFilter] = None,
+    export_config: Optional[DataExportConfig] = None,
+    alert_config: Optional[AlertConfig] = None,
+    rate_limit: Optional[int] = None,
+    max_queue_size: int = 10000,
+    cookies: Optional[Dict[str, str]] = None,
+)</code></pre></div>
+</section>
+<section style="margin:2rem 0;"><h2>Description</h2><p style="color:var(--text-secondary);line-height:1.75;">Initialize the advanced GMGN client.</p></section>
+<section style="margin:2rem 0;"><h2>Import</h2><div class="code-window"><div class="code-header"><div class="code-dots"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div><span class="code-title">import.py</span></div><pre><code class="language-python">from gmgnapi import GmGnEnhancedClient
+
+# then call
+# obj.__init__(...)</code></pre></div></section>
+<section style="margin:2rem 0;"><h2>Parameters</h2><div style="overflow-x:auto;"><table class="api-table"><thead><tr><th>Name</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code>access_token</code></td><td><code>Optional[str]</code></td><td><code>None</code></td><td>Optional access token for authenticated channels</td></tr><tr><td><code>chain</code></td><td><code>str</code></td><td><code>&#x27;sol&#x27;</code></td><td>Blockchain to monitor (default: &quot;sol&quot; for Solana)</td></tr><tr><td><code>auto_reconnect</code></td><td><code>bool</code></td><td><code>True</code></td><td>Whether to automatically reconnect on connection loss</td></tr><tr><td><code>reconnect_interval</code></td><td><code>float</code></td><td><code>5.0</code></td><td>Seconds to wait between reconnection attempts</td></tr><tr><td><code>token_filter</code></td><td><code>Optional[TokenFilter]</code></td><td><code>None</code></td><td>Filter configuration for tokens</td></tr><tr><td><code>export_config</code></td><td><code>Optional[DataExportConfig]</code></td><td><code>None</code></td><td>Data export configuration</td></tr><tr><td><code>alert_config</code></td><td><code>Optional[AlertConfig]</code></td><td><code>None</code></td><td>Alert and notification configuration</td></tr><tr><td><code>rate_limit</code></td><td><code>Optional[int]</code></td><td><code>None</code></td><td>Maximum messages per second to process</td></tr><tr><td><code>max_queue_size</code></td><td><code>int</code></td><td><code>10000</code></td><td>Maximum message queue size</td></tr><tr><td><code>cookies</code></td><td><code>Optional[Dict[str, str]]</code></td><td><code>None</code></td><td>Dictionary of cookies to send with connection</td></tr></tbody></table></div></section>
+<section style="margin:2rem 0;"><h2>Source</h2><details class="api-src"><summary>Show source (59 lines)</summary><div class="code-window"><div class="code-header"><div class="code-dots"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div><span class="code-title">src/gmgnapi/client_enhanced.py</span></div><pre><code class="language-python">    def __init__(
+        self,
+        access_token: Optional[str] = None,
+        chain: str = &quot;sol&quot;,
+        auto_reconnect: bool = True,
+        reconnect_interval: float = 5.0,
+        token_filter: Optional[TokenFilter] = None,
+        export_config: Optional[DataExportConfig] = None,
+        alert_config: Optional[AlertConfig] = None,
+        rate_limit: Optional[int] = None,
+        max_queue_size: int = 10000,
+        cookies: Optional[Dict[str, str]] = None,
+    ):
+        &quot;&quot;&quot;
+        Initialize the advanced GMGN client.
+        
+        Args:
+            access_token: Optional access token for authenticated channels
+            chain: Blockchain to monitor (default: &quot;sol&quot; for Solana)
+            auto_reconnect: Whether to automatically reconnect on connection loss
+            reconnect_interval: Seconds to wait between reconnection attempts
+            token_filter: Filter configuration for tokens
+            export_config: Data export configuration
+            alert_config: Alert and notification configuration
+            rate_limit: Maximum messages per second to process
+            max_queue_size: Maximum message queue size
+            cookies: Dictionary of cookies to send with connection
+        &quot;&quot;&quot;
+        self.access_token = access_token
+        self.chain = chain
+        self.auto_reconnect = auto_reconnect
+        self.reconnect_interval = reconnect_interval
+        self.token_filter = token_filter or TokenFilter()
+        self.export_config = export_config or DataExportConfig()
+        self.alert_config = alert_config or AlertConfig()
+        self.rate_limit = rate_limit
+        self.max_queue_size = max_queue_size
+        self.cookies = cookies or {}
+        
+        self._websocket: Optional[websockets.WebSocketServerProtocol] = None
+        self._handlers: Dict[str, List[Callable]] = {}
+        self._subscriptions: Set[str] = set()
+        self._running = False
+        self._reconnect_task: Optional[asyncio.Task] = None
+        self._message_queue: asyncio.Queue = asyncio.Queue(maxsize=max_queue_size)
+        self._stats = MonitoringStats()
+        self._connection_start_time: Optional[datetime] = None
+        
+        # Data storage
+        self._db_connection: Optional[sqlite3.Connection] = None
+        self._export_file_handle = None
+        self._csv_writer = None
+        
+        # Rate limiting
+        self._last_message_times: List[datetime] = []
+        
+        # Tracking sets for statistics
+        self._seen_tokens: Set[str] = set()
+        self._seen_pools: Set[str] = set()</code></pre></div></details></section>
+<section style="margin:2.5rem 0;"><h2>Also in <code>gmgnapi.client_enhanced</code></h2><div><a href="../../api/client-enhanced/gmgnenhancedclient.html" style="color:var(--text-secondary);text-decoration:none;border:1px solid var(--border-primary);border-radius:6px;padding:.25rem .6rem;font-size:.82rem;display:inline-block;margin:.2rem;font-family:monospace;">GmGnEnhancedClient</a> <a href="../../api/client-enhanced/gmgnenhancedclient-connect.html" style="color:var(--text-secondary);text-decoration:none;border:1px solid var(--border-primary);border-radius:6px;padding:.25rem .6rem;font-size:.82rem;display:inline-block;margin:.2rem;font-family:monospace;">GmGnEnhancedClient.connect</a> <a href="../../api/client-enhanced/gmgnenhancedclient-disconnect.html" style="color:var(--text-secondary);text-decoration:none;border:1px solid var(--border-primary);border-radius:6px;padding:.25rem .6rem;font-size:.82rem;display:inline-block;margin:.2rem;font-family:monospace;">GmGnEnhancedClient.disconnect</a> <a href="../../api/client-enhanced/gmgnenhancedclient-subscribe-new-pools.html" style="color:var(--text-secondary);text-decoration:none;border:1px solid var(--border-primary);border-radius:6px;padding:.25rem .6rem;font-size:.82rem;display:inline-block;margin:.2rem;font-family:monospace;">GmGnEnhancedClient.subscribe_new_pools</a> <a href="../../api/client-enhanced/gmgnenhancedclient-subscribe-pair-updates.html" style="color:var(--text-secondary);text-decoration:none;border:1px solid var(--border-primary);border-radius:6px;padding:.25rem .6rem;font-size:.82rem;display:inline-block;margin:.2rem;font-family:monospace;">GmGnEnhancedClient.subscribe_pair_updates</a> <a href="../../api/client-enhanced/gmgnenhancedclient-subscribe-token-launches.html" style="color:var(--text-secondary);text-decoration:none;border:1px solid var(--border-primary);border-radius:6px;padding:.25rem .6rem;font-size:.82rem;display:inline-block;margin:.2rem;font-family:monospace;">GmGnEnhancedClient.subscribe_token_launches</a> <a href="../../api/client-enhanced/gmgnenhancedclient-subscribe-chain-stats.html" style="color:var(--text-secondary);text-decoration:none;border:1px solid var(--border-primary);border-radius:6px;padding:.25rem .6rem;font-size:.82rem;display:inline-block;margin:.2rem;font-family:monospace;">GmGnEnhancedClient.subscribe_chain_stats</a> <a href="../../api/client-enhanced/gmgnenhancedclient-subscribe-token-social.html" style="color:var(--text-secondary);text-decoration:none;border:1px solid var(--border-primary);border-radius:6px;padding:.25rem .6rem;font-size:.82rem;display:inline-block;margin:.2rem;font-family:monospace;">GmGnEnhancedClient.subscribe_token_social</a> <a href="../../api/client-enhanced/gmgnenhancedclient-subscribe-wallet-trades.html" style="color:var(--text-secondary);text-decoration:none;border:1px solid var(--border-primary);border-radius:6px;padding:.25rem .6rem;font-size:.82rem;display:inline-block;margin:.2rem;font-family:monospace;">GmGnEnhancedClient.subscribe_wallet_trades</a> <a href="../../api/client-enhanced/gmgnenhancedclient-subscribe-limit-orders.html" style="color:var(--text-secondary);text-decoration:none;border:1px solid var(--border-primary);border-radius:6px;padding:.25rem .6rem;font-size:.82rem;display:inline-block;margin:.2rem;font-family:monospace;">GmGnEnhancedClient.subscribe_limit_orders</a> <a href="../../api/client-enhanced/gmgnenhancedclient-subscribe-all-channels.html" style="color:var(--text-secondary);text-decoration:none;border:1px solid var(--border-primary);border-radius:6px;padding:.25rem .6rem;font-size:.82rem;display:inline-block;margin:.2rem;font-family:monospace;">GmGnEnhancedClient.subscribe_all_channels</a> <a href="../../api/client-enhanced/gmgnenhancedclient-on-new-pool.html" style="color:var(--text-secondary);text-decoration:none;border:1px solid var(--border-primary);border-radius:6px;padding:.25rem .6rem;font-size:.82rem;display:inline-block;margin:.2rem;font-family:monospace;">GmGnEnhancedClient.on_new_pool</a></div></section>
+<div class="api-prevnext"><a href="../../api/client-enhanced/gmgnenhancedclient.html">← GmGnEnhancedClient</a><a href="../../api/client-enhanced/gmgnenhancedclient-connect.html">GmGnEnhancedClient.connect →</a></div>
+</div></main>
+<footer class="footer"><div class="container"><div class="footer-content">
+      <div class="footer-section"><h4>GmGnAPI</h4>
+        <p>Professional Python client for GMGN.ai WebSocket API</p>
+        <div class="social-links">
+          <a href="https://github.com/ChipaDevTeam/GmGnAPI" target="_blank"><i class="fab fa-github"></i></a>
+          <a href="https://discord.gg/ub46R9Dk" target="_blank"><i class="fab fa-discord"></i></a>
+          <a href="https://pypi.org/project/gmgnapi/" target="_blank"><i class="fab fa-python"></i></a>
+        </div></div>
+      <div class="footer-section"><h4>Documentation</h4><ul>
+        <li><a href="../../getting-started.html">Getting Started</a></li>
+        <li><a href="../../tutorials.html">Tutorials</a></li>
+        <li><a href="../../api-reference.html">API Reference</a></li>
+        <li><a href="../../api/index.html">Full API Index</a></li>
+        <li><a href="../../examples.html">Examples</a></li>
+        <li><a href="../../filters-guide.html">Filters Guide</a></li>
+        <li><a href="../../websocket-guide.html">WebSocket Guide</a></li>
+        <li><a href="../../faq.html">FAQ</a></li></ul></div>
+      <div class="footer-section"><h4>Community</h4><ul>
+        <li><a href="https://discord.gg/ub46R9Dk" target="_blank"><i class="fab fa-discord"></i> Discord Server</a></li>
+        <li><a href="https://gmgn.ai/r/9dLKvFyE" target="_blank"><i class="fas fa-external-link-alt"></i> Create GMGN Account</a></li>
+        <li><a href="https://chipaeditor.com/?utm_source=docs&utm_medium=footer&utm_campaign=gmgn_api&utm_content=api_footer" target="_blank"><i class="fas fa-code"></i> Chipa Editor</a></li>
+        <li><a href="../../community.html"><i class="fas fa-users"></i> Community Page</a></li></ul></div>
+      </div>
+      <div class="footer-bottom"><p>&copy; 2025 GmGnAPI. Open source under MIT License.</p>
+      <p style="margin-top:0.5rem;font-size:0.85rem;opacity:0.7;">✨ Proudly built with <a href="https://chipaeditor.com/?utm_source=docs&utm_medium=footer&utm_campaign=gmgn_api&utm_content=api_credit" target="_blank" style="color:var(--accent-color);">Chipa Editor</a></p></div>
+      </div></footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="../../assets/js/main.js"></script></body></html>
