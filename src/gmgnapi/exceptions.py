@@ -24,6 +24,16 @@ class AuthenticationError(GmGnAPIError):
     pass
 
 
+class CaptchaRequiredError(AuthenticationError):
+    """Raised when a login needs a captcha token that was not supplied."""
+    pass
+
+
+class VerificationRequiredError(AuthenticationError):
+    """Raised when a login needs a verification code that was not supplied."""
+    pass
+
+
 class SubscriptionError(GmGnAPIError):
     """Raised when subscription to a channel fails."""
     pass

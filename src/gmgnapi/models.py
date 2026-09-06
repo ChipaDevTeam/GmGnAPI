@@ -45,6 +45,21 @@ class SubscriptionRequest(BaseModel):
     retry: Optional[int] = None
 
 
+class AuthTokens(BaseModel):
+    """Credentials returned by an email and password login."""
+
+    access_token: str
+    refresh_token: Optional[str] = None
+    #: Unix timestamp the access token expires at, when GMGN reports one.
+    expires_at: Optional[int] = None
+    refresh_expires_at: Optional[int] = None
+    user_id: Optional[str] = None
+
+    def __str__(self) -> str:
+        """Render without exposing the tokens, so logs stay safe."""
+        return f"AuthTokens(user_id={self.user_id!r}, expires_at={self.expires_at!r})"
+
+
 class TokenInfo(BaseModel):
     """Basic token information from GMGN API."""
     

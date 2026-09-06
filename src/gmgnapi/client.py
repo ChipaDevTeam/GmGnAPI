@@ -26,7 +26,7 @@ from .exceptions import (
     MessageParsingError,
     SubscriptionError,
 )
-from .models import Message, SubscriptionRequest
+from .models import AuthTokens, Message, SubscriptionRequest
 
 logger = logging.getLogger(__name__)
 
@@ -46,6 +46,10 @@ class GmGnClient:
 
     DEFAULT_WS_URL = "wss://gmgn.ai/ws"
     DEFAULT_USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 OPR/126.0.0.0"
+
+    # curl_cffi TLS fingerprint to impersonate. Cloudflare now serves a managed
+    # challenge to the older chrome124 profile, so keep this reasonably current.
+    DEFAULT_IMPERSONATE = "chrome136"
     
     SUPPORTED_CHANNELS = {
         "new_pool_info",
@@ -72,6 +76,7 @@ class GmGnClient:
         cookies: Optional[Dict[str, str]] = None,
         fp_did: Optional[str] = None,
         user_uuid: Optional[str] = None,
+        impersonate: Optional[str] = None,
     ):
         """
         Initialize the GmGnClient.
@@ -90,6 +95,7 @@ class GmGnClient:
             cookies: Dictionary of cookies to send with connection
             fp_did: Fingerprint device ID
             user_uuid: User UUID session identifier
+            impersonate: curl_cffi browser fingerprint to impersonate
         """
         self.ws_url = ws_url or os.getenv("GMGN_WS_URL", self.DEFAULT_WS_URL)
         self.device_id = device_id or str(uuid.uuid4())
@@ -99,6 +105,7 @@ class GmGnClient:
         self.cookies = cookies or {}
         self.fp_did = fp_did or uuid.uuid4().hex
         self.user_uuid = user_uuid or uuid.uuid4().hex[:16]
+        self.impersonate = impersonate or os.getenv("GMGN_IMPERSONATE", self.DEFAULT_IMPERSONATE)
         
         # Connection settings
         self.auto_reconnect = auto_reconnect
@@ -166,6 +173,72 @@ class GmGnClient:
             
         return headers
 
+    async def login(
+        self,
+        email: Optional[str] = None,
+        password: Optional[str] = None,
+        captcha_solver: Optional[Callable] = None,
+        code_provider: Optional[Callable] = None,
+        **kwargs: Any,
+    ) -> AuthTokens:
+        """
+        Log in with an email address and password and use the resulting token.
+
+        On success the access token and session cookies are stored on this
+        client, so subsequently subscribing to authenticated channels such as
+        wallet trades needs no further arguments.
+
+        Call this before :meth:`connect`; an established connection is not
+        re-authenticated.
+
+        Args:
+            email: Account email; falls back to the ``GMGN_EMAIL`` environment
+                variable
+            password: Account password; falls back to ``GMGN_PASSWORD``
+            captcha_solver: Returns a reCAPTCHA token for a ``CaptchaChallenge``.
+                Required — GMGN gates login on reCAPTCHA.
+            code_provider: Returns a code for a ``VerificationChallenge``, when
+                GMGN asks for a second factor
+            **kwargs: Passed through to ``GmGnAuth``
+
+        Returns:
+            The access and refresh tokens for the account.
+
+        Raises:
+            AuthenticationError: If the login fails
+
+        Example:
+            ```python
+            client = GmGnClient()
+            await client.login("me@example.com", "hunter2", captcha_solver=solver)
+            await client.connect()
+            await client.subscribe_wallet_trades(wallet_address="...")
+            ```
+        """
+        # Imported here so gmgnapi.client stays importable independently of the
+        # auth module, which pulls in the SRP implementation.
+        from .auth import GmGnAuth
+
+        auth = GmGnAuth(
+            captcha_solver=captcha_solver,
+            code_provider=code_provider,
+            device_id=self.device_id,
+            fp_did=self.fp_did,
+            impersonate=self.impersonate,
+            **kwargs,
+        )
+        try:
+            tokens = await auth.login(email, password)
+            self.access_token = tokens.access_token
+            # Carry the login cookies over so the WebSocket handshake looks like
+            # the same browser session that just signed in.
+            self.cookies = {**self.cookies, **auth.cookies}
+        finally:
+            await auth.close()
+
+        logger.info("Logged in to GMGN as user %s", tokens.user_id or email)
+        return tokens
+
     async def connect(self) -> None:
         """
         Establish WebSocket connection to GMGN API.
@@ -188,7 +261,7 @@ class GmGnClient:
                 # We create a new session for each connection to ensure fresh state/impersonation
                 if self._session:
                      await self._session.close()
-                self._session = AsyncSession(impersonate="chrome124")
+                self._session = AsyncSession(impersonate=self.impersonate)
                 
                 # Connect using curl_cffi with manual context management
                 # ws_connect appears to be a coroutine in this version

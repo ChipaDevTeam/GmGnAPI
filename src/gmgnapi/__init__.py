@@ -17,12 +17,20 @@ __author__ = "GmGnAPI Team"
 __email__ = "contact@gmgnapi.dev"
 __license__ = "MIT"
 
+from .auth import (
+    CaptchaChallenge,
+    GmGnAuth,
+    VerificationChallenge,
+    login,
+)
 from .client import GmGnClient
 from .client_enhanced import GmGnEnhancedClient
 from .exceptions import (
     GmGnAPIError,
     ConnectionError,
     AuthenticationError,
+    CaptchaRequiredError,
+    VerificationRequiredError,
     SubscriptionError,
     MessageParsingError,
 )
@@ -30,6 +38,9 @@ from .models import (
     # Core message types
     Message,
     SubscriptionRequest,
+
+    # Authentication
+    AuthTokens,
     
     # Data structures
     NewPoolInfo,
@@ -54,11 +65,20 @@ __all__ = [
     # Clients
     "GmGnClient",
     "GmGnEnhancedClient",
-    
+
+    # Authentication
+    "GmGnAuth",
+    "login",
+    "AuthTokens",
+    "CaptchaChallenge",
+    "VerificationChallenge",
+
     # Exceptions
     "GmGnAPIError",
     "ConnectionError",
     "AuthenticationError", 
+    "CaptchaRequiredError",
+    "VerificationRequiredError",
     "SubscriptionError",
     "MessageParsingError",
     
