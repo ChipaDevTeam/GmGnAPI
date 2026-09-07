@@ -19,10 +19,15 @@ Two ways to get the token, chosen in the form:
 The page then shows every step of the exchange, prompts for an email or
 authenticator code if GMGN asks for one, and prints the tokens at the end.
 
-Run:
+Run, from the repository root:
 
-    pip install aiohttp
-    python examples/login_demo.py            # then open http://127.0.0.1:8765
+    python3 -m venv .venv                    # once; system Python is often
+    .venv/bin/pip install -e ".[demo]"       # "externally managed" (PEP 668)
+    .venv/bin/python examples/login_demo.py  # then open http://127.0.0.1:8765
+
+For the automatic captcha option, also:
+
+    .venv/bin/pip install playwright && .venv/bin/playwright install chromium
 
 Your password is used to compute an SRP proof and is never sent to GMGN, never
 written to disk, and never logged. The server binds to localhost only. It is a
