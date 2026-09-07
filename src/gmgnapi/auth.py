@@ -61,6 +61,21 @@ REQUIRE_OTP = "verify_otp"
 REQUIRE_OTP_CODE = "otp_code"
 REQUIRE_SMS_CODE = "sms_code"
 
+# Requirements this library knows how to answer, used to choose between the
+# alternatives in an "a|b" requirement.
+_SUPPORTED_REQUIREMENTS = frozenset(
+    {
+        REQUIRE_RECAPTCHA,
+        REQUIRE_CAPTCHA,
+        REQUIRE_PASSWORD,
+        REQUIRE_EMAIL_CODE,
+        REQUIRE_VERIFY_EMAIL,
+        REQUIRE_OTP,
+        REQUIRE_OTP_CODE,
+        REQUIRE_SMS_CODE,
+    }
+)
+
 # Codes that mean "that verification attempt was wrong, ask again" rather than
 # "this login is over". The web client re-prompts on these instead of failing.
 RETRYABLE_CODES = frozenset({-102000, -109903, -101021, -20202, -109917})
@@ -224,8 +239,12 @@ class GmGnAuth:
             "os": "web",
         }
 
-    async def _post(self, path: str, payload: Dict[str, Any]) -> Dict[str, Any]:
-        """POST a JSON body and unwrap GMGN's ``{code, message, data}`` envelope."""
+    async def _post(self, path: str, payload: Dict[str, Any]) -> Any:
+        """POST a JSON body and unwrap GMGN's ``{code, message, data}`` envelope.
+
+        Returns the ``data`` member, which is a dict for login steps but a bare
+        token string for the refresh endpoint.
+        """
         session = await self._get_session()
         url = f"{self.base_url}{path}"
 
@@ -265,10 +284,9 @@ class GmGnAuth:
                 details=body,
             )
 
-        data = body.get("data")
-        if not isinstance(data, dict):
-            raise AuthenticationError("Login response contained no data", details=body)
-        return data
+        if "data" not in body:
+            raise AuthenticationError("Response contained no data", details=body)
+        return body["data"]
 
     async def login(
         self,
@@ -323,6 +341,8 @@ class GmGnAuth:
         # Carried across steps: the server sends the SRP material once, but
         # later steps still need it.
         key_data: Dict[str, Any] = {}
+        # The last step the server described, replayed when it rejects an answer.
+        last_step: Optional[Dict[str, Any]] = None
         previous_error: Optional[str] = None
         attempts = 0
         max_attempts = self.MAX_RETRIES_PER_STEP * 6
@@ -334,13 +354,17 @@ class GmGnAuth:
 
             try:
                 step = await self._post(self.LOGIN_PATH, payload)
+                if not isinstance(step, dict):
+                    raise AuthenticationError(
+                        "Unexpected login response", details={"data": step}
+                    )
                 previous_error = None
             except AuthenticationError as e:
                 details = e.details if isinstance(e.details, dict) else {}
-                if details.get("code") in RETRYABLE_CODES and key_data.get("_step"):
+                if details.get("code") in RETRYABLE_CODES and last_step is not None:
                     # The server rejected a code or captcha. Re-prompt for the
                     # same step rather than dropping the whole login.
-                    step = key_data["_step"]
+                    step = last_step
                     previous_error = e.message
                 else:
                     raise
@@ -353,7 +377,7 @@ class GmGnAuth:
             if step.get("done"):
                 return self._build_tokens(step.get("data") or {})
 
-            key_data["_step"] = step
+            last_step = step
             data = step.get("data") or {}
             for name in ("key", "key_ver", "salt", "user_id", "srp_B"):
                 if data.get(name) is not None:
@@ -573,11 +597,17 @@ class GmGnAuth:
 
         data = await self._post(self.REFRESH_PATH, {"refresh_token": refresh_token})
 
-        # This endpoint answers with the access token alone; keep the caller's
-        # refresh token so the result is still usable as a complete credential.
-        tokens = self._build_tokens(
-            data if isinstance(data.get("access_token"), (str, dict)) else {"access_token": data}
-        )
+        # This endpoint answers with the new access token alone, either as a
+        # bare string or wrapped in the usual object.
+        if isinstance(data, str):
+            data = {"access_token": data}
+        elif isinstance(data, dict) and "access_token" not in data:
+            data = {"access_token": data}
+        elif not isinstance(data, dict):
+            raise AuthenticationError("Unexpected refresh response", details={"data": data})
+
+        tokens = self._build_tokens(data)
+        # Keep the caller's refresh token so the result is a complete credential.
         if tokens.refresh_token is None:
             tokens.refresh_token = refresh_token
         return tokens
@@ -609,17 +639,3 @@ async def login(
         captcha_solver=captcha_solver, code_provider=code_provider, **kwargs
     ) as auth:
         return await auth.login(email, password)
-
-
-_SUPPORTED_REQUIREMENTS = frozenset(
-    {
-        REQUIRE_RECAPTCHA,
-        REQUIRE_CAPTCHA,
-        REQUIRE_PASSWORD,
-        REQUIRE_EMAIL_CODE,
-        REQUIRE_VERIFY_EMAIL,
-        REQUIRE_OTP,
-        REQUIRE_OTP_CODE,
-        REQUIRE_SMS_CODE,
-    }
-)

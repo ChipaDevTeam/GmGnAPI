@@ -6,10 +6,18 @@ package (v0.3.1) that GMGN's web app bundles, driving both its client and
 server halves. They pin the exact bytes GMGN expects, so a refactor that
 changes hex padding or hashing order fails here rather than in production.
 
-Regenerate with:
+Regenerate with `npm install secure-remote-password@0.3.1` and:
 
-    npm install secure-remote-password
-    node -e '...'  # see docs/ for the generator used
+    const client = require('secure-remote-password/client')
+    const server = require('secure-remote-password/server')
+    const privateKey = client.derivePrivateKey(salt, username, password)
+    const verifier = client.deriveVerifier(privateKey)
+    const clientEph = client.generateEphemeral()
+    const serverEph = server.generateEphemeral(verifier)
+    const s = client.deriveSession(clientEph.secret, serverEph.public,
+                                   salt, username, privateKey)
+    const ss = server.deriveSession(serverEph.secret, clientEph.public,
+                                    salt, username, verifier, s.proof)
 """
 
 import pytest
