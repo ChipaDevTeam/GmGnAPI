@@ -11,7 +11,7 @@ puts one in the loop:
 Two ways to get the token, chosen in the form:
 
 * **Automatic** — the server drives a Playwright browser to gmgn.ai and runs
-  ``grecaptcha.execute`` there. Needs ``pip install playwright`` and
+  ``grecaptcha.enterprise.execute`` there. Needs ``pip install playwright`` and
   ``playwright install chromium``.
 * **Manual** — you paste a token yourself. The page shows the exact snippet to
   run in a devtools console on an open gmgn.ai tab. No extra dependencies.
