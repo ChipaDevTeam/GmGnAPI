@@ -18,7 +18,7 @@ Two ways to get the token, chosen in the form:
 
 The page then shows every step of the exchange, prompts for an email or
 authenticator code if GMGN asks for one, and prints the tokens at the end.
-
+ 
 Run, from the repository root:
 
     python3 -m venv .venv                    # once; system Python is often
