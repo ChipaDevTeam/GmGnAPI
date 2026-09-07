@@ -20,7 +20,7 @@ GmGnAPI provides real-time access to Solana blockchain data through GMGN.ai's We
 
 ## 🔗 Quick Links
 
-- 📚 **[Documentation](https://yourusername.github.io/GmGnAPI/)** - Complete guides and API reference
+- 📚 **[Documentation](https://ChipaDevTeam.github.io/GmGnAPI/)** - Complete guides and API reference
 - 💬 **[Discord Community](https://discord.gg/ub46R9Dk)** - Get help and discuss strategies
 - 🌐 **[Create GMGN Account](https://gmgn.ai/r/9dLKvFyE)** - Sign up with our referral link to support the project
 - ✨ **[Chipa Editor](https://chipaeditor.com/?utm_source=github&utm_medium=readme&utm_campaign=gmgn_api&utm_term=editor&utm_content=quicklinks)** - AI-powered code editor used to build this project
