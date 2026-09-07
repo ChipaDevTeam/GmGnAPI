@@ -54,6 +54,10 @@ PORT = 8765
 # The reCAPTCHA action GMGN's own login uses.
 LOGIN_ACTION = "login"
 
+# GMGN loads reCAPTCHA Enterprise from recaptcha.net (not the standard
+# api.js), so tokens come from grecaptcha.enterprise, not grecaptcha.
+ENTERPRISE_JS = "https://www.recaptcha.net/recaptcha/enterprise.js"
+
 
 class LoggingAuth(GmGnAuth):
     """A GmGnAuth that reports each protocol step to the page."""
@@ -153,13 +157,16 @@ async def solve_with_playwright(session: LoginSession, challenge: CaptchaChallen
         try:
             page = await browser.new_page()
             await page.goto("https://gmgn.ai/", wait_until="domcontentloaded")
+            # GMGN uses reCAPTCHA Enterprise and loads it lazily, so the plain
+            # page has no grecaptcha at all until we add the script ourselves.
             await page.add_script_tag(
-                url=f"https://www.google.com/recaptcha/api.js?render={challenge.site_key}"
+                url=f"{ENTERPRISE_JS}?render={challenge.site_key}"
             )
             token = await page.evaluate(
                 """([siteKey, action]) => new Promise((resolve, reject) => {
-                    grecaptcha.ready(() => {
-                        grecaptcha.execute(siteKey, { action }).then(resolve).catch(reject)
+                    grecaptcha.enterprise.ready(() => {
+                        grecaptcha.enterprise.execute(siteKey, { action })
+                            .then(resolve).catch(reject)
                     })
                 })""",
                 [challenge.site_key, challenge.action],
@@ -383,7 +390,12 @@ PAGE = r"""<!DOCTYPE html>
 
   <div id="promptCard" class="card hidden">
     <div id="promptMsg" style="font-weight:600;margin-bottom:.75rem"></div>
-    <div id="promptHelp" class="hint hidden" style="margin:0 0 .75rem"></div>
+    <div id="promptHelp" class="hint hidden" style="margin:0 0 .75rem">
+      <span id="promptHelpText"></span>
+      <pre id="promptSnippet"></pre>
+      <button id="copySnippet" type="button" class="ghost"
+              style="margin-top:.5rem;padding:.35rem .7rem;font-size:.8rem">Copy snippet</button>
+    </div>
     <div class="row"><input id="promptInput" type="text" autocomplete="off"></div>
     <button id="promptSend" type="button">Submit</button>
   </div>
@@ -481,15 +493,41 @@ function showPrompt(p) {
   $('promptMsg').textContent = p.message;
   if (p.kind === 'captcha') {
     $('promptHelp').classList.remove('hidden');
-    $('promptHelp').innerHTML =
+    $('promptHelpText').innerHTML =
       'Open <a href="https://gmgn.ai/" target="_blank" style="color:var(--accent)">gmgn.ai</a>, ' +
-      'then run this in the devtools console and paste the result:' +
-      '<pre>grecaptcha.execute("' + p.site_key + '", {action:"' + p.action + '"}).then(console.log)</pre>';
+      'then run this in the devtools console and paste the result. ' +
+      'GMGN uses reCAPTCHA Enterprise and loads it on demand, so this snippet ' +
+      'adds the script itself before asking for a token:';
+    $('promptSnippet').textContent = snippetFor(p.site_key, p.action);
   } else {
     $('promptHelp').classList.add('hidden');
   }
   $('promptInput').focus();
 }
+
+function snippetFor(key, action) {
+  return [
+    '(async () => {',
+    '  const k = "' + key + '";',
+    '  if (!window.grecaptcha || !window.grecaptcha.enterprise) {',
+    '    await new Promise((ok, no) => {',
+    '      const s = document.createElement("script");',
+    '      s.src = "https://www.recaptcha.net/recaptcha/enterprise.js?render=" + k;',
+    '      s.onload = ok; s.onerror = no; document.head.appendChild(s);',
+    '    });',
+    '  }',
+    '  await new Promise(r => grecaptcha.enterprise.ready(r));',
+    '  console.log(await grecaptcha.enterprise.execute(k, { action: "' + action + '" }));',
+    '})()'
+  ].join('\n');
+}
+
+$('copySnippet').addEventListener('click', () => {
+  navigator.clipboard.writeText($('promptSnippet').textContent).then(() => {
+    $('copySnippet').textContent = 'Copied';
+    setTimeout(() => { $('copySnippet').textContent = 'Copy snippet'; }, 1500);
+  });
+});
 
 function finish(state, payload) {
   clearInterval(polling);

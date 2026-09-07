@@ -43,13 +43,17 @@ async def solve_with_browser(challenge: CaptchaChallenge) -> str:
         page = await browser.new_page()
         try:
             await page.goto("https://gmgn.ai/", wait_until="domcontentloaded")
+            # GMGN uses reCAPTCHA Enterprise, loaded on demand — a freshly
+            # loaded page has no window.grecaptcha at all, and the standard
+            # api.js would give you a grecaptcha without .enterprise.
             await page.add_script_tag(
-                url=f"https://www.google.com/recaptcha/api.js?render={challenge.site_key}"
+                url="https://www.recaptcha.net/recaptcha/enterprise.js"
+                    f"?render={challenge.site_key}"
             )
             token = await page.evaluate(
                 """([siteKey, action]) => new Promise((resolve, reject) => {
-                    grecaptcha.ready(() => {
-                        grecaptcha.execute(siteKey, { action })
+                    grecaptcha.enterprise.ready(() => {
+                        grecaptcha.enterprise.execute(siteKey, { action })
                             .then(resolve)
                             .catch(reject)
                     })
@@ -74,6 +78,7 @@ async def solve_with_service(challenge: CaptchaChallenge) -> str:
         sitekey=challenge.site_key,
         url="https://gmgn.ai/",
         version="v3",
+        enterprise=1,  # GMGN uses reCAPTCHA Enterprise
         action=challenge.action,
         score=0.7,
     )
