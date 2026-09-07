@@ -328,7 +328,8 @@ PAGE = r"""<!DOCTYPE html>
   .kind-error .tag{color:var(--err)}
   .kind-success .tag{color:var(--ok)}
   pre{background:var(--bg);border:1px solid var(--line);border-radius:.5rem;padding:.6rem .75rem;
-      margin:.4rem 0 0;overflow-x:auto;font-size:.8rem;color:var(--muted)}
+      margin:.4rem 0 0;overflow-x:auto;font-size:.8rem;color:var(--muted);
+      white-space:pre-wrap;word-break:break-word}
   .token{word-break:break-all;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
          font-size:.8rem;background:var(--bg);border:1px solid var(--line);
          border-radius:.5rem;padding:.6rem .75rem;margin-top:.3rem}
