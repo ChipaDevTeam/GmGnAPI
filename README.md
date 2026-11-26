@@ -8,7 +8,7 @@
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-[![Discord](https://img.shields.io/discord/YOUR_DISCORD_ID?color=7289da&label=Discord&logo=discord&logoColor=white)](https://discord.gg/ub46R9Dk)
+[![Discord](https://img.shields.io/discord/YOUR_DISCORD_ID?color=7289da&label=Discord&logo=discord&logoColor=white)](https://discord.gg/PHHfh6UyCb)
 
 ---
 
@@ -21,7 +21,7 @@ GmGnAPI provides real-time access to Solana blockchain data through GMGN.ai's We
 ## 🔗 Quick Links
 
 - 📚 **[Documentation](https://ChipaDevTeam.github.io/GmGnAPI/)** - Complete guides and API reference
-- 💬 **[Discord Community](https://discord.gg/ub46R9Dk)** - Get help and discuss strategies
+- 💬 **[Discord Community](https://discord.gg/PHHfh6UyCb)** - Get help and discuss strategies
 - 🌐 **[Create GMGN Account](https://gmgn.ai/r/9dLKvFyE)** - Sign up with our referral link to support the project
 - ✨ **[Chipa Editor](https://chipaeditor.com/?utm_source=github&utm_medium=readme&utm_campaign=gmgn_api&utm_term=editor&utm_content=quicklinks)** - AI-powered code editor used to build this project
 
@@ -71,7 +71,7 @@ Create your GMGN account using our referral link to support the project:
 
 ### 3. Join Community
 Join our Discord server for support and updates:
-👉 **[Discord Community](https://discord.gg/ub46R9Dk)**
+👉 **[Discord Community](https://discord.gg/PHHfh6UyCb)**
 
 ## 🎯 Quick Start
 
